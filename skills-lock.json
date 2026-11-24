@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "playwright-best-practices": {
+      "source": "currents-dev/playwright-best-practices-skill",
+      "sourceType": "github",
+      "skillPath": "playwright-best-practices/SKILL.md",
+      "computedHash": "1c2babf492719b9fbfec4221df88e463b133ffb3983556073540f73427baa92e"
+    },
+    "web-design-guidelines": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/web-design-guidelines/SKILL.md",
+      "computedHash": "c0a42a031832ef356aa550855ab608eb36f919d0e6460bbca6958f516b022424"
+    }
+  }
+}

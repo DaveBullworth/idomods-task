@@ -1,0 +1,58 @@
+/* Design tokens. Values from Figma call #3 (PLAN.md §0.3) and the comments spec.
+   VP's / footer values are added after calls #4 and #5. */
+:root {
+  /* Colour */
+  --c-white: #fff;
+  --c-yellow: #f2bf25;
+  --c-ink: #1e1e1e;
+  --c-black: #101011;
+  --c-line: #e7e7e7;
+  --c-grey-hover: #4a4a4a; /* tile button hover (comments spec) */
+  --c-control-bg: rgb(16 16 17 / 20%); /* hero arrows */
+  --c-badge-bg: rgb(16 16 17 / 40%); /* Trustmate badge */
+  --c-track: rgb(231 231 231 / 50%); /* progress bar track */
+
+  /* Type */
+  --ff: 'Red Hat Display', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fw-medium: 500;
+  --fw-bold: 700;
+  --fs-13: 0.8125rem;
+  --fs-14: 0.875rem;
+  --fs-16: 1rem;
+  --fs-21: 1.3125rem;
+  --fs-hero: clamp(2.25rem, 1.6rem + 2.2vw, 3.5rem); /* 36 -> 56 px */
+
+  /* Motion (CLAUDE.md "Motion") */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --dur-hover: 250ms;
+  --dur-button: 200ms;
+  --dur-tile: 500ms;
+  --dur-fade: 600ms;
+  --dur-zoom: 800ms;
+  --dur-move: 500ms; /* menu panel, other movement */
+  --slide-interval: 3000ms;
+
+  /* Transform amounts. Set to "no effect" under reduced motion below,
+     so components never need their own reduced-motion branches for these. */
+  --scale-tile-hover: 1.1;
+  --scale-slide-in: 1.05;
+  --move-menu: 100%;
+
+  /* Layout */
+  --container: 1600px;
+  --gutter: clamp(16px, 8.33vw, 160px);
+  --radius-pill: 100px;
+  --header-h: 83px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    /* No transforms (scale, movement). Opacity fades keep their durations. */
+    --scale-tile-hover: 1;
+    --scale-slide-in: 1;
+    --move-menu: 0%;
+    --dur-zoom: 0ms;
+    --dur-move: 0ms;
+  }
+}

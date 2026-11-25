@@ -24,6 +24,7 @@
 - **No mobile layout.** Burger menu below 1280 px (changed from 1024: the full header row doesn't fit below ~1300 px), tiles in one column, benefits in two columns, footer columns stacked.
 - **Lamps on the second slide.** Lamps are shown on both, first and second slide.
 - **Lamps are baked into the hero background.** Lamps stay in place; the interaction is only the light turning on.
+- **Lamp overlays per slide.** Slide 1 shows only the lamps baked into the photo: the overlay lamp images stay at opacity 0 there, so the slide never depends on pixel-perfect alignment (rounding at different widths and pixel ratios made double edges). Only the glow shows on click. The overlay images fade in with slide 2 and fade out when going back to slide 1, in sync with the crossfade. They sit where the baked lamps are, so the switch looks continuous.
 - **Dropdown menus are not designed** ("Lampy", "Kolory", "Pomieszczenia"). Plain links with an arrow icon, no dropdowns.
 - **Links and search.** All links use `href="#"`. The search form is static and does not submit.
 - **Spec conflict:** "animate only transform and opacity" vs. colour changes in the header and buttons. Backgrounds change through an overlay with opacity; text and icon colour use a `color` transition as a deliberate exception.

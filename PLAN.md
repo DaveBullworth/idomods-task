@@ -157,14 +157,14 @@ tests/       (Playwright, written after the page is built)
 
 - `.hero` uses `--hero-h: clamp(560px, 100svh, 1080px)`, with `height: var(--hero-h)`, `overflow: hidden` and `position: relative`. `svh`, not `vh`, so the hero doesn't jump when the mobile browser bar shows or hides.
 - `.hero__stage` has `aspect-ratio: 1920 / 1080` and covers the hero like `object-fit: cover`:
-  - `width: max(100%, var(--hero-h) * 16 / 9)`;
+  - `width: max(100%, var(--hero-h) * 16 / 9)`; the height comes **only** from `aspect-ratio`. Never derive it as `calc(var(--stage-w) * 9 / 16)`: inside `height` the `100%` resolves against the hero's height, which squashed the photo on viewports wider than 16:9 (bug found at 1280 × 633, fixed);
   - centred with `left: 50%; transform: translateX(calc(-50% + var(--stage-x, 0%)))`.
 - Inside the stage, all absolutely positioned in % of the stage:
   - `.hero__slide` ×2 (`hero-rock`, `hero-interior`), stacked;
   - `.hero__lamps` above both slides, containing three `<button class="lamp">` elements. Each button holds a lamp image plus a `.lamp__glow` (radial gradient, opacity 0).
 - **Lamp positions:** left/top/width in % of the stage, taken from `design/lamp-positions.json` (§0.2). They aren't from Figma; the lamps aren't in the hero frame. For reference, the PNGs at 2× are 744×838, 940×856, 846×786, which is 372×419, 470×428, 423×393 at 1920, if the match confirms scale 1.0.
-- **Slide 1:** the lamp images sit exactly over the lamps baked into the photo, so they're invisible as separate layers. A click toggles `.lamp--on`: glow opacity 0 → 1 over 500 ms, plus a slight brightness lift done as an opacity overlay.
-- **Slide 2:** the same lamp images are visible as floating lamps over the interior while the background crossfades underneath. The click glow works the same way.
+- **Slide 1:** the lamp images stay at **opacity 0**; the lamps you see are the ones baked into the photo, so slide 1 never depends on pixel-perfect alignment (NOTES.md). The buttons stay in place and clickable. A click toggles `.lamp--on`: glow opacity 0 → 1 over 500 ms. The glow is a separate element, not the lamp image, so it shows on slide 1 too.
+- **Slide 2:** the lamp images fade in (`.hero__stage--lamps-visible`, opacity, `--dur-fade` = the 600 ms crossfade) as floating lamps over the interior, and fade out again when going back to slide 1. They sit where the baked lamps are, so the switch looks continuous. The slider (§3.4) toggles the modifier together with the slide change; reduced motion keeps the fade (opacity only). The click glow works the same way.
 - Lamps are `<button aria-pressed>` with a Polish `aria-label` ("Włącz lampę 1").
 - **Portrait screens (`max-aspect-ratio: 5/4`), "contained mode":** shifting a covering stage can't work, because at 375 × 812 the covering stage is 1443 px wide and the lamp group alone is 848 px. Instead:
   - the stage is sized so the lamp group (58.75 % of the stage) fits the viewport minus the gutters, and anchored to the bottom, centred on the lamp group;

@@ -11,8 +11,9 @@
      photo's top edge) continues the image; the stage's top edge fades into it. */
 .hero {
   --hero-h: clamp(560px, 100svh, 1080px);
+
+  /* only ever used for `width`: the 100% must resolve against the hero's width */
   --stage-w: max(100%, var(--hero-h) * 16 / 9);
-  --stage-h: calc(var(--stage-w) * 9 / 16);
   --arrow-size: 48px;
   --arrow-inset: 72px;
 
@@ -54,12 +55,15 @@
   --hero-scrim: 45%;
 }
 
+/* Height comes from aspect-ratio, never from a calc on --stage-w: inside
+   `height`, the 100% in --stage-w would resolve against the hero's height and
+   squash the photo on viewports wider than 16:9 (e.g. 1280 x 633). */
 .hero__stage {
   position: absolute;
   top: 50%;
   left: 50%;
   width: var(--stage-w);
-  height: var(--stage-h);
+  aspect-ratio: 1920 / 1080;
   transform: translate(-50%, -50%);
 }
 
@@ -80,8 +84,18 @@
   width: var(--w);
 }
 
+/* Slide 1 has the lamps baked into the photo, so the overlay images stay
+   hidden there (no reliance on pixel-perfect alignment); only the click glow
+   shows. They fade in with slide 2, in sync with the slide crossfade. The
+   buttons stay in place and clickable on both slides. */
 .lamp__img {
   width: 100%;
+  opacity: 0;
+  transition: opacity var(--dur-fade) var(--ease);
+}
+
+.hero__stage--lamps-visible .lamp__img {
+  opacity: 1;
 }
 
 /* Text block: grid item on top of the absolute layers */
@@ -228,7 +242,9 @@
 /* Contained mode: portrait screens */
 @media (max-aspect-ratio: 5/4) {
   .hero {
+    /* no % here, so --stage-h can be derived from it */
     --stage-w: calc((100vw - 2 * var(--gutter)) / var(--lamps-span));
+    --stage-h: calc(var(--stage-w) * 9 / 16);
 
     height: auto;
     min-height: var(--hero-h);

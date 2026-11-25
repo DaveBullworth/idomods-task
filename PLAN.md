@@ -21,7 +21,7 @@ The rules are in `CLAUDE.md`. Values marked **TBD #N** come from Figma call N (s
   - Top row: 96 px from the top; logo block 198 wide; link columns start at x = 541 inside the 1600 column; column headings 14 px with 38 px to the first link; links on a 28 px step.
   - Bottom row: three 512 px columns with a 32 px gap (payments 5×2 at 57×36 cells with 8 px gaps, awards 3×2, 8 flags of 32 px on a 40 px step).
   - Caption: VAT line + divider + IdoMods (98×36) / IdoSell (66×36) logos, then a contact line.
-- The hero (1:506) came back as a `<frame>` with **no children**, and the shader section (1:707) is a single `<rounded-rectangle>` (image-only). Header, hero text, slider controls and rating badge: **TBD #3**. Lamp positions: §0.2.
+- The hero (1:506) came back as a `<frame>` with **no children**, and the shader section (1:707) is a single `<rounded-rectangle>` (image-only). Header, hero text, slider controls and rating badge: see §0.3 (call #3). Lamp positions: §0.2.
 - The file has **no Figma variables** (call #2 returned `{}`).
 
 ## 0.1 Confirm the node for call #3 (before spending it)
@@ -45,7 +45,58 @@ The rules are in `CLAUDE.md`. Values marked **TBD #N** come from Figma call N (s
   - Take Playwright screenshots at 1920 and 375 with the overlays at full opacity, plus a difference view (`mix-blend-mode: difference` on the lamp layer, debug only). Aligned lamps come out almost black.
   - Hand-tune if needed and record any tweak in the JSON.
 - The script and the JSON are committed; the script is not part of `npm run assets`.
-- Colours and type scale: **TBD #3–#5**. Known so far from the comments spec: tile button hover `#4A4A4A`, header hover background `#FFFFFF`.
+- Colours and type scale: hero and header known from #3 (§0.3); VP's and footer **TBD #4–#5**. From the comments spec: tile button hover `#4A4A4A`, header hover background `#FFFFFF`.
+
+## 0.3 Header + hero facts (Figma call #3, `03-design-context-hero.tsx`)
+
+**Colours seen so far**
+| Token | Value | Used for |
+|---|---|---|
+| `--c-yellow` | `#F2BF25` | hero CTA background, active progress segment |
+| `--c-ink` | `#1E1E1E` | text on yellow buttons |
+| `--c-black` | `#101011` | base of the translucent controls (arrows at 20 %, badge at 40 %) |
+| `--c-line` | `#E7E7E7` | search border; progress track at 50 % opacity |
+| `--c-white` | `#FFFFFF` | all hero/header text and icons |
+
+**Type** (Red Hat Display, confirmed Medium 500 + Bold 700 only)
+| Role | Weight | Size / line-height |
+|---|---|---|
+| Hero eyebrow | 500 | 16 / 1.2 |
+| Hero H1 | 700 | 56 / 1.0, two explicit lines |
+| Button (hero CTA) | 700 | 16 / 1.2 |
+| Nav link, search placeholder | 700 | 14 / 1.2 |
+| "Stwórz swoją lampę" | 700 | 13 / 1.1 |
+| Badge rating "4.8" | 700 | 21 / 1.1 |
+| Badge label | 500 | 13 / 1.1 |
+
+**Navbar (1:533):**
+- Absolutely positioned at the top, with no background in the default state.
+- 16 px padding; content max-width 1600, centred. Three groups with 64 px gaps:
+  1. **Logo + links:** logo box 150 × 48 (`union.svg` is 150 × 22, so it's centred vertically), then 64 px to the links. Links have 32 px gaps; the three with a dropdown arrow have a 16 px `angle-down` with a 4 px gap.
+  2. **Search pill:** takes the remaining width (`flex: 1`); 1 px `#E7E7E7` border; radius 100; padding 16 / 24; placeholder with 16 px gap to a 20 px search icon. Height is about 51.
+  3. **Icons:** 8 px gaps. "Konfigurator" pill: padding 11 / 16, 9 px gap, 20 px cube. User and cart are 48 px circles with 24 px icons.
+- Navbar height is about 83 px (16 + 51 + 16).
+
+**Hero content (Container 1:507):**
+- Max-width 1600 with 16 px side padding on the hero and 64 px vertical padding.
+- **Vertically centred** in the 1080 frame, left-aligned.
+- Gaps: eyebrow → H1 16 px; title block → CTA 32 px.
+- CTA: padding 16 / 24, radius 100.
+
+**Arrows (1:514, 1:517):**
+- 48 px circles, background `rgba(16,16,17,0.2)`, 24 px white arrow icons.
+- 72 px from the left/right edges, vertically centred (the left one is `top: 516` = 540 − 24).
+
+**Progress bar (1:520):**
+- 2 segments of 64 × 2 px with a 4 px gap, centred, 32 px from the bottom.
+- Active segment `#F2BF25`, track `rgba(231,231,231,0.5)`.
+- The active segment's yellow fill is the `scaleX` element.
+
+**Trustmate badge (1:524):**
+- 32 px from the bottom, 72 px from the right. Background `rgba(16,16,17,0.4)`, radius 100, padding 12 / 24, 12 px gap.
+- "4.8" + 20 px star (2 px gap): `star.svg` already has its own orange gradient, so no recolouring.
+
+**Not in Figma:** slide 2 (the frame has one background image), lamp positions (§0.2), any hover/open state of the header.
 
 ## 1. File layout
 
@@ -99,7 +150,7 @@ tests/       (Playwright, written after the page is built)
 - Below 1024 px: logo + search icon + cart + burger.
   - The burger opens a full-height panel that slides in with `transform` (a plain fade under reduced motion).
   - `aria-expanded` / `aria-controls`; focus trap while open; Esc closes; body scroll lock.
-- Sizes and spacing: **TBD #3**.
+- Sizes and spacing: §0.3. The 1600 content max-width and 64 px group gaps apply at ≥ 1440. Between 1024 and 1440 the gaps shrink (64 → 24, links 32 → 20) and the search pill shrinks first. This is my decision; there's no frame for it.
 
 ### 3.3 Hero stage (`.hero`, `.hero__stage`)
 
@@ -115,10 +166,11 @@ tests/       (Playwright, written after the page is built)
 - **Slide 2:** the same lamp images are visible as floating lamps over the interior while the background crossfades underneath. The click glow works the same way.
 - Lamps are `<button aria-pressed>` with a Polish `aria-label` ("Włącz lampę 1").
 - **Mobile, 375 px:** set `--stage-x` per breakpoint so all three lamps stay in view and clear of the text block. Check with a screenshot; the hero text stays at a fixed position on the left/bottom.
-- Hero text: eyebrow "Bestsellery SOLLUX", H1 "Kolor i forma w nowym świetle", yellow pill CTA "Sprawdź bestsellery". _(to verify: read from PNG, check against Figma text from #3)_
-- Rating badge bottom right: "4.8 ★ Uwielbiany przez klientów". _(to verify against #3)_
-- Header copy (nav labels, search placeholder "Czego szukasz?", "Stwórz swoją lampę") _(to verify against #3)_.
-- Prev/next round arrow buttons at the sides. Sizes: **TBD #3**.
+- Hero text: eyebrow "Bestsellery SOLLUX", H1 "Kolor i forma" / "w nowym świetle" (two lines, line break kept at desktop), yellow pill CTA "Sprawdź bestsellery". _(verified against #3, nodes 1:510, 1:511, 1:513)_
+- Text block is vertically centred and left-aligned on the 1600 column (§0.3). On mobile it moves to the lower part of the hero, so the lamps stay clear (§3.3 mobile).
+- Rating badge bottom right: "4.8" + star icon + "Uwielbiany przez klientów". _(verified against #3, nodes 1:526, 1:532)_
+- Header copy: Lampy, Kolory, Pomieszczenia, Nowości, Bestsellery, Promocje; search placeholder "Czego szukasz?"; "Stwórz swoją lampę". _(verified against #3)_
+- Prev/next round arrow buttons at the sides: sizes and colours in §0.3. Below 1024 px: **open decision** (see §5).
 
 ### 3.4 Slider (`hero-slider.js`)
 
@@ -151,7 +203,7 @@ tests/       (Playwright, written after the page is built)
 
 - `<canvas>` fills the section. Text, CTA and subline sit statically above it.
 - WebGL1 fragment shader:
-  - black → dark yellow → yellow (`#F5C518`-ish, **TBD**) flowing waves at the bottom of the section;
+  - black → dark yellow → yellow flowing waves at the bottom of the section. Start from brand yellow `#F2BF25` (from #3) and tune by eye against `screen.png`;
   - domain-warped noise driven by `sin`/`cos` of `t = 2π · time / 25 s`, so the loop is seamless with no visible start or end.
 - Rendering:
   - DPR capped at 1.5;
@@ -196,7 +248,8 @@ tests/       (Playwright, written after the page is built)
 
 ## 5. Open items
 
-- **TBD #3** on `1:506` (navbar, Container, arrows, progress bar, Trustmate badge): sizes, colours, slider controls, rating badge; verify the copy marked _to verify_.
+- ~~TBD #3~~ done (§0.3). All hero and header copy matched Figma.
+- **Hero arrows below 1024 px** (no frame): at 72 px from the edges they'd overlap the hero text on phones. Proposed: hide the arrows below 1024 px and rely on swipe + the progress bar segments (made into 44 px tap targets).
 - **Lamp positions:** `scripts/find-lamps.mjs` → `design/lamp-positions.json` (§0.2), then check by eye.
 - **User check:** shader section copy (image-only).
 - **TBD #4** (VP's): tile radius, type scale, button styles, benefit icon colour.

@@ -1,0 +1,26 @@
+{
+  "name": "sollux-landing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static SOLLUX landing page (recruitment task). The site itself has no build step; these are dev tools only.",
+  "type": "module",
+  "scripts": {
+    "assets": "node scripts/build-assets.mjs",
+    "find-lamps": "node scripts/find-lamps.mjs",
+    "lint": "npm run lint:css && npm run lint:html && npm run format:check",
+    "lint:css": "stylelint \"css/**/*.css\"",
+    "lint:html": "html-validate index.html",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.1",
+    "@playwright/test": "^1.65.1",
+    "html-validate": "^11.4.0",
+    "prettier": "^3.10.1",
+    "sharp": "^0.35.5",
+    "stylelint": "^17.16.0",
+    "svgo": "^4.1.0"
+  }
+}

@@ -1,7 +1,7 @@
 ## Links on frames in Figma
 
 - **Full page** - `Landingp page` - https://www.figma.com/design/pEdVK9upunNouPDObQQXe4/IdoMods-rekrutacja-frontend-AI--Copy-?node-id=1-505&t=UFXQ3M10Es05dVPK-4
-- **Hero** - `HERO Baner` - https://www.figma.com/design/pEdVK9upunNouPDObQQXe4/IdoMods-rekrutacja-frontend-AI--Copy-?node-id=1-506&t=UFXQ3M10Es05dVPK-4
+- **Hero** - `HERO Baner` - https://www.figma.com/design/pEdVK9upunNouPDObQQXe4/IdoMods-rekrutacja-frontend-AI--Copy-?node-id=1-506&t=yE9OL6n9cNBm7JU0-4
 - **VP** - `VP's` - https://www.figma.com/design/pEdVK9upunNouPDObQQXe4/IdoMods-rekrutacja-frontend-AI--Copy-?node-id=1-593&t=UFXQ3M10Es05dVPK-4
 - **Screen** - `screen` - https://www.figma.com/design/pEdVK9upunNouPDObQQXe4/IdoMods-rekrutacja-frontend-AI--Copy-?node-id=1-707&t=UFXQ3M10Es05dVPK-4
 - **Footer** - `Footer` - https://www.figma.com/design/pEdVK9upunNouPDObQQXe4/IdoMods-rekrutacja-frontend-AI--Copy-?node-id=1-708&t=UFXQ3M10Es05dVPK-4
@@ -17,12 +17,12 @@
   - `VP's` - 1424 px
   - `screen` - 835 px
   - `Footer` - 709 px
-- Font: `Red Hat Display` (file: `\assets\raw\font.woff2`), weights: <…>
+- Font: `Red Hat Display` (file: `\assets\raw\font.woff2`), weights: Medium, Bold
 
 ## Gaps in the design and my decisions
 
 - **No mobile layout.** Burger menu below 1024 px, tiles in one column, benefits in two columns, footer columns stacked.
-- **Lamps on the second slide.** Lamps are shown only on both, first and second slide.
+- **Lamps on the second slide.** Lamps are shown on both, first and second slide.
 - **Lamps are baked into the hero background.** Lamps stay in place; the interaction is only the light turning on.
 - **Dropdown menus are not designed** ("Lampy", "Kolory", "Pomieszczenia"). Plain links with an arrow icon, no dropdowns.
 - **Links and search.** All links use `href="#"`. The search form is static and does not submit.

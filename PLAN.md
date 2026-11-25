@@ -1,0 +1,204 @@
+# Build plan: SOLLUX landing page
+
+The rules are in `CLAUDE.md`. Values marked **TBD #N** come from Figma call N (see `design/figma/LOG.md`) and aren't guessed until then.
+
+## 0. Layout facts already known (Figma call #1, 1920 px frame)
+
+- Page 1920 × 4048. Sections:
+  - hero 1080
+  - VP's 1424
+  - shader "screen" 835
+  - footer 709
+- Content column: **1600 px wide at x = 160**, so 160 px side gutters at 1920.
+- VP's: content starts 86 px from the top of the section.
+  - Benefits row: 5 items, each 294.4 wide with 32 px gaps; 136 high with 16 px padding; 32 px icon; text block 72 px from the top; titles 23 px tall, subtitles 17 px tall, 8 px between them.
+  - Tile grid starts 200 px from the top of the section. Tile rows are 518 px high, with a 16 px gap between and within rows.
+  - Row 1: THORO 648 + Konfigurator 936.
+  - Row 2: Katalog 936 + SOLLUX SMART 648.
+  - Tile text block: 48 px padding; eyebrow 23 px, 12 px gap, title 35 px per line; 24 px to the button.
+  - Button: 51 px high with 24 px horizontal padding.
+- Footer:
+  - Top row: 96 px from the top; logo block 198 wide; link columns start at x = 541 inside the 1600 column; column headings 14 px with 38 px to the first link; links on a 28 px step.
+  - Bottom row: three 512 px columns with a 32 px gap (payments 5×2 at 57×36 cells with 8 px gaps, awards 3×2, 8 flags of 32 px on a 40 px step).
+  - Caption: VAT line + divider + IdoMods (98×36) / IdoSell (66×36) logos, then a contact line.
+- The hero (1:506) came back as a `<frame>` with **no children**, and the shader section (1:707) is a single `<rounded-rectangle>` (image-only). Header, hero text, slider controls and rating badge: **TBD #3**. Lamp positions: §0.2.
+- The file has **no Figma variables** (call #2 returned `{}`).
+
+## 0.1 Confirm the node for call #3 (before spending it)
+
+- The user's link to the "HERO Baner" layer (`node-id=1-506`) matches `1:506` in `01-metadata-full.xml`. So the ID is right; the problem is that `get_metadata` didn't return the hero's children, although Figma shows Container › Content › Title / Button / Circle button.
+- Evidence the children exist: IDs `1:507`–`1:592` (86 IDs) are missing from the metadata, between the hero `1:506` and VP's `1:593`.
+- **Confirmed by the user in Figma:** `1:506` contains **Navbar**, **Container** (eyebrow, title, button), two **Circle buttons** (arrows), **Progress bar** and **Trustmate badge** (the rating badge). The header is a sibling of Container.
+- **Decision:** spend call #3 on **`1:506` itself**. Calling it on Container would lose the navbar, arrows, progress bar and badge.
+- **Lamps are not in `1:506`.** The lamp layers (lampa1–3) sit on the canvas next to the page; on the page the lamps are baked into the background image. Call #3 won't give lamp positions; see §0.2.
+
+## 0.2 Lamp positions: found by image matching, not by Figma
+
+- One-off script `scripts/find-lamps.mjs`, using sharp. It runs after the tooling step (§3.1) has installed sharp.
+- What it does:
+  1. Load `hero-rock.png` (3840×2160) and each `lamp{1,2,3}.png`, with the lamp's alpha channel as a mask.
+  2. **Coarse search:** downscale everything by 8 (the hero becomes 480×270). Brute-force every x/y offset and compute the masked mean absolute RGB difference, counting only pixels where lamp alpha > 0.5. Also try lamp scales 0.9–1.1 in 0.02 steps, in case the PNGs aren't exactly at background scale. Keep the best scale and position per lamp.
+  3. **Refine** at full resolution in a ±16 px window around the coarse hit, at the best scale.
+  4. Print and write `design/lamp-positions.json`: for each lamp, x/y/w/h in source px **and** in % of 3840×2160 (left, top, width), plus the match score. A high score means a bad match; it gets flagged, not silently used.
+- Check by eye:
+  - Place the lamps in the stage from the JSON.
+  - Take Playwright screenshots at 1920 and 375 with the overlays at full opacity, plus a difference view (`mix-blend-mode: difference` on the lamp layer, debug only). Aligned lamps come out almost black.
+  - Hand-tune if needed and record any tweak in the JSON.
+- The script and the JSON are committed; the script is not part of `npm run assets`.
+- Colours and type scale: **TBD #3–#5**. Known so far from the comments spec: tile button hover `#4A4A4A`, header hover background `#FFFFFF`.
+
+## 1. File layout
+
+```
+index.html
+favicon.svg
+css/  tokens.css base.css header.css hero.css benefits.css tiles.css shader.css footer.css
+js/   header.js menu.js hero-slider.js lamps.js shader.js      (classic <script defer>)
+assets/raw/  (source, untouched)
+assets/img/  assets/icons/  assets/fonts/  (built by npm run assets, committed)
+scripts/build-assets.mjs
+tests/       (Playwright, written after the page is built)
+```
+
+- Each JS file is an IIFE that runs only if its section is present. There are no globals except a small `window.SOLLUX` namespace if two files need to talk to each other (the slider tells lamps.js which slide is active).
+- Add `.gitattributes` with `* text=auto eol=lf`, because git warns about CRLF conversion on this Windows checkout.
+
+## 2. `<head>`
+
+- `<html lang="pl">`, charset, viewport, `<title>`, meta description.
+- `<meta name="robots" content="noindex">`, since the page is a copy of a real shop.
+- `<link rel="preload" as="image" type="image/webp" imagesrcset="hero-rock-640.webp 640w, ...-960w, ...-1440w, ...-1920w, ...-2880w" imagesizes="(max-aspect-ratio: 16/9) calc(100svh * 16 / 9), 100vw" fetchpriority="high">` for the first hero slide.
+  - `imagesizes` must match the stage width, because the stage covers the hero. It must also be identical to the slide `<img sizes>` so the preload gets reused.
+- `<link rel="preload" as="font" type="font/woff2" crossorigin>` for `assets/fonts/font.woff2` (latin). latin-ext loads on demand through `unicode-range`.
+- CSS in `<link>` tags in section order; JS with `defer` at the end of `<head>`.
+- `favicon.svg`: the "S" from `union.svg`.
+- `loading="lazy"` + `decoding="async"` on every image below the fold: tiles, benefit icons, footer logos, flags, badges. Hero images load eagerly; slide 1 gets `fetchpriority="high"`.
+
+## 3. Sections, in commit order
+
+### 3.1 Tooling + tokens + base
+
+- `package.json` devDependencies, Prettier/Stylelint/html-validate configs, `scripts/build-assets.mjs`:
+  - sharp, full-width / large photos (both hero slides, all four tiles): WebP at **640, 960, 1440, 1920, 2880 w**. Skip widths larger than the source (the tiles are 1296 or 1872 px wide, so they stop there). Use `srcset` with `w` descriptors plus `sizes`, so phones with DPR 3 don't download the 3840 file.
+    - Tile `sizes`: `(max-width: 1023px) calc(100vw - 2 * var(--gutter))` (written out in px/vw), and at desktop the tile's share of `min(100vw, 1920px) - 320px`.
+  - sharp, lamps and small images (payment/award logos, flags, IdoMods/IdoSell badges): WebP at **1x and 2x** density;
+  - svgo for icons;
+  - copy fonts.
+- `tokens.css`:
+  - colours;
+  - motion: `--dur-hover: 250ms`, `--dur-button: 200ms`, `--dur-fade: 600ms`, `--dur-zoom: 800ms`, `--dur-tile: 500ms`, `--ease: cubic-bezier(0.4,0,0.2,1)`, `--ease-out`;
+  - layout: `--container: 1600px`, `--gutter: clamp(16px, 8.33vw, 160px)`.
+- `base.css`: `@font-face` ×2, reset, `.container`, `.visually-hidden`, focus ring, button base, and a `prefers-reduced-motion` block that removes transform transitions and animations but keeps short opacity fades.
+
+### 3.2 Header (`.header`)
+
+- Absolutely positioned over the hero, transparent, white text and icons.
+- Items: logo, nav (Lampy ▾, Kolory ▾, Pomieszczenia ▾, Nowości, Bestsellery, Promocje), search pill, "Stwórz swoją lampę" link with the cube icon, user icon, cart icon. Per NOTES, the arrows are decoration only and there are no dropdowns.
+- Hover: `.header__bg` (white) fades `opacity 0 → 1`. Text, icons and logo transition `color` white → black; SVGs use `currentColor`. All 250 ms ease-in-out, and the same timing on leave.
+- Hover only applies with `(hover: hover)`. Also apply the state on `:focus-within`.
+- Below 1024 px: logo + search icon + cart + burger.
+  - The burger opens a full-height panel that slides in with `transform` (a plain fade under reduced motion).
+  - `aria-expanded` / `aria-controls`; focus trap while open; Esc closes; body scroll lock.
+- Sizes and spacing: **TBD #3**.
+
+### 3.3 Hero stage (`.hero`, `.hero__stage`)
+
+- `.hero` uses `--hero-h: clamp(560px, 100svh, 1080px)`, with `height: var(--hero-h)`, `overflow: hidden` and `position: relative`. `svh`, not `vh`, so the hero doesn't jump when the mobile browser bar shows or hides.
+- `.hero__stage` has `aspect-ratio: 1920 / 1080` and covers the hero like `object-fit: cover`:
+  - `width: max(100%, var(--hero-h) * 16 / 9)`;
+  - centred with `left: 50%; transform: translateX(calc(-50% + var(--stage-x, 0%)))`.
+- Inside the stage, all absolutely positioned in % of the stage:
+  - `.hero__slide` ×2 (`hero-rock`, `hero-interior`), stacked;
+  - `.hero__lamps` above both slides, containing three `<button class="lamp">` elements. Each button holds a lamp image plus a `.lamp__glow` (radial gradient, opacity 0).
+- **Lamp positions:** left/top/width in % of the stage, taken from `design/lamp-positions.json` (§0.2). They aren't from Figma; the lamps aren't in the hero frame. For reference, the PNGs at 2× are 744×838, 940×856, 846×786, which is 372×419, 470×428, 423×393 at 1920, if the match confirms scale 1.0.
+- **Slide 1:** the lamp images sit exactly over the lamps baked into the photo, so they're invisible as separate layers. A click toggles `.lamp--on`: glow opacity 0 → 1 over 500 ms, plus a slight brightness lift done as an opacity overlay.
+- **Slide 2:** the same lamp images are visible as floating lamps over the interior while the background crossfades underneath. The click glow works the same way.
+- Lamps are `<button aria-pressed>` with a Polish `aria-label` ("Włącz lampę 1").
+- **Mobile, 375 px:** set `--stage-x` per breakpoint so all three lamps stay in view and clear of the text block. Check with a screenshot; the hero text stays at a fixed position on the left/bottom.
+- Hero text: eyebrow "Bestsellery SOLLUX", H1 "Kolor i forma w nowym świetle", yellow pill CTA "Sprawdź bestsellery". _(to verify: read from PNG, check against Figma text from #3)_
+- Rating badge bottom right: "4.8 ★ Uwielbiany przez klientów". _(to verify against #3)_
+- Header copy (nav labels, search placeholder "Czego szukasz?", "Stwórz swoją lampę") _(to verify against #3)_.
+- Prev/next round arrow buttons at the sides. Sizes: **TBD #3**.
+
+### 3.4 Slider (`hero-slider.js`)
+
+- Autoplay: a new slide every 3 s.
+- Crossfade: opacity, 600 ms ease-in-out.
+- Incoming image: `scale(1.05) → scale(1)` over 800 ms ease-out.
+- Progress bar: one segment per slide at the bottom centre. The active one fills yellow with `transform: scaleX(0 → 1)`, linear over 3 s, and resets on slide change. Clicking a segment goes to that slide.
+- Prev/next buttons; keyboard ←/→ when the hero has focus.
+- Pause on hover and focus-within, and on `visibilitychange` (hidden).
+- Timing uses `setTimeout`/`requestAnimationFrame` so `page.clock` can control it.
+- `aria-roledescription="carousel"`, slides labelled "1 z 2", `aria-live="off"` while autoplaying.
+- Reduced motion: no autoplay and no scale-in; manual slide changes still crossfade (opacity); progress bar hidden.
+
+### 3.5 Benefits (`.benefits`)
+
+- 5 items. Icons: enter, bookmark-full, truck, ci2 (shield), trophy.
+- 5 columns at desktop; 3 + 2 at tablet; **2 columns** on mobile (per NOTES).
+
+### 3.6 Tiles (`.tiles`)
+
+- Two rows at desktop with the 648/936 and 936/648 split (as a 1600-wide grid with ratio columns).
+- One column on mobile (per NOTES); tablet: **TBD**, probably also one column.
+- `.tile`: `overflow: hidden`, rounded corners (radius **TBD #4**); `.tile__img` is the background image as an `<img>`; text block bottom-left.
+- Hover on the tile:
+  - image `scale(1 → 1.1)`, 500 ms ease-out;
+  - button: a grey `#4A4A4A` overlay fades in (opacity, 200 ms ease-in-out) instead of animating background-color.
+- The whole tile is clickable through the button's link stretched with `::after`, so there's still a single focus target.
+
+### 3.7 Shader section (`.shader`)
+
+- `<canvas>` fills the section. Text, CTA and subline sit statically above it.
+- WebGL1 fragment shader:
+  - black → dark yellow → yellow (`#F5C518`-ish, **TBD**) flowing waves at the bottom of the section;
+  - domain-warped noise driven by `sin`/`cos` of `t = 2π · time / 25 s`, so the loop is seamless with no visible start or end.
+- Rendering:
+  - DPR capped at 1.5;
+  - resized with a debounced ResizeObserver;
+  - `requestAnimationFrame` runs only while the section is on screen (IntersectionObserver) and the tab is visible.
+- Fallback (no WebGL, context lost, or reduced motion): `.shader--static` with a CSS gradient that matches one frame.
+- Heading "Twoje wnętrze zasługuje na wyjątkowe światło", yellow CTA "Kup teraz", subline "Od 119 zł na oficjalnej stronie producenta SOLLUX". _(to verify by the user by eye: 1:707 is image-only, so there's no Figma text)_
+
+### 3.8 Footer (`.footer`)
+
+- Top row: logo + 4 social circle buttons, then 5 link columns. On mobile the columns stack; collapsible `<details>` are optional and only if it's simple.
+- Bottom row: Płatności i dostawy / Nagrody / Nasze sklepy in 3 columns, stacked on mobile.
+- Caption: VAT note, divider, IdoMods + IdoSell badges, contact line (NIP, tel, hours, e-mail, company, address).
+- Type and colours: **TBD #5**.
+
+### 3.9 Polish pass
+
+- Favicon; html-validate, Stylelint and Prettier clean.
+- Check the 320–1920 range by hand; Lighthouse sanity check.
+
+## 4. Acceptance criteria (Playwright tests, written after the page is built)
+
+1. **Slider timing** (`page.clock`): the slide changes at 3 s; the crossfade finishes by 600 ms; the progress bar is `scaleX(1)` at 3 s and resets after the change; it pauses on hover; prev/next and segment clicks work.
+2. **Header hover:** after 250 ms the computed `color` is black and the overlay opacity is 1; both revert on leave.
+3. **Tile hover:** after the transition the image transform is `scale(1.1)` and the button overlay opacity is 1.
+4. **Burger menu** (< 1024 px): opens and closes, `aria-expanded` toggles, Esc closes, focus is trapped and returns to the burger.
+5. **Lamps:**
+   - a click toggles `aria-pressed` and the glow opacity on both slides;
+   - lamp boxes stay aligned with their reference positions in the stage (tolerance in px, agreed once measured) at 375 / 768 / 1440 / 1920;
+   - at 375 the lamps are inside the viewport and don't overlap the hero text box.
+6. **Shader:**
+   - the canvas has a WebGL context and draws non-blank pixels;
+   - with WebGL disabled (via `HTMLCanvasElement.prototype.getContext` override in `addInitScript`) the `.shader--static` fallback is shown and there are no errors.
+7. **Accessibility:** axe finds no violations on the full page (desktop and mobile).
+8. **No horizontal scroll** at widths from 320 to 1920 (stepped): `scrollWidth <= clientWidth`.
+9. **No console errors or failed requests** on load, also when opened over `file://`.
+10. **Reduced motion** (`emulateMedia`): no autoplay, the shader doesn't animate (static fallback), no transform transitions (tile zoom, slide scale-in, menu slide). Opacity fades are allowed.
+11. **Touch:** with `hasTouch` and no hover capability, tapping a tile or the header leaves no stuck hover state.
+12. **Lighthouse (mobile)** on the deployed GitHub Pages URL: **≥ 90** in Performance, Accessibility, Best Practices and SEO.
+    - `noindex` is intentional; if SEO flags it, note it and keep the meta tag. Don't remove it to pass.
+    - Run by hand or with Lighthouse CLI (needs approval as a new dependency) after deploy.
+
+## 5. Open items
+
+- **TBD #3** on `1:506` (navbar, Container, arrows, progress bar, Trustmate badge): sizes, colours, slider controls, rating badge; verify the copy marked _to verify_.
+- **Lamp positions:** `scripts/find-lamps.mjs` → `design/lamp-positions.json` (§0.2), then check by eye.
+- **User check:** shader section copy (image-only).
+- **TBD #4** (VP's): tile radius, type scale, button styles, benefit icon colour.
+- **TBD #5** (footer): type and colours.
+- Spare **#6**: the shader section, only if its colours can't be read from `full.png` / `screen.png`.

@@ -11,7 +11,7 @@ File: `pEdVK9upunNouPDObQQXe4`. Free plan: budget of 6 calls. Check this log bef
 ## Remaining plan
 | # | Tool | Node | Purpose |
 |---|------|------|---------|
-| 3 | get_design_context | 1:506 HERO Baner | Header + hero: nav, search, lamp positions, slider controls, rating badge |
+| 3 | get_design_context | 1:506 HERO Baner (confirmed by user: contains Navbar, Container, 2 Circle buttons, Progress bar, Trustmate badge) | Header + hero text, arrows, progress bar, rating badge. **No lamp positions**: lamps are separate canvas layers, found by image matching instead (PLAN.md §0.2) |
 | 4 | get_design_context | 1:593 VP's | Benefits row + tiles: type, colours, radii, button styles |
 | 5 | get_design_context | 1:708 Footer | Footer type and colours |
 | 6 | spare | - | e.g. 1:707 screen, if the shader colours are unclear from the PNG |

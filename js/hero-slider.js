@@ -6,6 +6,7 @@
 //   which Playwright's page.clock controls.
 // - Pauses while a control is hovered, while keyboard focus is inside the
 //   hero, while the tab is hidden and while the hero is off-screen.
+// - Pause/play toggle next to the progress bar (WCAG 2.2.2).
 // - Reduced motion: no autoplay (manual changes still crossfade).
 // - Lamp overlay images are shown on slides marked data-slide-lamps.
 (function () {
@@ -39,12 +40,17 @@
     var elapsed = 0;
     var last = null;
     var frame = 0;
+    var pauseButton = root.querySelector('[data-slider-pause]');
     var paused = { hover: false, focus: false, hidden: document.hidden, offscreen: false };
+    // Explicit choice from the pause/play toggle: null (not used), 'paused' or
+    // 'playing'. Once used it wins over the automatic hover/focus pauses, so
+    // pressing "play" with the keyboard (focus still inside) really plays.
+    var userChoice = null;
 
     function autoplay() {
-      return (
-        !reduce.matches && !paused.hover && !paused.focus && !paused.hidden && !paused.offscreen
-      );
+      if (reduce.matches || paused.hidden || paused.offscreen) return false;
+      if (userChoice) return userChoice === 'playing';
+      return !paused.hover && !paused.focus;
     }
 
     function renderProgress() {
@@ -164,7 +170,27 @@
       }).observe(root);
     }
 
-    reduce.addEventListener('change', update);
+    // Pause/play toggle (WCAG 2.2.2). Hidden under reduced motion, where
+    // there is no autoplay to pause.
+    function syncPauseButton() {
+      if (!pauseButton) return;
+      pauseButton.hidden = reduce.matches;
+      pauseButton.setAttribute('aria-pressed', String(userChoice === 'paused'));
+    }
+
+    if (pauseButton) {
+      pauseButton.addEventListener('click', function () {
+        userChoice = userChoice === 'paused' ? 'playing' : 'paused';
+        syncPauseButton();
+        update();
+      });
+    }
+
+    reduce.addEventListener('change', function () {
+      syncPauseButton();
+      update();
+    });
+    syncPauseButton();
 
     // Touch swipe (the arrows are hidden below 1024 px).
     var start = null;

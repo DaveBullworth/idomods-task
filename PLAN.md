@@ -178,7 +178,7 @@ tests/       (Playwright, written after the page is built)
 - Text block is vertically centred and left-aligned on the 1600 column (§0.3). In contained mode it sits at the top and the lamps below it (see above). Below 1024 the Trustmate badge joins the text flow under the CTA, because at the bottom it would collide with the progress bar.
 - Rating badge bottom right: "4.8" + star icon + "Uwielbiany przez klientów". _(verified against #3, nodes 1:526, 1:532)_
 - Header copy: Lampy, Kolory, Pomieszczenia, Nowości, Bestsellery, Promocje; search placeholder "Czego szukasz?"; "Stwórz swoją lampę". _(verified against #3)_
-- Prev/next round arrow buttons at the sides: sizes and colours in §0.3. Below 1024 px: **open decision** (see §5).
+- Prev/next round arrow buttons at the sides: sizes and colours in §0.3. Below 1024 px they're hidden (user-approved, §5); swipe and the progress segments (64 × 44 px tap areas) take over.
 
 ### 3.4 Slider (`hero-slider.js`)
 
@@ -189,7 +189,8 @@ tests/       (Playwright, written after the page is built)
 - **Lamp overlays:** shown on slides marked `data-slide-lamps` (slide 2). 1 → 2: they fade in with the crossfade. 2 → 1: they hold until the rock zoom has settled (`--dur-zoom` delay, 0 under reduced motion), then fade out over the baked lamps, so there's no double edge while the rock is still zooming. Checked frame by frame at 1280 × 633, DPR 1.5.
 - Progress bar: one segment per slide at the bottom centre. The active one fills yellow with `transform: scaleX(0 → 1)`, linear over 3 s, and resets on slide change. It is driven from the same rAF clock as the slide change, so the bar and the switch can't drift. Clicking a segment goes to that slide.
 - Prev/next buttons; keyboard ←/→ while focus is inside the hero; touch swipe (≥ 50 px, horizontal; the hero has `touch-action: pan-y`). Manual changes restart the 3 s timer.
-- **Pause** (changed from "hover on the hero"): while the mouse is over a control (arrows, progress), while **keyboard** focus is inside the hero (`:focus-visible`, so a mouse click doesn't stop autoplay), while the tab is hidden, and while the hero is off-screen (IntersectionObserver). Pausing on hover over the whole hero would stop autoplay for most desktop visitors, because the hero fills the first screen and the cursor usually rests on it.
+- **Pause** (changed from "hover on the hero"): while the mouse is over a control (arrows, progress), while **keyboard** focus is inside the hero (`:focus-visible`, so a mouse click doesn't stop autoplay), while the tab is hidden, and while the hero is off-screen (IntersectionObserver). Pausing on hover over the whole hero would stop autoplay for most desktop visitors, because the hero fills the first screen and the cursor usually rests on it. (User-approved.)
+- **Pause/play toggle** (WCAG 2.2.2, user-approved): a 44 × 44 button just right of the segments, styled like the bar (white 16 px icon, no background), positioned outside the centred group so the segments stay centred. Constant `aria-label` "Wstrzymaj automatyczne przewijanie" with `aria-pressed` (true = paused; the icon switches pause ↔ play). Once used, the toggle overrides the hover/focus pauses, so "play" works even while keyboard focus is still on it. It renders `hidden` and is shown by JS; under reduced motion it stays hidden, because there's no autoplay to pause.
 - Timing uses `requestAnimationFrame` + `performance.now`, which `page.clock` controls (verified: slide changes at exactly 3.0 s; the bar is at 0.49 at 1.5 s).
 - `aria-roledescription="karuzela"`, slides labelled "1 z 2" with `aria-hidden` on the inactive one, `aria-live="off"`, `aria-current` on the active segment.
 - Reduced motion: no autoplay and no scale-in; manual slide changes still crossfade (opacity). The progress bar **stays visible** as a static indicator (active segment full), because below 1024 px its segments are the only slide controls besides swipe.
@@ -259,7 +260,7 @@ tests/       (Playwright, written after the page is built)
 ## 5. Open items
 
 - ~~TBD #3~~ done (§0.3). All hero and header copy matched Figma.
-- **Hero arrows below 1024 px** (no frame): at 72 px from the edges they'd overlap the hero text on phones. Proposed: hide the arrows below 1024 px and rely on swipe + the progress bar segments (made into 44 px tap targets).
+- ~~**Hero arrows below 1024 px**~~ **Resolved (user-approved):** hidden below 1024 px; swipe + progress segments (64 × 44 px tap areas) + the pause/play toggle (44 × 44).
 - **Lamp positions:** `scripts/find-lamps.mjs` → `design/lamp-positions.json` (§0.2), then check by eye.
 - **User check:** shader section copy (image-only).
 - **TBD #4** (VP's): tile radius, type scale, button styles, benefit icon colour.

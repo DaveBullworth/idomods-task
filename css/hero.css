@@ -267,6 +267,30 @@
   transform: scaleX(1);
 }
 
+/* Pause/play toggle (WCAG 2.2.2): styled like the bar, white icon, no
+   background. Sits just right of the segments, outside the centred group, so
+   the segments stay centred. 44 x 44 tap target. aria-pressed="true" means
+   paused, so the icon switches to "play". */
+.hero__pause {
+  position: absolute;
+  top: 0;
+  left: calc(100% + 4px);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--c-white);
+}
+
+.hero__pause[hidden] {
+  display: none;
+}
+
+.hero__pause[aria-pressed='true'] .hero__pause-icon--pause,
+.hero__pause[aria-pressed='false'] .hero__pause-icon--play {
+  display: none;
+}
+
 @media (width >= 1024px) {
   .hero__arrow {
     display: grid;

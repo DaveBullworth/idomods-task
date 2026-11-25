@@ -400,6 +400,39 @@
           <button class="hero__dot" type="button" aria-label="Slajd 2" data-slider-dot>
             <span class="hero__dot-fill"></span>
           </button>
+          <!-- Pause/play for autoplay (WCAG 2.2.2); shown by js/hero-slider.js -->
+          <button
+            class="hero__pause"
+            type="button"
+            aria-label="Wstrzymaj automatyczne przewijanie"
+            aria-pressed="false"
+            data-slider-pause
+            hidden
+          >
+            <svg
+              class="hero__pause-icon hero__pause-icon--pause"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path fill="currentColor" d="M4 2h3v12H4zM9 2h3v12H9z" />
+            </svg>
+            <svg
+              class="hero__pause-icon hero__pause-icon--play"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                fill="currentColor"
+                d="M4 2.5v11a.5.5 0 0 0 .76.43l9-5.5a.5.5 0 0 0 0-.86l-9-5.5A.5.5 0 0 0 4 2.5"
+              />
+            </svg>
+          </button>
         </div>
       </section>
     </main>

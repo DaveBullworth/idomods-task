@@ -1,0 +1,486 @@
+<!-- Figma MCP call #1: get_metadata, file pEdVK9upunNouPDObQQXe4, node 1:505 (Landingp page), 2026-11-25. Raw response; the tool's "Currently selected nodes: 1:878 Nasze sklepy" preamble and trailing usage note are omitted. -->
+<frame id="1:505" name="Landingp page" x="0" y="0" width="1920" height="4048">
+  <frame id="1:506" name="HERO Baner" x="0" y="0" width="1920" height="1080" />
+  <frame id="1:593" name="VP&#39;s" x="0" y="1080" width="1920" height="1424">
+    <frame id="1:594" name="Content" x="160" y="86" width="1600" height="1252">
+      <frame id="1:595" name="TOP VP" x="0" y="0" width="1600" height="136">
+        <frame id="1:596" name="Value" x="0" y="0" width="294.3999938964844" height="136">
+          <frame id="1:597" name="enter" x="16" y="16" width="32" height="32" />
+          <frame id="1:599" name="Copy" x="16" y="72" width="262.3999938964844" height="48">
+            <text id="1:600" name="Zwroty nawet do 100 dni" x="0" y="0" width="262.3999938964844" height="23" />
+            <text id="1:601" name="szybkie i proste" x="0" y="31" width="262.3999938964844" height="17" />
+          </frame>
+        </frame>
+        <frame id="1:602" name="Value" x="326.3999938964844" y="0" width="294.3999938964844" height="136">
+          <frame id="1:603" name="bookmark-full" x="16" y="16" width="32" height="32" />
+          <frame id="1:605" name="Copy" x="16" y="72" width="262.3999938964844" height="48">
+            <text id="1:606" name="5 lat gwarancji" x="0" y="0" width="262.3999938964844" height="23" />
+            <text id="1:607" name="na wszystkie produkty" x="0" y="31" width="262.3999938964844" height="17" />
+          </frame>
+        </frame>
+        <frame id="1:608" name="Value" x="652.7999877929688" y="0" width="294.3999938964844" height="136">
+          <frame id="1:609" name="truck" x="16" y="16" width="32" height="32" />
+          <frame id="1:611" name="Copy" x="16" y="72" width="262.3999938964844" height="48">
+            <text id="1:612" name="Darmowa dostawa" x="0" y="0" width="262.3999938964844" height="23" />
+            <text id="1:613" name="już za 299 zł" x="0" y="31" width="262.3999938964844" height="17" />
+          </frame>
+        </frame>
+        <frame id="1:614" name="Value" x="979.199951171875" y="0" width="294.39996337890625" height="136">
+          <frame id="1:615" name="Custom Icons" x="16" y="16" width="32" height="32" />
+          <frame id="1:622" name="Copy" x="16" y="72" width="262.39996337890625" height="48">
+            <text id="1:623" name="Polskie produkty" x="0" y="0" width="262.39996337890625" height="23" />
+            <text id="1:624" name="sprawdzona jakość" x="0" y="31" width="262.39996337890625" height="17" />
+          </frame>
+        </frame>
+        <frame id="1:625" name="Value" x="1305.599853515625" y="0" width="294.39996337890625" height="136">
+          <frame id="1:626" name="trophy" x="16" y="16" width="32" height="32" />
+          <frame id="1:628" name="Copy" x="16" y="72" width="262.39996337890625" height="48">
+            <text id="1:629" name="Oficjalny sklep producenta" x="0" y="0" width="262.39996337890625" height="23" />
+            <text id="1:630" name="gwarancja satysfakcji" x="0" y="31" width="262.39996337890625" height="17" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="1:631" name="Grid" x="0" y="200" width="1600" height="1052">
+        <frame id="1:632" name="1 row" x="0" y="0" width="1600" height="518">
+          <frame id="1:633" name="THORO" x="0" y="0" width="648" height="518" />
+          <frame id="1:640" name="Konfigurator" x="664" y="0" width="936" height="518">
+            <frame id="1:641" name="Phone" x="413" y="10" width="488" height="464">
+              <frame id="1:642" name="Mockup" x="-77" y="-30" width="700.910400390625" height="524.7039184570312">
+                <frame id="1:643" name="Cricle" x="33.619140625" y="102.1552734375" width="202.63751220703125" height="202.63751220703125">
+                  <ellipse id="1:644" name="Ellipse 20" x="33.619140625" y="102.1552734375" width="202.63751220703125" height="202.63751220703125" />
+                  <frame id="1:645" name="Colors" x="35.20283055305481" y="106.905029296875" width="199.5686492919922" height="194.5664825439453">
+                    <frame id="1:646" name="Color" x="109.65625309944153" y="106.905029296875" width="50.65937805175781" height="50.65937805175781">
+                      <frame id="1:647" name="Fill" x="6.46875" y="6.46875" width="37.72187805175781" height="37.72187805175781" />
+                    </frame>
+                    <frame id="1:648" name="Color" x="194.692378282547" y="123.46142578125" width="71.19268693976915" height="71.19268693976915">
+                      <frame id="1:649" name="Fill" x="6.46875" y="6.46875" width="53.011342620634196" height="53.011342620634196" />
+                    </frame>
+                    <frame id="1:650" name="Color" x="234.771479845047" y="200.267822265625" width="60.66200265022894" height="60.66200265022894">
+                      <frame id="1:651" name="Fill" x="6.46875" y="6.46875" width="45.1700110492759" height="45.1700110492759" />
+                    </frame>
+                    <frame id="1:652" name="Color" x="199.708979845047" y="279.4912109375" width="67.6228133820423" height="67.6228133820423">
+                      <frame id="1:653" name="Fill" x="6.46875" y="6.46875" width="50.35315509219254" height="50.35315509219254" />
+                    </frame>
+                    <frame id="1:654" name="Color" x="115.91015934944153" y="301.470703125" width="67.6228133820423" height="67.6228133820423">
+                      <frame id="1:655" name="Fill" x="6.46875" y="6.46875" width="50.35315509219254" height="50.35315509219254" />
+                    </frame>
+                    <frame id="1:656" name="Color" x="46.47558617591858" y="249.65771484375" width="60.66200265022894" height="60.66200265022894">
+                      <frame id="1:657" name="Fill" x="6.46875" y="6.46875" width="45.1700110492759" height="45.1700110492759" />
+                    </frame>
+                    <frame id="1:658" name="Color" x="43.69238305091858" y="163.067626953125" width="71.19268693976915" height="71.19268693976915">
+                      <frame id="1:659" name="Fill" x="6.46875" y="6.46875" width="53.011342620634196" height="53.011342620634196" />
+                    </frame>
+                  </frame>
+                </frame>
+                <rounded-rectangle id="1:660" name="Rectangle 1" x="-4.5595703125" y="218.9599609375" width="354.0097833483269" height="258.3483391773443" />
+                <rounded-rectangle id="1:661" name="MacBook Air (15 inch)" x="-77.00011506676674" y="-30.000030517578125" width="700.910400390625" height="524.7039184570312" />
+              </frame>
+              <rounded-rectangle id="1:662" name="Rectangle 2" x="24" y="305" width="464" height="159" />
+            </frame>
+            <frame id="1:663" name="Text" x="0" y="242" width="936" height="276">
+              <frame id="1:664" name="Title" x="48" y="48" width="840" height="105">
+                <text id="1:665" name="Konfigurator 3D" x="0" y="0" width="840" height="23" />
+                <text id="1:666" name="Wybierz projekt i dostosuj go do swojego wnętrza" x="0" y="35" width="840" height="70" />
+              </frame>
+              <frame id="1:667" name="Button" x="48" y="177" width="193" height="51">
+                <text id="1:668" name="Stwórz swój projekt" x="24" y="16" width="145" height="19" />
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+        <frame id="1:669" name="2 row" x="0" y="534" width="1600" height="518">
+          <frame id="1:670" name="Katalog" x="0" y="0" width="936" height="518">
+            <frame id="1:671" name="Phone" x="424" y="54" width="488" height="464">
+              <rounded-rectangle id="1:672" name="iPad Pro" x="-108" y="-48" width="727.5680541992188" height="545.1749267578125" />
+              <rounded-rectangle id="1:673" name="Rectangle 2" x="24" y="124" width="464" height="340" />
+            </frame>
+            <frame id="1:674" name="Text" x="0" y="277" width="936" height="241">
+              <frame id="1:675" name="Title" x="48" y="48" width="840" height="70">
+                <text id="1:676" name="Katalog" x="0" y="0" width="840" height="23" />
+                <text id="1:677" name="Odkryj najnowszy katalog" x="0" y="35" width="840" height="35" />
+              </frame>
+              <frame id="1:678" name="Button" x="48" y="142" width="171" height="51">
+                <text id="1:679" name="Sprawdź katalog" x="24" y="16" width="123" height="19" />
+              </frame>
+            </frame>
+          </frame>
+          <frame id="1:680" name="SOLLUX SMART" x="952" y="0" width="648" height="518">
+            <frame id="1:681" name="Phone" x="79" y="72" width="230" height="231">
+              <frame id="1:682" name="Mockup" x="230" y="6" width="223" height="283.0650329589844">
+                <rounded-rectangle id="1:683" name="iPhone-16" x="230" y="6" width="223" height="283.0650329589844" />
+                <frame id="1:684" name="Mockup" x="224.27681922912598" y="10.613009452819824" width="205.92791748046875" height="264.3904724121094">
+                  <vector id="1:685" name="Mask" x="224.27681922912598" y="10.613009452819824" width="205.92791748046875" height="264.3904724121094" />
+                  <frame id="1:686" name="Mask group" x="224.27681922912598" y="10.613009452819824" width="205.92791748046875" height="264.3904724121094">
+                    <frame id="1:687" name="Group" x="224.27681922912598" y="10.613009452819824" width="205.92791748046875" height="264.3904724121094">
+                      <vector id="1:688" name="Vector" x="224.27681922912598" y="10.613009452819824" width="205.92791748046875" height="264.3904724121094" />
+                    </frame>
+                    <vector id="1:689" name="Change-This" x="229.68561267852783" y="9.504475116729736" width="216.42665100097656" height="267.3342590332031" />
+                  </frame>
+                </frame>
+              </frame>
+              <rounded-rectangle id="1:690" name="Rectangle 2" x="0" y="92" width="230" height="139" />
+            </frame>
+            <frame id="1:691" name="Phone" x="220" y="97" width="419" height="421">
+              <frame id="1:692" name="Mockup" x="29" y="38" width="372.1000061035156" height="472.3251037597656">
+                <rounded-rectangle id="1:693" name="iPhone-16" x="29" y="38" width="372.1000061035156" height="472.3251037597656" />
+                <frame id="1:694" name="Mockup" x="38.54888343811035" y="45.697195053100586" width="343.6134033203125" height="441.1645812988281">
+                  <vector id="1:695" name="Mask" x="38.54888343811035" y="45.697195053100586" width="343.6134033203125" height="441.1645812988281" />
+                  <frame id="1:696" name="Mask group" x="38.54888343811035" y="45.697195053100586" width="343.6134033203125" height="441.1645812988281">
+                    <frame id="1:697" name="Group" x="38.54888343811035" y="45.697195053100586" width="343.6134033203125" height="441.1645812988281">
+                      <vector id="1:698" name="Vector" x="38.54888343811035" y="45.697195053100586" width="343.6134033203125" height="441.1645812988281" />
+                    </frame>
+                    <vector id="1:699" name="Change-This" x="29.523298263549805" y="43.846920013427734" width="361.1316223144531" height="446.0765686035156" />
+                  </frame>
+                </frame>
+              </frame>
+              <rounded-rectangle id="1:700" name="Rectangle 2" x="15" y="96" width="386" height="325" />
+            </frame>
+            <frame id="1:701" name="Text" x="0" y="277" width="648" height="241">
+              <frame id="1:702" name="Title" x="48" y="48" width="552" height="70">
+                <text id="1:703" name="SOLLUX SMART" x="0" y="0" width="552" height="23" />
+                <text id="1:704" name="Przymierz lampę w aplikacji" x="0" y="35" width="552" height="35" />
+              </frame>
+              <frame id="1:705" name="Button" x="48" y="142" width="251" height="51">
+                <text id="1:706" name="Pobierz aplikacje na telefon" x="24" y="16" width="203" height="19" />
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+  </frame>
+  <rounded-rectangle id="1:707" name="screen" x="0" y="2504" width="1920" height="835" />
+  <frame id="1:708" name="Footer" x="0" y="3339" width="1920" height="709">
+    <frame id="1:709" name="Top" x="0" y="0" width="1920" height="380">
+      <frame id="1:710" name="Columns" x="160" y="96" width="1600" height="220">
+        <frame id="1:711" name="Logo" x="0" y="0" width="198" height="100">
+          <frame id="1:712" name="LOGO_sollux_standard 3" x="19" y="0" width="160" height="44" />
+          <frame id="1:720" name="Social media icons" x="0" y="52" width="198" height="48">
+            <frame id="1:721" name="Circle button" x="0" y="0" width="48" height="48">
+              <frame id="1:722" name="facebook" x="12" y="12" width="24" height="24" />
+            </frame>
+            <frame id="1:724" name="Circle button" x="50" y="0" width="48" height="48">
+              <frame id="1:725" name="instagram" x="12" y="12" width="24" height="24" />
+            </frame>
+            <frame id="1:727" name="Circle button" x="100" y="0" width="48" height="48">
+              <frame id="1:728" name="Tiktok" x="12" y="12" width="24" height="24" />
+            </frame>
+            <frame id="1:734" name="Circle button" x="150" y="0" width="48" height="48">
+              <frame id="1:735" name="youtube" x="12" y="12" width="24" height="24" />
+            </frame>
+          </frame>
+        </frame>
+        <frame id="1:737" name="Links" x="541" y="0" width="1059" height="220">
+          <frame id="1:738" name="Column" x="0" y="0" width="165" height="164">
+            <text id="1:739" name="Moje zamówienia" x="0" y="0" width="165" height="14" />
+            <frame id="1:740" name="Links" x="0" y="38" width="165" height="126">
+              <frame id="1:741" name="Mini button" x="0" y="0" width="108" height="14">
+                <frame id="1:742" name="Link text" x="0" y="0" width="108" height="14">
+                  <text id="1:743" name="Status zamówienia" x="0" y="0" width="108" height="14" />
+                </frame>
+              </frame>
+              <frame id="1:744" name="Mini button" x="0" y="28" width="111" height="14">
+                <frame id="1:745" name="Link text" x="0" y="0" width="111" height="14">
+                  <text id="1:746" name="Śledzenie przesyłki" x="0" y="0" width="111" height="14" />
+                </frame>
+              </frame>
+              <frame id="1:747" name="Mini button" x="0" y="56" width="165" height="14">
+                <frame id="1:748" name="Link text" x="0" y="0" width="165" height="14">
+                  <text id="1:749" name="Chcę zareklamować produkt" x="0" y="0" width="165" height="14" />
+                </frame>
+              </frame>
+              <frame id="1:750" name="Mini button" x="0" y="84" width="130" height="14">
+                <frame id="1:751" name="Link text" x="0" y="0" width="130" height="14">
+                  <text id="1:752" name="Informacje o wymianie" x="0" y="0" width="130" height="14" />
+                </frame>
+              </frame>
+              <frame id="1:753" name="Mini button" x="0" y="112" width="46" height="14">
+                <frame id="1:754" name="Link text" x="0" y="0" width="46" height="14">
+                  <text id="1:755" name="Kontakt" x="0" y="0" width="46" height="14" />
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+          <frame id="1:756" name="Column" x="261" y="0" width="170" height="192">
+            <text id="1:757" name="Moje konto" x="0" y="0" width="170" height="14" />
+            <frame id="1:758" name="Links" x="0" y="38" width="170" height="154">
+              <frame id="1:759" name="Mini button" x="0" y="0" width="81" height="14">
+                <frame id="1:760" name="Link text" x="0" y="0" width="81" height="14">
+                  <text id="1:761" name="Zarejestruj się" x="0" y="0" width="81" height="14" />
+                </frame>
+              </frame>
+              <frame id="1:762" name="Mini button" x="0" y="28" width="41" height="14">
+                <frame id="1:763" name="Link text" x="0" y="0" width="41" height="14">
+                  <text id="1:764" name="Koszyk" x="0" y="0" width="41" height="14" />
+                </frame>
+              </frame>
+              <frame id="1:765" name="Mini button" x="0" y="56" width="90" height="14">
+                <frame id="1:766" name="Link text" x="0" y="0" width="90" height="14">
+                  <text id="1:767" name="Listy zakupowe" x="0" y="0" width="90" height="14" />
+                </frame>
+              </frame>
+              <frame id="1:768" name="Mini button" x="0" y="84" width="170" height="14">
+                <frame id="1:769" name="Link text" x="0" y="0" width="170" height="14">
+                  <text id="1:770" name="Lista zakupionych produktów" x="0" y="0" width="170" height="14" />
+                </frame>
+              </frame>
+              <frame id="1:771" name="Mini button" x="0" y="112" width="102" height="14">
+                <frame id="1:772" name="Link text" x="0" y="0" width="102" height="14">
+                  <text id="1:773" name="Historia transakcji" x="0" y="0" width="102" height="14" />
+                </frame>
+              </frame>
+              <frame id="1:774" name="Mini button" x="0" y="140" width="70" height="14">
+                <frame id="1:775" name="Link text" x="0" y="0" width="70" height="14">
+                  <text id="1:776" name="Moje rabaty" x="0" y="0" width="70" height="14" />
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+          <frame id="1:777" name="Column" x="527" y="0" width="164" height="192">
+            <text id="1:778" name="Regulaminy" x="0" y="0" width="164" height="14" />
+            <frame id="1:779" name="Links" x="0" y="38" width="164" height="154">
+              <frame id="1:780" name="Mini button" x="0" y="0" width="96" height="14">
+                <frame id="1:781" name="Link text" x="0" y="0" width="96" height="14">
+                  <text id="1:782" name="Sposoby wysyłki" x="0" y="0" width="96" height="14" />
+                </frame>
+              </frame>
+              <frame id="1:783" name="Mini button" x="0" y="28" width="108" height="14">
+                <frame id="1:784" name="Link text" x="0" y="0" width="108" height="14">
+                  <text id="1:785" name="Sposoby płatności" x="0" y="0" width="108" height="14" />
+                </frame>
+              </frame>
+              <frame id="1:786" name="Mini button" x="0" y="56" width="102" height="14">
+                <frame id="1:787" name="Link text" x="0" y="0" width="102" height="14">
+                  <text id="1:788" name="Regulamin sklepu" x="0" y="0" width="102" height="14" />
+                </frame>
+              </frame>
+              <frame id="1:789" name="Mini button" x="0" y="84" width="120" height="14">
+                <frame id="1:790" name="Link text" x="0" y="0" width="120" height="14">
+                  <text id="1:791" name="Polityka prywatności" x="0" y="0" width="120" height="14" />
+                </frame>
+              </frame>
+              <frame id="1:792" name="Mini button" x="0" y="112" width="143" height="14">
+                <frame id="1:793" name="Link text" x="0" y="0" width="143" height="14">
+                  <text id="1:794" name="Polityka bezpieczeństwa" x="0" y="0" width="143" height="14" />
+                </frame>
+              </frame>
+              <frame id="1:795" name="Mini button" x="0" y="140" width="164" height="14">
+                <frame id="1:796" name="Link text" x="0" y="0" width="164" height="14">
+                  <text id="1:797" name="Zmień ustawienia ciasteczek" x="0" y="0" width="164" height="14" />
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+          <frame id="1:798" name="Column" x="787" y="0" width="94" height="220">
+            <text id="1:799" name="Informacje" x="0" y="0" width="94" height="14" />
+            <frame id="1:800" name="Links" x="0" y="38" width="94" height="182">
+              <frame id="1:801" name="Mini button" x="0" y="0" width="34" height="14">
+                <frame id="1:802" name="Link text" x="0" y="0" width="34" height="14">
+                  <text id="1:803" name="O nas" x="0" y="0" width="34" height="14" />
+                </frame>
+              </frame>
+              <frame id="1:804" name="Mini button" x="0" y="28" width="26" height="14">
+                <frame id="1:805" name="Link text" x="0" y="0" width="26" height="14">
+                  <text id="1:806" name="FAQ" x="0" y="0" width="26" height="14" />
+                </frame>
+              </frame>
+              <frame id="1:807" name="Mini button" x="0" y="56" width="68" height="14">
+                <frame id="1:808" name="Link text" x="0" y="0" width="68" height="14">
+                  <text id="1:809" name="Kurs światła" x="0" y="0" width="68" height="14" />
+                </frame>
+              </frame>
+              <frame id="1:810" name="Mini button" x="0" y="84" width="55" height="14">
+                <frame id="1:811" name="Link text" x="0" y="0" width="55" height="14">
+                  <text id="1:812" name="Inspiracje" x="0" y="0" width="55" height="14" />
+                </frame>
+              </frame>
+              <frame id="1:813" name="Mini button" x="0" y="112" width="91" height="14">
+                <frame id="1:814" name="Link text" x="0" y="0" width="91" height="14">
+                  <text id="1:815" name="Marka premium" x="0" y="0" width="91" height="14" />
+                </frame>
+              </frame>
+              <frame id="1:816" name="Mini button" x="0" y="140" width="61" height="14">
+                <frame id="1:817" name="Link text" x="0" y="0" width="61" height="14">
+                  <text id="1:818" name="Gwarancja" x="0" y="0" width="61" height="14" />
+                </frame>
+              </frame>
+              <frame id="1:819" name="Mini button" x="0" y="168" width="94" height="14">
+                <frame id="1:820" name="Link text" x="0" y="0" width="94" height="14">
+                  <text id="1:821" name="Konfigurator 3D" x="0" y="0" width="94" height="14" />
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+          <frame id="1:822" name="Column" x="977" y="0" width="82" height="108">
+            <text id="1:823" name="Wpsółpraca" x="0" y="0" width="82" height="14" />
+            <frame id="1:824" name="Links" x="0" y="38" width="82" height="70">
+              <frame id="1:825" name="Mini button" x="0" y="0" width="82" height="14">
+                <frame id="1:826" name="Link text" x="0" y="0" width="82" height="14">
+                  <text id="1:827" name="Dla Architekta" x="0" y="0" width="82" height="14" />
+                </frame>
+              </frame>
+              <frame id="1:828" name="Mini button" x="0" y="28" width="65" height="14">
+                <frame id="1:829" name="Link text" x="0" y="0" width="65" height="14">
+                  <text id="1:830" name="Modele 3D" x="0" y="0" width="65" height="14" />
+                </frame>
+              </frame>
+              <frame id="1:831" name="Mini button" x="0" y="56" width="70" height="14">
+                <frame id="1:832" name="Link text" x="0" y="0" width="70" height="14">
+                  <text id="1:833" name="Dystrybucja" x="0" y="0" width="70" height="14" />
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <frame id="1:834" name="Bottom" x="0" y="380" width="1920" height="208">
+      <frame id="1:835" name="Content" x="160" y="0" width="1600" height="192">
+        <frame id="1:836" name="Płatności" x="0" y="0" width="512" height="192">
+          <text id="1:837" name="Płatności i dostawy" x="0" y="32" width="480" height="14" />
+          <frame id="1:838" name="Grid" x="0" y="70" width="317" height="80">
+            <frame id="1:839" name="Payment+Delivery" x="0" y="0" width="57" height="36">
+              <frame id="1:840" name="Placeholder logo" x="7" y="6" width="43" height="24">
+                <frame id="1:841" name="visa" x="0" y="0" width="43" height="24" />
+              </frame>
+            </frame>
+            <frame id="1:842" name="Payment+Delivery" x="65" y="0" width="57" height="36">
+              <frame id="1:843" name="mastercard" x="7" y="6" width="43" height="24">
+                <frame id="1:844" name="Płatności+Dostawcy" x="0" y="0" width="43" height="24" />
+              </frame>
+            </frame>
+            <frame id="1:845" name="Payment+Delivery" x="130" y="0" width="57" height="36">
+              <frame id="1:846" name="Placeholder logo" x="7" y="6" width="43" height="24">
+                <frame id="1:847" name="payu" x="0" y="0" width="43" height="24" />
+              </frame>
+            </frame>
+            <frame id="1:848" name="Payment+Delivery" x="195" y="0" width="57" height="36">
+              <frame id="1:849" name="Placeholder logo" x="7" y="6" width="43" height="24">
+                <frame id="1:850" name="paypal" x="0" y="0" width="43" height="24" />
+              </frame>
+            </frame>
+            <frame id="1:851" name="Payment+Delivery" x="260" y="0" width="57" height="36">
+              <frame id="1:852" name="Placeholder logo" x="7" y="6" width="43" height="24">
+                <frame id="1:853" name="inpost" x="0" y="0" width="43" height="24" />
+              </frame>
+            </frame>
+            <frame id="1:854" name="Payment+Delivery" x="0" y="44" width="57" height="36">
+              <frame id="1:855" name="Placeholder logo" x="7" y="6" width="43" height="24">
+                <frame id="1:856" name="dpd" x="0" y="0" width="43" height="24" />
+              </frame>
+            </frame>
+            <frame id="1:857" name="Payment+Delivery" x="65" y="44" width="57" height="36">
+              <frame id="1:858" name="Placeholder logo" x="7" y="6" width="43" height="24">
+                <frame id="1:859" name="paczka" x="0" y="0" width="43" height="24" />
+              </frame>
+            </frame>
+            <frame id="1:860" name="Payment+Delivery" x="130" y="44" width="57" height="36">
+              <frame id="1:861" name="Placeholder logo" x="7" y="6" width="43" height="24">
+                <frame id="1:862" name="dhl" x="0" y="0" width="43" height="24" />
+              </frame>
+            </frame>
+            <frame id="1:863" name="Payment+Delivery" x="195" y="44" width="57" height="36">
+              <frame id="1:864" name="Placeholder logo" x="7" y="6" width="43" height="24">
+                <frame id="1:865" name="gls" x="0" y="0" width="43" height="24" />
+              </frame>
+            </frame>
+            <frame id="1:866" name="Payment+Delivery" x="260" y="44" width="57" height="36">
+              <frame id="1:867" name="Placeholder logo" x="7" y="6" width="43" height="24">
+                <frame id="1:868" name="pocztapolska" x="0" y="0" width="43" height="24" />
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+        <frame id="1:869" name="Nagrody" x="544" y="0" width="512" height="192">
+          <text id="1:870" name="Nagrody" x="32" y="32" width="448" height="14" />
+          <frame id="1:871" name="Frame 6" x="32" y="70" width="294" height="90">
+            <rounded-rectangle id="1:872" name="rzetelma" x="0" y="0" width="96" height="44" />
+            <rounded-rectangle id="1:873" name="orly" x="99" y="0" width="96" height="43" />
+            <rounded-rectangle id="1:874" name="e-gazele" x="198" y="0" width="94" height="43" />
+            <rounded-rectangle id="1:875" name="solidna-firma" x="0" y="47" width="96" height="43" />
+            <rounded-rectangle id="1:876" name="polska-gwarancja-jakosci" x="99" y="47" width="96" height="43" />
+            <rounded-rectangle id="1:877" name="firma-godna-zaufania" x="198" y="47" width="51" height="42" />
+          </frame>
+        </frame>
+        <frame id="1:878" name="Nasze sklepy" x="1088" y="0" width="512" height="192">
+          <text id="1:879" name="Nasze sklepy" x="32" y="32" width="448" height="14" />
+          <frame id="1:880" name="Flags" x="32" y="70" width="312" height="32">
+            <frame id="1:881" name="flag" x="0" y="0" width="32" height="32">
+              <frame id="1:882" name="Flag" x="4" y="4" width="24" height="24">
+                <frame id="1:883" name="Flags" x="0" y="0" width="24" height="24" />
+              </frame>
+            </frame>
+            <frame id="1:886" name="flag" x="40" y="0" width="32" height="32">
+              <frame id="1:887" name="Flag" x="4" y="4" width="24" height="24">
+                <frame id="1:888" name="Flags" x="0" y="0" width="24" height="24" />
+              </frame>
+            </frame>
+            <frame id="1:892" name="flag" x="80" y="0" width="32" height="32">
+              <frame id="1:893" name="Flag" x="4" y="4" width="24" height="24">
+                <frame id="1:894" name="Flags" x="0" y="0" width="24" height="24">
+                  <frame id="1:895" name="photo [Vectorized]" x="0" y="0" width="24" height="24" />
+                  <frame id="1:899" name="photo" x="0" y="0" width="24" height="24" hidden="true" />
+                </frame>
+              </frame>
+            </frame>
+            <frame id="1:900" name="flag" x="120" y="0" width="32" height="32">
+              <frame id="1:901" name="Flag" x="4" y="4" width="24" height="24">
+                <frame id="1:902" name="Flags" x="0" y="0" width="24" height="24" />
+              </frame>
+            </frame>
+            <frame id="1:906" name="flag" x="160" y="0" width="32" height="32">
+              <frame id="1:907" name="Flag" x="4" y="4" width="24" height="24">
+                <frame id="1:908" name="Flags" x="0" y="0" width="24" height="24" />
+              </frame>
+            </frame>
+            <frame id="1:912" name="flag" x="200" y="0" width="32" height="32">
+              <frame id="1:913" name="Flag" x="4" y="4" width="24" height="24">
+                <frame id="1:914" name="Flags" x="0" y="0" width="24" height="24" />
+              </frame>
+            </frame>
+            <frame id="1:932" name="flag" x="240" y="0" width="32" height="32">
+              <frame id="1:933" name="Flag" x="4" y="4" width="24" height="24">
+                <frame id="1:934" name="Flags" x="0" y="0" width="24" height="24" />
+              </frame>
+            </frame>
+            <frame id="1:938" name="flag" x="280" y="0" width="32" height="32">
+              <frame id="1:939" name="Flag" x="4" y="4" width="24" height="24">
+                <frame id="1:940" name="Flags" x="0" y="0" width="24" height="24" />
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <frame id="1:946" name="Caption" x="0" y="588" width="1920" height="121">
+      <frame id="1:947" name="Content" x="160" y="32" width="1600" height="57">
+        <frame id="1:948" name="info VAT" x="0" y="0" width="1600" height="36">
+          <text id="1:949" name="W sklepie prezentujemy ceny brutto (z VAT). Stawki VAT dla konsumentów z kraju: Polska." x="0" y="11.5" width="474" height="13" />
+          <vector id="1:950" name="Divider" x="506" y="18" width="890" height="0" />
+          <frame id="1:951" name="Logotypy" x="1428" y="0" width="172" height="36">
+            <frame id="1:952" name="Group 13" x="0" y="0" width="98" height="36" />
+            <frame id="1:967" name="suparfair_IdoSellShop_black 1" x="106" y="0" width="66" height="36" />
+          </frame>
+        </frame>
+        <frame id="1:990" name="Shop contact" x="0" y="44" width="1600" height="13">
+          <text id="1:991" name="NIP: 6070082443" x="0" y="0" width="99" height="13" />
+          <frame id="1:992" name="Tel" x="123" y="0" width="227" height="13">
+            <frame id="1:993" name="Mini button" x="0" y="0" width="95" height="13">
+              <frame id="1:994" name="Link text" x="0" y="0" width="95" height="13">
+                <text id="1:995" name="+48 668 806 323" x="0" y="0" width="95" height="13" />
+              </frame>
+            </frame>
+            <text id="1:996" name="(Pn - Pt 7:00 - 15:00)" x="111" y="0" width="116" height="13" />
+          </frame>
+          <frame id="1:997" name="Mini button" x="374" y="0" width="81" height="13">
+            <frame id="1:998" name="Link text" x="0" y="0" width="81" height="13">
+              <text id="1:999" name="sklep@sollux.pl" x="0" y="0" width="81" height="13" />
+            </frame>
+          </frame>
+          <text id="1:1000" name="Sollux Lighting Sp. z o.o." x="479" y="0" width="129" height="13" />
+          <text id="1:1001" name="Władysława Łokietka 35, 64-840 Budzyń (POLSKA)" x="632" y="0" width="280" height="13" />
+        </frame>
+      </frame>
+    </frame>
+  </frame>
+</frame>

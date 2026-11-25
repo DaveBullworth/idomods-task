@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SOLLUX – Kolor i forma w nowym świetle</title>
+    <meta
+      name="description"
+      content="Lampy SOLLUX: bestsellery, konfigurator 3D i najnowszy katalog. Oficjalny sklep producenta."
+    />
+    <meta name="robots" content="noindex" />
+
+    <link
+      rel="preload"
+      as="image"
+      type="image/webp"
+      imagesrcset="
+        assets/img/hero-rock-640.webp   640w,
+        assets/img/hero-rock-960.webp   960w,
+        assets/img/hero-rock-1440.webp 1440w,
+        assets/img/hero-rock-1920.webp 1920w,
+        assets/img/hero-rock-2880.webp 2880w
+      "
+      imagesizes="(max-aspect-ratio: 5/4) calc((100vw - 32px) * 1.7021), (max-aspect-ratio: 16/9) calc(100vh * 1.7778), 100vw"
+      fetchpriority="high"
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="assets/fonts/red-hat-display-latin.woff2"
+      crossorigin
+    />
+
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/header.css" />
+    <link rel="stylesheet" href="css/hero.css" />
+
+    <script src="js/header.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Przejdź do treści</a>
+
+    <header class="header">
+      <div class="header__inner">
+        <a class="header__logo" href="#" aria-label="SOLLUX – strona główna">
+          <svg
+            width="150"
+            height="22"
+            viewBox="0 0 150 22"
+            fill="none"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              fill="currentColor"
+              d="M103.394 11.015c0 3.872 3.198 7.012 7.143 7.012s7.144-3.14 7.144-7.012V0h4.062v11.015c0 3.408-1.581 6.456-4.062 8.473A11.28 11.28 0 0 1 111.113 22h-1.152a11.27 11.27 0 0 1-6.567-2.51c-2.482-2.017-4.063-5.065-4.063-8.474V0h4.063zm34.043-3.16 6.844-7.854h5.548l-9.642 11.03 9.58 10.967h-5.517l-6.813-7.792-6.783 7.792h-5.531l9.564-10.968L125.092.001h5.5zM20.362 4.001H6.61c-1.277 0-2.333.922-2.518 2.123a2.5 2.5 0 0 0-.017.632C4.205 8.017 5.291 9 6.61 9h9.172c1.778 0 3.392.688 4.58 1.809a6.4 6.4 0 0 1 2.032 4.685 6.4 6.4 0 0 1-2.032 4.679 6.65 6.65 0 0 1-4.58 1.81H0v-3.997h15.782c1.364 0 2.477-1.052 2.545-2.373a2 2 0 0 0 0-.248c-.062-1.325-1.178-2.38-2.545-2.38H6.61c-3.308 0-6.048-2.384-6.534-5.497a6.4 6.4 0 0 1 .028-2.134v-.002A6.49 6.49 0 0 1 3.459.799c.937-.5 2.01-.783 3.151-.783h13.752zM36.932.016c6.18 0 11.191 4.917 11.191 10.984 0 6.066-5.01 10.983-11.19 10.983S25.743 17.066 25.743 11 30.752.016 36.932.016M55.536 18h16.518v3.982H53.515q-.056.001-.112-.002c-1.041-.055-1.875-.875-1.928-1.898l-.002-.103V.016h4.062zm23.93 0h16.517v3.982H77.444q-.055.001-.111-.002c-1.042-.055-1.876-.875-1.929-1.898l-.003-.103V.016h4.065zM36.934 4.003c-3.937 0-7.128 3.133-7.128 6.997s3.191 6.996 7.128 6.996c3.936 0 7.127-3.132 7.127-6.996s-3.191-6.997-7.127-6.997"
+            />
+          </svg>
+        </a>
+
+        <nav class="header__nav" id="header-nav" aria-label="Menu główne">
+          <ul class="header__links">
+            <li>
+              <a class="header__link" href="#">
+                Lampy
+                <svg
+                  class="header__chevron"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M11.333 6.113a.667.667 0 0 0-.94 0L8 8.473l-2.36-2.36a.667.667 0 1 0-.94.947l2.827 2.827a.667.667 0 0 0 .946 0l2.86-2.827a.67.67 0 0 0 0-.947"
+                  />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a class="header__link" href="#">
+                Kolory
+                <svg
+                  class="header__chevron"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M11.333 6.113a.667.667 0 0 0-.94 0L8 8.473l-2.36-2.36a.667.667 0 1 0-.94.947l2.827 2.827a.667.667 0 0 0 .946 0l2.86-2.827a.67.67 0 0 0 0-.947"
+                  />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a class="header__link" href="#">
+                Pomieszczenia
+                <svg
+                  class="header__chevron"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M11.333 6.113a.667.667 0 0 0-.94 0L8 8.473l-2.36-2.36a.667.667 0 1 0-.94.947l2.827 2.827a.667.667 0 0 0 .946 0l2.86-2.827a.67.67 0 0 0 0-.947"
+                  />
+                </svg>
+              </a>
+            </li>
+            <li><a class="header__link" href="#">Nowości</a></li>
+            <li><a class="header__link" href="#">Bestsellery</a></li>
+            <li><a class="header__link" href="#">Promocje</a></li>
+          </ul>
+        </nav>
+
+        <form class="header__search search" role="search" action="#">
+          <label class="visually-hidden" for="search-input">Szukaj w sklepie</label>
+          <input
+            class="search__input"
+            id="search-input"
+            type="search"
+            name="q"
+            placeholder="Czego szukasz?"
+            autocomplete="off"
+          />
+          <button class="search__button" type="submit" aria-label="Szukaj">
+            <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+              <path
+                fill="currentColor"
+                d="M18.092 16.908 15 13.842A7.5 7.5 0 1 0 13.842 15l3.066 3.067a.83.83 0 0 0 1.184 0 .833.833 0 0 0 0-1.159M9.167 15a5.833 5.833 0 1 1 0-11.666 5.833 5.833 0 0 1 0 11.666"
+              />
+            </svg>
+          </button>
+        </form>
+
+        <div class="header__actions">
+          <a class="header__configurator" href="#">
+            <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+              <path
+                fill="currentColor"
+                d="M17.058 6.142v-.067l-.05-.125a1 1 0 0 0-.058-.075 1 1 0 0 0-.075-.1l-.075-.058-.133-.067-6.25-3.858a.83.83 0 0 0-.884 0l-6.2 3.858-.075.067-.075.058a1 1 0 0 0-.075.1 1 1 0 0 0-.058.075L3 6.075v.067a1 1 0 0 0 0 .216v7.284a.83.83 0 0 0 .392.708l6.25 3.858a.4.4 0 0 0 .125.05h.066a.7.7 0 0 0 .434 0h.066a.4.4 0 0 0 .125-.05l6.209-3.858a.83.83 0 0 0 .391-.708V6.358a1 1 0 0 0 0-.216m-7.891 9.866-4.584-2.833V7.858l4.584 2.825zM10 9.242 5.333 6.358 10 3.483l4.667 2.875zm5.417 3.933-4.584 2.833v-5.325l4.584-2.825z"
+              />
+            </svg>
+            <span class="header__configurator-label">Stwórz swoją lampę</span>
+          </a>
+          <a class="header__icon header__icon--user" href="#" aria-label="Moje konto">
+            <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path
+                fill="currentColor"
+                d="M15.71 12.71a6 6 0 1 0-7.42 0 10 10 0 0 0-6.22 8.18 1.006 1.006 0 1 0 2 .22 8 8 0 0 1 15.9 0 1 1 0 0 0 1 .89h.11a1 1 0 0 0 .88-1.1 10 10 0 0 0-6.25-8.19M12 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8"
+              />
+            </svg>
+          </a>
+          <a class="header__icon" href="#" aria-label="Koszyk">
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <g clip-path="url(#cart-a)">
+                <g clip-path="url(#cart-b)">
+                  <mask
+                    id="cart-c"
+                    width="24"
+                    height="26"
+                    x="0"
+                    y="0"
+                    maskUnits="userSpaceOnUse"
+                    style="mask-type: luminance"
+                  >
+                    <path fill="#fff" d="M23.158 0H.75v25.425h22.408z" />
+                  </mask>
+                  <g mask="url(#cart-c)">
+                    <path
+                      fill="currentColor"
+                      d="M3.401 3.179c.453-.006.914.012 1.137.054.232.043.456.126.66.246l.084.053c.409.268.65.64.811 1.05.158.4.242.849.33 1.273.47.018.997.006 1.47.006h13.7c.175 0 .451-.006.738-.007.28 0 .564.003.726.02l.11.013v.23l-.022.027-.002.007-.015.036-.047.136c-.036.114-.084.272-.139.459-.109.373-.246.863-.384 1.362-.274.994-.552 2.031-.611 2.244l-1.143 4.105c-.197.708-.44 1.507-.608 2.209l-.022.091-.091.005c-.958.045-2.213.009-3.185.01h-6.104l-1.655-.004c-.157 0-.438-.012-.723-.007a4 4 0 0 0-.392.023.7.7 0 0 0-.236.058.53.53 0 0 0-.24.562c.038.214.19.399.448.426.216.023.428.015.667.015h1.314l7.585-.001c.2 0 .453-.007.697-.002s.495.022.7.073c.529.135.983.48 1.265.958.284.488.367 1.071.232 1.622a2.14 2.14 0 0 1-.96 1.317 1.98 1.98 0 0 1-1.553.227 2.1 2.1 0 0 1-1.283-.993c-.303-.531-.324-1.053-.209-1.604-1.215.011-2.575.024-3.785.002.074.334.075.715 0 1.037a2.1 2.1 0 0 1-.946 1.317 2 2 0 0 1-1.572.24 2.1 2.1 0 0 1-1.277-.978c-.308-.533-.33-1.063-.215-1.618-.384.005-.843.011-1.213-.105a2.1 2.1 0 0 1-1.22-1.04l-.024-.05a2.2 2.2 0 0 1-.113-1.582c.18-.595.538-.979 1.035-1.265l-2.237-9.36c-.036-.148-.069-.328-.103-.482a2.4 2.4 0 0 0-.134-.441.67.67 0 0 0-.216-.287.53.53 0 0 0-.372-.078c-.202.02-.412.008-.607-.004-.199-.012-.38-.025-.545-.01a.7.7 0 0 0-.398.138c-.102.081-.19.215-.243.445l-.02.086-.085.01a7 7 0 0 1-.656.024c-.258 0-.524-.009-.65-.025l-.108-.014v-.524l.018-.03c.04-.07.068-.147.097-.238.028-.088.06-.19.106-.287A2.03 2.03 0 0 1 2.24 3.276h.002c.238-.062.708-.092 1.16-.097m7.349 18.834.047-.003zm-.24-.004.046.003-.093-.007zm1.187-.308-.04.026zm6.463.292-.047-.008zm-8.167-.1a2 2 0 0 0 .422.106l-.047-.007a2 2 0 0 1-.375-.099m-.171-.073.081.038-.044-.02zm9.527-.032-.013.007.055-.03zm.084-.048.039-.024zm-2.853-2.28q-.037.165-.055.324l-.006.053c-.038.405.023.79.247 1.182-.311-.544-.307-1.078-.16-1.668zm3.544 1.57.007-.011zm-7.6-.456-.002.01zm-1.768.09-.004.001.063-.013zm8.236-.295.016-.027zm-.808.244.015.006-.017-.007zm-7.025-.74a.52.52 0 0 0-.64-.377.537.537 0 0 0-.366.655.52.52 0 0 0 .636.378.537.537 0 0 0 .37-.656m7.795-.001a.52.52 0 0 0-.642-.376.537.537 0 0 0-.363.655.52.52 0 0 0 .635.378.537.537 0 0 0 .37-.657m-6.358.265.003-.073zm5.235.048.02.063.012.029-.012-.029zm-7.795.001.023.071-.003-.01zm9.036-.347a.64.64 0 0 0-.854-.444l.061-.02a.63.63 0 0 1 .697.254.66.66 0 0 1 .119.375l-.001-.033a1 1 0 0 0-.022-.132m-8.618-.455-.03.011.062-.02zm9.7-.347.035.068-.022-.044zm-13.823-.764a2 2 0 0 0 .306.44l-.032-.036a2 2 0 0 1-.274-.404m13.461.285.067.068-.033-.035zm-2.23-.552h-6.69zm-11.36-1.268-.002.008zm4.592-.057h6.104zm9.331-.203-.048.194-.182.007.182-.007zm-13.379-.619-.037.035zM21.15 7.46c-1.161-.014-2.344-.001-3.508-.001H8.121c-.32.001-.927.02-1.31.003.117.622.36 1.514.504 2.117l.904 3.774c.142.59.314 1.249.444 1.85.42.016.873.008 1.298.008h9.028q.237-.825.465-1.65v-.001l1.11-3.984.32-1.137q.139-.492.266-.98M7.095 14.798 5.431 7.833l-.38-1.587zm14.734-4.445-1.143 4.106zl.05-.18zM23.044 6v.074c-.045.062-.243.741-.467 1.543a100 100 0 0 1 .325-1.13c.07-.232.122-.385.142-.412zM10.996 7.332H9.233h8.41zM6.707 5.988l-.194-.004zm16.003-.005a27 27 0 0 0-.788 0l-.165.002c.268-.003.653-.009.953-.002M2.536 4.746a.7.7 0 0 0-.15.108l.024-.022a.6.6 0 0 1 .126-.086M1.049 4.48l.002-.005zm.598-.77.04-.03zm3.49-.122-.009-.006zM3.06 3.314c-.327.013-.622.04-.787.084q-.195.053-.373.15l.045-.024q.157-.08.328-.126c.165-.043.46-.07.787-.084"
+                    />
+                  </g>
+                </g>
+              </g>
+              <defs>
+                <clipPath id="cart-a"><path fill="#fff" d="M0 0h24v24H0z" /></clipPath>
+                <clipPath id="cart-b"><path fill="#fff" d="M.75 0h22.5v25.5H.75z" /></clipPath>
+              </defs>
+            </svg>
+          </a>
+          <button
+            class="header__burger"
+            type="button"
+            aria-expanded="false"
+            aria-controls="header-nav"
+            aria-label="Otwórz menu"
+          >
+            <span class="header__burger-line"></span>
+            <span class="header__burger-line"></span>
+            <span class="header__burger-line"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-roledescription="karuzela" aria-label="Bestsellery SOLLUX">
+        <div class="hero__slides">
+          <div
+            class="hero__slide hero__slide--rock hero__slide--active"
+            role="group"
+            aria-roledescription="slajd"
+            aria-label="1 z 2"
+          >
+            <div class="hero__stage">
+              <img
+                class="hero__img"
+                srcset="
+                  assets/img/hero-rock-640.webp   640w,
+                  assets/img/hero-rock-960.webp   960w,
+                  assets/img/hero-rock-1440.webp 1440w,
+                  assets/img/hero-rock-1920.webp 1920w,
+                  assets/img/hero-rock-2880.webp 2880w
+                "
+                sizes="(max-aspect-ratio: 5/4) calc((100vw - 32px) * 1.7021), (max-aspect-ratio: 16/9) calc(100vh * 1.7778), 100vw"
+                src="assets/img/hero-rock-1920.webp"
+                width="1920"
+                height="1080"
+                alt=""
+                fetchpriority="high"
+              />
+            </div>
+          </div>
+          <div
+            class="hero__slide hero__slide--interior"
+            role="group"
+            aria-roledescription="slajd"
+            aria-label="2 z 2"
+          >
+            <div class="hero__stage">
+              <img
+                class="hero__img"
+                srcset="
+                  assets/img/hero-interior-640.webp   640w,
+                  assets/img/hero-interior-960.webp   960w,
+                  assets/img/hero-interior-1440.webp 1440w,
+                  assets/img/hero-interior-1920.webp 1920w,
+                  assets/img/hero-interior-2880.webp 2880w
+                "
+                sizes="(max-aspect-ratio: 5/4) calc((100vw - 32px) * 1.7021), (max-aspect-ratio: 16/9) calc(100vh * 1.7778), 100vw"
+                src="assets/img/hero-interior-1920.webp"
+                width="1920"
+                height="1080"
+                alt=""
+                fetchpriority="low"
+                decoding="async"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Lamps: same stage geometry as the slides; positions from design/lamp-positions.json -->
+        <div class="hero__stage hero__stage--lamps">
+          <button
+            class="lamp"
+            type="button"
+            aria-pressed="false"
+            aria-label="Włącz lampę 1"
+            style="--x: 39.5833%; --y: 7.8704%; --w: 19.375%"
+          >
+            <img
+              class="lamp__img"
+              src="assets/img/lamp1@1x.webp"
+              srcset="assets/img/lamp1@1x.webp 1x, assets/img/lamp1@2x.webp 2x"
+              width="372"
+              height="419"
+              alt=""
+            />
+          </button>
+          <button
+            class="lamp"
+            type="button"
+            aria-pressed="false"
+            aria-label="Włącz lampę 2"
+            style="--x: 56.0417%; --y: 30.7407%; --w: 24.4792%"
+          >
+            <img
+              class="lamp__img"
+              src="assets/img/lamp2@1x.webp"
+              srcset="assets/img/lamp2@1x.webp 1x, assets/img/lamp2@2x.webp 2x"
+              width="470"
+              height="428"
+              alt=""
+            />
+          </button>
+          <button
+            class="lamp"
+            type="button"
+            aria-pressed="false"
+            aria-label="Włącz lampę 3"
+            style="--x: 21.7708%; --y: 40.1852%; --w: 22.0313%"
+          >
+            <img
+              class="lamp__img"
+              src="assets/img/lamp3@1x.webp"
+              srcset="assets/img/lamp3@1x.webp 1x, assets/img/lamp3@2x.webp 2x"
+              width="423"
+              height="393"
+              alt=""
+            />
+          </button>
+        </div>
+
+        <div class="hero__content">
+          <div class="hero__inner">
+            <p class="hero__eyebrow">Bestsellery SOLLUX</p>
+            <h1 class="hero__title">Kolor i forma <br />w nowym świetle</h1>
+            <a class="button button--primary hero__cta" href="#">Sprawdź bestsellery</a>
+
+            <p class="hero__badge">
+              <span class="hero__rating">
+                4.8
+                <img
+                  class="hero__star"
+                  src="assets/icons/star.svg"
+                  width="20"
+                  height="20"
+                  alt="na 5"
+                />
+              </span>
+              <span>Uwielbiany przez klientów</span>
+            </p>
+          </div>
+        </div>
+
+        <button class="hero__arrow hero__arrow--prev" type="button" aria-label="Poprzedni slajd">
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+              fill="currentColor"
+              d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2"
+            />
+          </svg>
+        </button>
+        <button class="hero__arrow hero__arrow--next" type="button" aria-label="Następny slajd">
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+              fill="currentColor"
+              d="M17.92 11.62a1 1 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76"
+            />
+          </svg>
+        </button>
+
+        <div class="hero__progress">
+          <button
+            class="hero__dot hero__dot--active"
+            type="button"
+            aria-label="Slajd 1"
+            aria-current="true"
+          >
+            <span class="hero__dot-fill"></span>
+          </button>
+          <button class="hero__dot" type="button" aria-label="Slajd 2">
+            <span class="hero__dot-fill"></span>
+          </button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

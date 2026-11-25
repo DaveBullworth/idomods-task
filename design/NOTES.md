@@ -21,7 +21,7 @@
 
 ## Gaps in the design and my decisions
 
-- **No mobile layout.** Burger menu below 1024 px, tiles in one column, benefits in two columns, footer columns stacked.
+- **No mobile layout.** Burger menu below 1280 px (changed from 1024: the full header row doesn't fit below ~1300 px), tiles in one column, benefits in two columns, footer columns stacked.
 - **Lamps on the second slide.** Lamps are shown on both, first and second slide.
 - **Lamps are baked into the hero background.** Lamps stay in place; the interaction is only the light turning on.
 - **Dropdown menus are not designed** ("Lampy", "Kolory", "Pomieszczenia"). Plain links with an arrow icon, no dropdowns.

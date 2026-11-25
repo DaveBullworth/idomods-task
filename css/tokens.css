@@ -41,9 +41,14 @@
 
   /* Layout */
   --container: 1600px;
-  --gutter: clamp(16px, 8.33vw, 160px);
+  --gutter: 16px; /* Figma: px-16 + max-w-1600 on navbar and hero container */
   --radius-pill: 100px;
-  --header-h: 83px;
+  --header-h: 80px; /* mobile: 16 + 48 + 16 */
+
+  /* Lamp group in the hero stage (from design/lamp-positions.json):
+     left edge 21.7708 %, right edge 80.5209 %, so 58.75 % wide, centred at 51.146 %. */
+  --lamps-span: 0.5875;
+  --lamps-center: 0.5115;
 }
 
 @media (prefers-reduced-motion: reduce) {

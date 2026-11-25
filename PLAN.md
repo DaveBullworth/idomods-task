@@ -147,10 +147,10 @@ tests/       (Playwright, written after the page is built)
 - Items: logo, nav (Lampy ▾, Kolory ▾, Pomieszczenia ▾, Nowości, Bestsellery, Promocje), search pill, "Stwórz swoją lampę" link with the cube icon, user icon, cart icon. Per NOTES, the arrows are decoration only and there are no dropdowns.
 - Hover: `.header__bg` (white) fades `opacity 0 → 1`. Text, icons and logo transition `color` white → black; SVGs use `currentColor`. All 250 ms ease-in-out, and the same timing on leave.
 - Hover only applies with `(hover: hover)`. Also apply the state on `:focus-within`.
-- Below 1024 px: logo + search icon + cart + burger.
+- Below **1280 px** (moved from 1024 by user decision; the full row doesn't fit below ~1300): logo + cart + burger. Nav, search, configurator and account go into the burger panel.
   - The burger opens a full-height panel that slides in with `transform` (a plain fade under reduced motion).
   - `aria-expanded` / `aria-controls`; focus trap while open; Esc closes; body scroll lock.
-- Sizes and spacing: §0.3. The 1600 content max-width and 64 px group gaps apply at ≥ 1440. Between 1024 and 1440 the gaps shrink (64 → 24, links 32 → 20) and the search pill shrinks first. This is my decision; there's no frame for it.
+- Sizes and spacing: §0.3. The header row uses 16 px side padding with a max width of 1600 (as in Figma), not a wider page gutter. Group gaps `clamp(16px, 3.33vw, 64px)`, link gaps `clamp(12px, 1.67vw, 32px)`; the search pill takes the remaining width. From 1280 to 1439 the configurator is icon-only (label kept for screen readers). Measured search width: 270 px at 1280–1439, 374 px at 1920.
 
 ### 3.3 Hero stage (`.hero`, `.hero__stage`)
 
@@ -165,9 +165,14 @@ tests/       (Playwright, written after the page is built)
 - **Slide 1:** the lamp images sit exactly over the lamps baked into the photo, so they're invisible as separate layers. A click toggles `.lamp--on`: glow opacity 0 → 1 over 500 ms, plus a slight brightness lift done as an opacity overlay.
 - **Slide 2:** the same lamp images are visible as floating lamps over the interior while the background crossfades underneath. The click glow works the same way.
 - Lamps are `<button aria-pressed>` with a Polish `aria-label` ("Włącz lampę 1").
-- **Mobile, 375 px:** set `--stage-x` per breakpoint so all three lamps stay in view and clear of the text block. Check with a screenshot; the hero text stays at a fixed position on the left/bottom.
+- **Portrait screens (`max-aspect-ratio: 5/4`), "contained mode":** shifting a covering stage can't work, because at 375 × 812 the covering stage is 1443 px wide and the lamp group alone is 848 px. Instead:
+  - the stage is sized so the lamp group (58.75 % of the stage) fits the viewport minus the gutters, and anchored to the bottom, centred on the lamp group;
+  - above it, the slide's sky colour (sampled from the photo's top edge: rock `#9c6744`, interior `#c5afa3`) fills the hero, and the stage image fades in over its top 25 %;
+  - slide 2 adds a 45 % dark scrim behind the text, since white on `#c5afa3` is only about 2.1:1;
+  - the text sits at the top under the header; its bottom padding reserves the stage height, so the hero grows instead of overlapping on short screens.
+  - Measured at 375 × 812: text block y 104–365, lamps y 509–735, all within x 16–359.
 - Hero text: eyebrow "Bestsellery SOLLUX", H1 "Kolor i forma" / "w nowym świetle" (two lines, line break kept at desktop), yellow pill CTA "Sprawdź bestsellery". _(verified against #3, nodes 1:510, 1:511, 1:513)_
-- Text block is vertically centred and left-aligned on the 1600 column (§0.3). On mobile it moves to the lower part of the hero, so the lamps stay clear (§3.3 mobile).
+- Text block is vertically centred and left-aligned on the 1600 column (§0.3). In contained mode it sits at the top and the lamps below it (see above). Below 1024 the Trustmate badge joins the text flow under the CTA, because at the bottom it would collide with the progress bar.
 - Rating badge bottom right: "4.8" + star icon + "Uwielbiany przez klientów". _(verified against #3, nodes 1:526, 1:532)_
 - Header copy: Lampy, Kolory, Pomieszczenia, Nowości, Bestsellery, Promocje; search placeholder "Czego szukasz?"; "Stwórz swoją lampę". _(verified against #3)_
 - Prev/next round arrow buttons at the sides: sizes and colours in §0.3. Below 1024 px: **open decision** (see §5).
@@ -229,7 +234,7 @@ tests/       (Playwright, written after the page is built)
 1. **Slider timing** (`page.clock`): the slide changes at 3 s; the crossfade finishes by 600 ms; the progress bar is `scaleX(1)` at 3 s and resets after the change; it pauses on hover; prev/next and segment clicks work.
 2. **Header hover:** after 250 ms the computed `color` is black and the overlay opacity is 1; both revert on leave.
 3. **Tile hover:** after the transition the image transform is `scale(1.1)` and the button overlay opacity is 1.
-4. **Burger menu** (< 1024 px): opens and closes, `aria-expanded` toggles, Esc closes, focus is trapped and returns to the burger.
+4. **Burger menu** (< 1280 px): opens and closes, `aria-expanded` toggles, Esc closes, focus is trapped and returns to the burger.
 5. **Lamps:**
    - a click toggles `aria-pressed` and the glow opacity on both slides;
    - lamp boxes stay aligned with their reference positions in the stage (tolerance in px, agreed once measured) at 375 / 768 / 1440 / 1920;

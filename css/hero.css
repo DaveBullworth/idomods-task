@@ -1,0 +1,260 @@
+/* Hero (Figma 1:506, PLAN.md §0.3 / §3.3). Static: no slide animation yet.
+
+   Two layouts share one rule: everything that must stay aligned with the photo
+   (slide images and lamps) lives in a `.hero__stage` box with the photo's
+   1920:1080 ratio, positioned identically.
+
+   - Cover mode (landscape): the stage covers the hero like object-fit: cover.
+   - Contained mode (portrait, max-aspect-ratio 5/4): covering would crop the
+     lamps, so the stage is sized so the lamp group fits the viewport width and
+     sits at the bottom. Above it, the slide's own sky colour (sampled from the
+     photo's top edge) continues the image; the stage's top edge fades into it. */
+.hero {
+  --hero-h: clamp(560px, 100svh, 1080px);
+  --stage-w: max(100%, var(--hero-h) * 16 / 9);
+  --stage-h: calc(var(--stage-w) * 9 / 16);
+
+  position: relative;
+  display: grid;
+  height: var(--hero-h);
+  overflow: hidden;
+  color: var(--c-white);
+  background: var(--c-black);
+}
+
+.hero__slides {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.hero__slide--active {
+  opacity: 1;
+}
+
+/* Top-edge colour of each photo; scrim keeps white text >= 4.5:1 on mobile */
+.hero__slide--rock {
+  --hero-sky: #9c6744;
+  --hero-scrim: 0%;
+}
+
+.hero__slide--interior {
+  --hero-sky: #c5afa3;
+  --hero-scrim: 45%;
+}
+
+.hero__stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--stage-w);
+  height: var(--stage-h);
+  transform: translate(-50%, -50%);
+}
+
+.hero__img {
+  width: 100%;
+  height: 100%;
+}
+
+/* Lamps */
+.hero__stage--lamps {
+  z-index: 1;
+}
+
+.lamp {
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  width: var(--w);
+}
+
+.lamp__img {
+  width: 100%;
+}
+
+/* Text block: grid item on top of the absolute layers */
+.hero__content {
+  z-index: 2;
+  grid-area: 1 / 1;
+  align-self: center;
+  width: min(100% - 2 * var(--gutter), var(--container));
+  margin-inline: auto;
+  padding-block: 64px;
+  pointer-events: none;
+}
+
+.hero__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.hero__inner > * {
+  pointer-events: auto;
+}
+
+.hero__eyebrow {
+  font-size: var(--fs-16);
+  font-weight: var(--fw-medium);
+  line-height: 1.2;
+}
+
+.hero__title {
+  margin-top: 16px;
+  font-size: var(--fs-hero);
+  font-weight: var(--fw-bold);
+  line-height: 1;
+}
+
+.hero__cta {
+  margin-top: 32px;
+}
+
+/* Trustmate badge: bottom right of the hero on desktop (absolute against
+   .hero, since .hero__content is not positioned), in the text flow on mobile. */
+.hero__badge {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 24px;
+  padding: 12px 24px;
+  font-size: var(--fs-13);
+  font-weight: var(--fw-medium);
+  line-height: 1.1;
+  white-space: nowrap;
+  background: var(--c-badge-bg);
+  border-radius: var(--radius-pill);
+}
+
+.hero__rating {
+  display: inline-flex;
+  gap: 2px;
+  align-items: center;
+  font-size: var(--fs-21);
+  font-weight: var(--fw-bold);
+}
+
+/* Arrows: hidden below 1024 (PLAN.md §5, proposed) */
+.hero__arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  display: none;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  color: var(--c-line);
+  background: var(--c-control-bg);
+  border-radius: var(--radius-pill);
+  transform: translateY(-50%);
+}
+
+.hero__arrow--prev {
+  left: 72px;
+}
+
+.hero__arrow--next {
+  right: 72px;
+}
+
+/* Progress: 2 x 64 x 2 px bars; the buttons are 44 px tall tap targets. */
+.hero__progress {
+  position: absolute;
+  bottom: 11px; /* 32 px to the bar = 11 + (44 - 2) / 2 */
+  left: 50%;
+  z-index: 3;
+  display: flex;
+  gap: 4px;
+  transform: translateX(-50%);
+}
+
+.hero__dot {
+  position: relative;
+  width: 64px;
+  height: 44px;
+}
+
+.hero__dot::before,
+.hero__dot-fill {
+  position: absolute;
+  inset: 21px 0;
+}
+
+.hero__dot::before {
+  content: '';
+  background: var(--c-track);
+}
+
+.hero__dot-fill {
+  background: var(--c-yellow);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.hero__dot--active .hero__dot-fill {
+  transform: scaleX(1);
+}
+
+@media (width >= 1024px) {
+  .hero__arrow {
+    display: grid;
+  }
+
+  .hero__badge {
+    position: absolute;
+    right: 72px;
+    bottom: 32px;
+    z-index: 3;
+    margin: 0;
+  }
+}
+
+/* Contained mode: portrait screens */
+@media (max-aspect-ratio: 5/4) {
+  .hero {
+    --stage-w: calc((100vw - 2 * var(--gutter)) / var(--lamps-span));
+
+    height: auto;
+    min-height: var(--hero-h);
+  }
+
+  .hero__slide {
+    background: var(--hero-sky);
+  }
+
+  .hero__slide::after {
+    position: absolute;
+    inset: 0 0 auto;
+    height: calc(100% - var(--stage-h) * 0.8);
+    content: '';
+    background: linear-gradient(rgb(16 16 17 / var(--hero-scrim)) 60%, rgb(16 16 17 / 0%));
+  }
+
+  .hero__stage {
+    top: auto;
+    bottom: 0;
+
+    /* centre the lamp group, not the photo */
+    left: calc(50% - var(--stage-w) * var(--lamps-center));
+    transform: none;
+  }
+
+  .hero__img {
+    mask-image: linear-gradient(transparent, #000 25%);
+  }
+
+  .hero__content {
+    align-self: start;
+
+    /* room for the header on top and for the stage below; the stage's top
+       8 % is sky, so the text may overlap that */
+    padding-top: calc(var(--header-h) + 24px);
+    padding-bottom: calc(var(--stage-h) * 0.92 + 24px);
+  }
+}

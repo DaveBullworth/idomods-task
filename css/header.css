@@ -1,0 +1,208 @@
+/* Header (Figma 1:533, PLAN.md §0.3 / §3.2). Static layout only:
+   hover overlay and burger panel come with the interaction step. */
+.skip-link {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 100;
+  padding: 12px 16px;
+  font-weight: var(--fw-bold);
+  color: var(--c-ink);
+  background: var(--c-white);
+  border-radius: var(--radius-pill);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+}
+
+.header {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 10;
+  color: var(--c-white);
+}
+
+.header__inner {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  width: min(100% - 2 * var(--gutter), var(--container));
+  margin-inline: auto;
+  padding-block: 16px;
+}
+
+.header__logo {
+  display: flex;
+  flex: none;
+  align-items: center;
+  height: 48px;
+}
+
+.header__actions {
+  display: flex;
+  flex: none;
+  gap: 8px;
+  align-items: center;
+}
+
+.header__icon,
+.header__burger {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-pill);
+}
+
+.header__burger {
+  align-content: center;
+  gap: 5px;
+}
+
+.header__burger-line {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: currentcolor;
+  border-radius: 1px;
+}
+
+/* Mobile first: logo, cart, burger. Nav, search, configurator and account
+   move into the burger panel (interaction step). After the base rules above,
+   so it wins over `.header__icon { display: grid }`. */
+.header__nav,
+.header__search,
+.header__configurator,
+.header__icon--user {
+  display: none;
+}
+
+/* Full row from 1280 (burger below; design/NOTES.md). Below 1280 the row
+   can't fit logo + 6 links + a usable search + actions. */
+@media (width >= 1280px) {
+  .header__inner {
+    gap: clamp(16px, 3.33vw, 64px);
+    justify-content: flex-start;
+  }
+
+  .header__nav,
+  .header__icon--user {
+    display: block;
+  }
+
+  .header__icon--user {
+    display: grid;
+  }
+
+  .header__search,
+  .header__configurator {
+    display: flex;
+  }
+
+  .header__burger {
+    display: none;
+  }
+
+  .header__links {
+    display: flex;
+    gap: clamp(12px, 1.67vw, 32px);
+    align-items: center;
+  }
+
+  .header__link {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+    font-size: var(--fs-14);
+    font-weight: var(--fw-bold);
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .header__chevron {
+    flex: none;
+  }
+
+  .search {
+    flex: 1 1 0;
+    gap: 16px;
+    align-items: center;
+    min-width: 0;
+    padding: 15px 24px; /* + 1 px border = Figma 16 / 24 */
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius-pill);
+  }
+
+  .search:focus-within {
+    outline: 2px solid var(--c-white);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px var(--c-black);
+  }
+
+  .search__input {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0;
+    font-size: var(--fs-14);
+    font-weight: var(--fw-bold);
+    line-height: 1.2;
+    background: transparent;
+    border: 0;
+    appearance: none;
+  }
+
+  .search__input::placeholder {
+    color: inherit;
+    opacity: 1;
+  }
+
+  .search__input:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .search__input::-webkit-search-cancel-button {
+    display: none;
+  }
+
+  .search__button {
+    display: grid;
+    flex: none;
+    place-items: center;
+  }
+
+  .header__configurator {
+    gap: 9px;
+    align-items: center;
+    padding: 11px 16px;
+    font-size: var(--fs-13);
+    font-weight: var(--fw-bold);
+    line-height: 1.1;
+    white-space: nowrap;
+    border-radius: var(--radius-pill);
+  }
+
+  .header__configurator svg {
+    flex: none;
+  }
+}
+
+/* 1280-1439: the configurator becomes icon-only (its label stays for screen
+   readers) so the search pill keeps a usable width. */
+@media (width >= 1280px) and (width < 1440px) {
+  .header__configurator {
+    padding: 14px;
+  }
+
+  .header__configurator-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

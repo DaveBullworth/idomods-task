@@ -46,6 +46,7 @@ Recruitment task: a static landing page for SOLLUX, built from a Figma design. T
 - Work directly on `master`, one small commit per section. No feature branches. Don't push unless asked.
 - **Section done-check** (Playwright MCP screenshots):
   1. **1920 px:** compare with the matching frame PNG in `design/frames/`.
-  2. **375 and 768 px:** there are no mobile frames, so check against the mobile decisions in `design/NOTES.md`: no horizontal overflow, nothing cut off, lamps in view.
-  3. List the differences first, then fix them, then commit.
+  2. **1280 and 1440 px** (the most common laptop widths, e.g. a 1920 screen at 150 % scaling is ~1280 CSS px): no frame either, so check that nothing overlaps (text vs. arrows, header row), nothing is cut off and icons stay consistent.
+  3. **375 and 768 px:** there are no mobile frames, so check against the mobile decisions in `design/NOTES.md`: no horizontal overflow, nothing cut off, lamps in view.
+  4. List the differences first, then fix them, then commit.
 - Tests: never update snapshots or loosen thresholds without asking the user.

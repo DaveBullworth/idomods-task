@@ -191,10 +191,19 @@
 }
 
 /* 1280-1439: the configurator becomes icon-only (its label stays for screen
-   readers) so the search pill keeps a usable width. */
+   readers) so the search pill keeps a usable width. Same 48 px box and 24 px
+   glyph as the account and cart icons. */
 @media (width >= 1280px) and (width < 1440px) {
   .header__configurator {
-    padding: 14px;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+  }
+
+  .header__configurator svg {
+    width: 24px;
+    height: 24px;
   }
 
   .header__configurator-label {

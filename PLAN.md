@@ -86,6 +86,7 @@ The rules are in `CLAUDE.md`. Values marked **TBD #N** come from Figma call N (s
 **Arrows (1:514, 1:517):**
 - 48 px circles, background `rgba(16,16,17,0.2)`, 24 px white arrow icons.
 - 72 px from the left/right edges, vertically centred (the left one is `top: 516` = 540 − 24).
+- While the arrows show (≥ 1024 px), the hero text column is `min(100% − 2 × (72 + 48 + 24), 1600)`, so the text starts at least 24 px clear of the arrow. At 1920 the 1600 column wins (text at 160, 40 px clear, as in Figma); at 1024–1919 the text starts at 144.
 
 **Progress bar (1:520):**
 - 2 segments of 64 × 2 px with a 4 px gap, centred, 32 px from the bottom.

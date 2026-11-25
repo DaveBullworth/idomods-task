@@ -13,6 +13,12 @@
   --hero-h: clamp(560px, 100svh, 1080px);
   --stage-w: max(100%, var(--hero-h) * 16 / 9);
   --stage-h: calc(var(--stage-w) * 9 / 16);
+  --arrow-size: 48px;
+  --arrow-inset: 72px;
+
+  /* while the arrows show, text starts this far from the hero edge
+     (inset + arrow + 24 px gap); at 1920 the 1600 column is wider anyway */
+  --arrow-clear: calc(var(--arrow-inset) + var(--arrow-size) + 24px);
 
   position: relative;
   display: grid;
@@ -147,8 +153,8 @@
   z-index: 3;
   display: none;
   place-items: center;
-  width: 48px;
-  height: 48px;
+  width: var(--arrow-size);
+  height: var(--arrow-size);
   color: var(--c-line);
   background: var(--c-control-bg);
   border-radius: var(--radius-pill);
@@ -156,11 +162,11 @@
 }
 
 .hero__arrow--prev {
-  left: 72px;
+  left: var(--arrow-inset);
 }
 
 .hero__arrow--next {
-  right: 72px;
+  right: var(--arrow-inset);
 }
 
 /* Progress: 2 x 64 x 2 px bars; the buttons are 44 px tall tap targets. */
@@ -206,9 +212,13 @@
     display: grid;
   }
 
+  .hero__content {
+    width: min(100% - 2 * var(--arrow-clear), var(--container));
+  }
+
   .hero__badge {
     position: absolute;
-    right: 72px;
+    right: var(--arrow-inset);
     bottom: 32px;
     z-index: 3;
     margin: 0;

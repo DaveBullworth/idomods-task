@@ -72,9 +72,45 @@ function outPath(src, suffix) {
   return path.join(OUT_IMG, path.dirname(r), `${base}${suffix}.webp`);
 }
 
+// Tile PNGs come with the Figma 24 px corner radius baked in as transparency.
+// The page crops tiles with object-fit: cover at a different scale per width,
+// so a baked radius would never match the CSS one. Fill each transparent
+// corner with the colour just inside it (the tiles' flat backgrounds; per
+// corner for the THORO photo) and let `border-radius` do the rounding. The
+// output is opaque, which also makes the files smaller.
+const SQUARE_CORNERS = /^tile-/;
+const CORNER_INSET = 60; // px at 2x, safely inside the 48 px baked radius
+
+async function squareCorners(src) {
+  const { data, info } = await sharp(src).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const { width: w, height: h } = info;
+  const at = (x, y) => (y * w + x) * 4;
+  const sample = (x, y) => Array.from(data.subarray(at(x, y), at(x, y) + 3));
+  const corners = {
+    tl: sample(CORNER_INSET, CORNER_INSET),
+    tr: sample(w - 1 - CORNER_INSET, CORNER_INSET),
+    bl: sample(CORNER_INSET, h - 1 - CORNER_INSET),
+    br: sample(w - 1 - CORNER_INSET, h - 1 - CORNER_INSET),
+  };
+  const rgb = Buffer.alloc(w * h * 3);
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const i = at(x, y);
+      const a = data[i + 3] / 255;
+      const bg = corners[(y < h / 2 ? 't' : 'b') + (x < w / 2 ? 'l' : 'r')];
+      for (let c = 0; c < 3; c++)
+        rgb[(y * w + x) * 3 + c] = Math.round(data[i + c] * a + bg[c] * (1 - a));
+    }
+  }
+  return sharp(rgb, { raw: { width: w, height: h, channels: 3 } })
+    .png()
+    .toBuffer();
+}
+
 async function buildWide(name) {
   const src = path.join(RAW, name);
-  const { width: srcW } = await sharp(src).metadata();
+  const input = SQUARE_CORNERS.test(name) ? await squareCorners(src) : src;
+  const { width: srcW } = await sharp(input).metadata();
   // Never upscale. If the source falls between two list widths, add the source
   // width itself as the top candidate so 2x desktop still gets full detail.
   const widths = WIDE_WIDTHS.filter((w) => w <= srcW);
@@ -82,7 +118,7 @@ async function buildWide(name) {
   for (const w of widths) {
     const out = outPath(src, `-${w}`);
     await mkdir(path.dirname(out), { recursive: true });
-    await sharp(src).resize({ width: w }).webp({ quality: PHOTO_QUALITY, effort: 6 }).toFile(out);
+    await sharp(input).resize({ width: w }).webp({ quality: PHOTO_QUALITY, effort: 6 }).toFile(out);
     await record(out);
   }
 }

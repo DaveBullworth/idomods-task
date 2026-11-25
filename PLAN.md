@@ -12,7 +12,7 @@ The rules are in `CLAUDE.md`. Values marked **TBD #N** come from Figma call N (s
 - Content column: **1600 px wide at x = 160**, so 160 px side gutters at 1920.
 - VP's: content starts 86 px from the top of the section.
   - Benefits row: 5 items, each 294.4 wide with 32 px gaps; 136 high with 16 px padding; 32 px icon; text block 72 px from the top; titles 23 px tall, subtitles 17 px tall, 8 px between them.
-  - Tile grid starts 200 px from the top of the section. Tile rows are 518 px high, with a 16 px gap between and within rows.
+  - Tile grid starts **286** px from the top of the section (86 + 136 benefits + 64 gap; was noted as 200, corrected after call #4). Tile rows are 518 px high, with a 16 px gap between and within rows.
   - Row 1: THORO 648 + Konfigurator 936.
   - Row 2: Katalog 936 + SOLLUX SMART 648.
   - Tile text block: 48 px padding; eyebrow 23 px, 12 px gap, title 35 px per line; 24 px to the button.
@@ -132,7 +132,12 @@ tests/       (Playwright, written after the page is built)
 
 - `package.json` devDependencies, Prettier/Stylelint/html-validate configs, `scripts/build-assets.mjs`:
   - sharp, full-width / large photos (both hero slides, all four tiles): WebP at **640, 960, 1440, 1920, 2880 w**. Skip widths larger than the source (the tiles are 1296 or 1872 px wide, so they stop there). Use `srcset` with `w` descriptors plus `sizes`, so phones with DPR 3 don't download the 3840 file.
-    - Tile `sizes`: `(max-width: 1023px) calc(100vw - 2 * var(--gutter))` (written out in px/vw), and at desktop the tile's share of `min(100vw, 1920px) - 320px`.
+    - Tile `sizes` (16 px gutter, so the content column is `min(100vw - 32px, 1600px)`; a desktop row is that column minus the 16 px gap, split 648 : 936 of 1584):
+      - narrow tiles (THORO, SMART, 648 at 1920): `(min-width: 1024px) calc((min(100vw - 32px, 1600px) - 16px) * 0.4091), <one-column value>`;
+      - wide tiles (Konfigurator, Katalog, 936 at 1920): `(min-width: 1024px) calc((min(100vw - 32px, 1600px) - 16px) * 0.5909), <one-column value>`;
+      - below 1024 the value is the rendered (cover-cropped) image width, see §3.6: THORO `max(100vw - 32px, clamp(440px, 60vw, 520px) * 1.251)`; SMART `calc(100vw - 32px)`; wide tiles `(min-width: 640px) calc((100vw - 32px) * 1.017), calc((100vw - 32px) * 1.355)`.
+      - desktop, final (3-column grid, see §3.6): narrow `max((min(100vw - 32px, 1600px) - 32px) * 0.4133, 450px)`, wide `max((min(100vw - 32px, 1600px) - 32px) * 0.5867 + 16px, 650px)`; the 450/650 floors are the cover width at the 360 px minimum row height. Verified: every tile picks a file at least as large as its rendered size × DPR (capped by the 1296/1872 sources).
+      - (Was `min(100vw, 1920px) - 320px`, written for the old 160 px gutter.)
   - sharp, lamps and small images (payment/award logos, flags, IdoMods/IdoSell badges): WebP at **1x and 2x** density;
   - svgo for icons;
   - copy fonts.
@@ -195,20 +200,23 @@ tests/       (Playwright, written after the page is built)
 - `aria-roledescription="karuzela"`, slides labelled "1 z 2" with `aria-hidden` on the inactive one, `aria-live="off"`, `aria-current` on the active segment.
 - Reduced motion: no autoplay and no scale-in; manual slide changes still crossfade (opacity). The progress bar **stays visible** as a static indicator (active segment full), because below 1024 px its segments are the only slide controls besides swipe.
 
-### 3.5 Benefits (`.benefits`)
+### 3.5 Benefits (`.benefits`) **(built; values from Figma #4)**
 
-- 5 items. Icons: enter, bookmark-full, truck, ci2 (shield), trophy.
-- 5 columns at desktop; 3 + 2 at tablet; **2 columns** on mobile (per NOTES).
+- Section wrapper `.vps`: 86 px vertical padding (48 on phones), 16 px gutter, 1600 max, 64 px between benefits and tiles. Height 1424 at 1920, as in the frame.
+- 5 items, each padding 16, icon 32 px (inline SVG, `#101011`), 24 px to the copy; title Bold 21/1.1 `#101011` (fluid 18-21 px, `--fs-lead`), subtitle Medium 14/1.2 `#1e1e1e`, 8 px apart. Icons: enter, bookmark-full, truck, shield (ci2), trophy. Copy verified against #4 (nodes 1:600-1:630).
+- 5 columns at desktop (gap 32), 3 + 2 from 640 px, **2 columns** on phones (per NOTES).
 
 ### 3.6 Tiles (`.tiles`)
 
-- Two rows at desktop with the 648/936 and 936/648 split (as a 1600-wide grid with ratio columns).
-- One column on mobile (per NOTES); tablet: **TBD**, probably also one column.
-- `.tile`: `overflow: hidden`, rounded corners (radius **TBD #4**); `.tile__img` is the background image as an `<img>`; text block bottom-left.
+**(built; values from Figma #4)**
+- Desktop (≥ 1024): one 3-column grid `648fr 272fr 648fr` (16 px gaps) gives both mirrored rows, 648 | 936 and 936 | 648, exactly at 1600. Row height from the column width, `max(360px, (min(100vw - 32px, 1600px) - 32px) * 0.3304)` (518 at 1600), so the images keep their ratio. Pixel diff against `vp.png` in the tile area: mean 2.3/255 (WebP).
+- Below 1024: **one column** (also on tablets: the 32 px titles don't fit a ~300 px half tile). THORO keeps the overlay (photo, height `clamp(440px, 60vw, 520px)`); configurator, catalog and SMART **stack**: image block on top (4:3, 16:9 from 640 px), text below on the same flat colour, because overlaid text would run across the device mockups at these widths.
+- `.tile`: radius 24, `overflow: hidden`; `.tile__img` is an `<img>` with `object-fit: cover`, `loading="lazy"`. Text: padding 48 (fluid down to 24), eyebrow Bold 21/1.1, title Bold 32/1.1 (fluid 24-32, `h2`), 12 px apart, 24 px to the button; button = `.button--dark` (black, padding 16/24, pill). Text colour: white on THORO and Konfigurator, `#101011` on Katalog and SMART. Backgrounds: `#72a3f3`, `#fdf8eb`, `#e8e4df` (tokens). The Konfigurator title keeps Figma's line break at desktop only.
+- Tile images: the raw PNGs have the 24 px radius baked in as transparency; the build script fills those corners with the colour just inside them and the CSS radius does the rounding (cover crops at a different scale per width, so a baked radius wouldn't match).
 - Hover on the tile:
   - image `scale(1 → 1.1)`, 500 ms ease-out;
   - button: a grey `#4A4A4A` overlay fades in (opacity, 200 ms ease-in-out) instead of animating background-color.
-- The whole tile is clickable through the button's link stretched with `::after`, so there's still a single focus target.
+- The whole tile is clickable: the `<a class="tile__link">` wraps the pill (`<span class="button button--dark">`) and its `::after` covers the tile, so there's a single focus target. Keyboard focus on the link gets the same zoom + overlay as hover.
 
 ### 3.7 Shader section (`.shader`)
 
@@ -261,6 +269,8 @@ tests/       (Playwright, written after the page is built)
 
 - ~~TBD #3~~ done (§0.3). All hero and header copy matched Figma.
 - ~~**Hero arrows below 1024 px**~~ **Resolved (user-approved):** hidden below 1024 px; swipe + progress segments (64 × 44 px tap areas) + the pause/play toggle (44 × 44).
+- **Tile copy typo in Figma (#4, node 1:706):** "Pobierz aplikacje na telefon"; correct Polish would be "aplikację". Built verbatim from Figma; change only if the user confirms.
+- **Tile text contrast (from the design):** white on `#72a3f3` (Konfigurator) is about 2.5:1, under the 3:1 needed even for large text; THORO's white eyebrow sits on the light wall (well under 3:1). Built as designed. Options: a darker blue or text colour for Konfigurator, a subtle bottom scrim on THORO.
 - **Lamp positions:** `scripts/find-lamps.mjs` → `design/lamp-positions.json` (§0.2), then check by eye.
 - **User check:** shader section copy (image-only).
 - **TBD #4** (VP's): tile radius, type scale, button styles, benefit icon colour.

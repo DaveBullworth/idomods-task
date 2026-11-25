@@ -1,0 +1,192 @@
+/* Tiles (Figma 1:631, design/figma/04-design-context-vps.tsx; PLAN.md §3.6).
+
+   Desktop (>= 1024): two mirrored rows, 648 | 936 and 936 | 648 at 1600.
+   One 3-column grid does both: 648fr 272fr 648fr with 16 px gaps gives
+   648 / 16 + 272 + 16 ... = 936 exactly at 1600 and scales proportionally.
+   Row height scales with the column (518 at 1600, min 360), so both tiles
+   keep their image's ratio and cover only crops once the 360 px floor applies.
+
+   Below 1024: one column, fixed height, image cropped with object-fit:
+   cover (the srcset `sizes` in index.html account for that crop). */
+.tiles {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+
+.tile {
+  --tile-fg: var(--c-black);
+  --tile-pad: clamp(24px, 2.5vw + 8px, 48px);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: clamp(440px, 60vw, 520px);
+  overflow: hidden;
+  color: var(--tile-fg);
+  background: var(--tile-bg, var(--c-tile-stone));
+  border-radius: 24px;
+  isolation: isolate;
+}
+
+.tile--thoro {
+  --tile-fg: var(--c-white);
+  --tile-pos: 40% center;
+}
+
+.tile--configurator {
+  --tile-fg: var(--c-white);
+  --tile-bg: var(--c-tile-blue);
+  --tile-pos: 85% center;
+}
+
+.tile--catalog {
+  --tile-bg: var(--c-tile-cream);
+  --tile-pos: 85% center;
+}
+
+.tile--smart {
+  --tile-bg: var(--c-tile-stone);
+  --tile-pos: 75% center;
+}
+
+/* Image zoom on hover (comments spec 05): 1 -> 1.1, 500 ms ease-out, clipped
+   by the tile's overflow. `scale` is neutralised under reduced motion. */
+.tile__img {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--tile-pos, center);
+  transition: scale var(--dur-tile) var(--ease-out);
+}
+
+.tile__body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+  padding: var(--tile-pad);
+}
+
+.tile__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-weight: var(--fw-bold);
+  line-height: 1.1;
+}
+
+.tile__eyebrow {
+  font-size: var(--fs-lead);
+}
+
+.tile__title {
+  font-size: var(--fs-tile-title);
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+/* Figma's forced line break (Konfigurator) only at desktop; narrower tiles wrap naturally */
+.tile__title br {
+  display: none;
+}
+
+/* One focus target: the link wraps the pill, and its ::after covers the
+   whole tile (the link itself stays unpositioned). */
+.tile__link {
+  display: inline-flex;
+  border-radius: var(--radius-pill);
+}
+
+.tile__link::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+}
+
+/* Hover anywhere on the tile: zoom + button overlay (grey). Keyboard focus
+   gets the same state. */
+@media (hover: hover) {
+  .tile:hover .tile__img {
+    scale: var(--scale-tile-hover);
+  }
+
+  .tile:hover .button::before {
+    opacity: 1;
+  }
+}
+
+.tile:has(.tile__link:focus-visible) .tile__img {
+  scale: var(--scale-tile-hover);
+}
+
+.tile__link:focus-visible .button::before {
+  opacity: 1;
+}
+
+/* Below 1024, tiles with a flat background (configurator, catalog, smart)
+   stack: image block on top, text underneath on the same colour (the images'
+   own background, so the join is invisible). Overlaying the text, as on
+   desktop, would put it across the device mockups at these widths. THORO is
+   a photo with a dark lower half and keeps the overlay. The `sizes` in
+   index.html follow these boxes: wide images cover a 4:3 box at 1.355x the
+   tile width, a 16:9 box at ~1.017x. */
+@media (width < 1024px) {
+  .tile--split {
+    justify-content: flex-start;
+    height: auto;
+  }
+
+  .tile--split .tile__img {
+    position: static;
+    z-index: auto;
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  /* painted after the (possibly zoomed) image */
+  .tile--split .tile__body {
+    position: relative;
+    padding-top: 8px;
+  }
+}
+
+@media (640px <= width < 1024px) {
+  .tile--split .tile__img {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+@media (width >= 1024px) {
+  .tiles {
+    grid-template-columns: 648fr 272fr 648fr;
+  }
+
+  .tile__title br {
+    display: inline;
+  }
+
+  /* Row height from the column width (not aspect-ratio + min-height, which
+     would force a min width and overflow the grid at 1024): narrow tile width
+     (column - 32) * 0.4133, times 518/648 = 0.3304. 518 px at 1600. */
+  .tile {
+    height: max(360px, (min(100vw - 32px, 1600px) - 32px) * 0.3304);
+  }
+
+  /* row 1: narrow | wide; row 2: wide | narrow */
+  .tile--row1.tile--wide {
+    grid-column: 2 / 4;
+  }
+
+  .tile--row2.tile--wide {
+    grid-column: 1 / 3;
+  }
+
+  .tile--row2.tile--narrow {
+    grid-column: 3;
+  }
+}

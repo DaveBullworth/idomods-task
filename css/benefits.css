@@ -1,0 +1,65 @@
+/* VP's section (Figma 1:593, design/figma/04-design-context-vps.tsx; PLAN.md §3.5).
+   `.vps` is the section wrapper shared with the tiles (css/tiles.css):
+   86 px vertical padding, 16 px gutter, 1600 max, 64 px between benefits and tiles. */
+.vps {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 4vw, 64px);
+  width: min(100% - 2 * var(--gutter), var(--container));
+  margin-inline: auto;
+  padding-block: clamp(48px, 4.5vw, 86px);
+}
+
+/* Benefits: 5 at desktop (32 px gaps), 3 + 2 at tablet, 2 columns on phones
+   (design/NOTES.md). */
+.benefits {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.benefit {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 16px;
+}
+
+.benefit__icon {
+  flex: none;
+  color: var(--c-black);
+}
+
+.benefit__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.benefit__title {
+  font-size: var(--fs-lead);
+  font-weight: var(--fw-bold);
+  line-height: 1.1;
+  color: var(--c-black);
+}
+
+.benefit__text {
+  font-size: var(--fs-14);
+  font-weight: var(--fw-medium);
+  line-height: 1.2;
+  color: var(--c-ink);
+}
+
+@media (width >= 640px) {
+  .benefits {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (width >= 1024px) {
+  .benefits {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 32px;
+  }
+}

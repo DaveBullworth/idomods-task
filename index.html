@@ -36,6 +36,8 @@
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/header.css" />
     <link rel="stylesheet" href="css/hero.css" />
+    <link rel="stylesheet" href="css/benefits.css" />
+    <link rel="stylesheet" href="css/tiles.css" />
 
     <script src="js/header.js" defer></script>
     <script src="js/hero-slider.js" defer></script>
@@ -435,6 +437,236 @@
           </button>
         </div>
       </section>
+
+      <!-- VP's: benefits + tiles (Figma 1:593, design/figma/04-design-context-vps.tsx) -->
+      <div class="vps">
+        <ul class="benefits">
+          <li class="benefit">
+            <svg
+              class="benefit__icon"
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                fill="currentColor"
+                d="M25.333 8A1.333 1.333 0 0 0 24 9.333v5.334A1.334 1.334 0 0 1 22.667 16H9.88l1.733-1.72a1.339 1.339 0 1 0-1.893-1.893l-4 4a1.3 1.3 0 0 0-.28.44 1.33 1.33 0 0 0 0 1.013c.063.164.159.313.28.44l4 4a1.333 1.333 0 0 0 1.893 0 1.333 1.333 0 0 0 0-1.893l-1.733-1.72h12.787a4 4 0 0 0 4-4V9.333A1.333 1.333 0 0 0 25.333 8"
+              />
+            </svg>
+            <div class="benefit__copy">
+              <p class="benefit__title">Zwroty nawet do 100 dni</p>
+              <p class="benefit__text">szybkie i proste</p>
+            </div>
+          </li>
+          <li class="benefit">
+            <svg
+              class="benefit__icon"
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                fill="currentColor"
+                d="M24 2.667H8A1.333 1.333 0 0 0 6.667 4v24a1.333 1.333 0 0 0 2.2 1.013L16 23.027l7.053 5.92a1.33 1.33 0 0 0 .947.386 1.1 1.1 0 0 0 .507-.106A1.33 1.33 0 0 0 25.333 28V4A1.334 1.334 0 0 0 24 2.667m-1.333 22.48-5.814-4.88a1.334 1.334 0 0 0-1.706 0l-5.814 4.88V5.333h13.334z"
+              />
+            </svg>
+            <div class="benefit__copy">
+              <p class="benefit__title">5 lat gwarancji</p>
+              <p class="benefit__text">na wszystkie produkty</p>
+            </div>
+          </li>
+          <li class="benefit">
+            <svg
+              class="benefit__icon"
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                fill="currentColor"
+                d="M30.667 16.667v6.666a1.334 1.334 0 0 1-1.334 1.334H28a4 4 0 1 1-8 0h-8a4 4 0 1 1-8 0H2.667a1.333 1.333 0 0 1-1.334-1.334v-16a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4V10H24a4 4 0 0 1 3.2 1.6l3.2 4.267q.059.087.093.186l.08.147q.089.225.094.467m-21.334 8a1.334 1.334 0 1 0-2.667 0 1.334 1.334 0 0 0 2.667 0m9.334-17.334A1.333 1.333 0 0 0 17.333 6h-12A1.333 1.333 0 0 0 4 7.333V22h1.04a4 4 0 0 1 5.92 0h7.707zm2.666 8h5.334l-1.6-2.133A1.33 1.33 0 0 0 24 12.667h-2.667zm4 9.334a1.333 1.333 0 1 0-2.665 0 1.333 1.333 0 0 0 2.665 0M28 18h-6.667v3.707A4 4 0 0 1 26.96 22H28z"
+              />
+            </svg>
+            <div class="benefit__copy">
+              <p class="benefit__title">Darmowa dostawa</p>
+              <p class="benefit__text">już za 299 zł</p>
+            </div>
+          </li>
+          <li class="benefit">
+            <svg
+              class="benefit__icon"
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <mask
+                id="shield-a"
+                width="26"
+                height="30"
+                x="3"
+                y="1"
+                maskUnits="userSpaceOnUse"
+                style="mask-type: luminance"
+              >
+                <path fill="#fff" d="M28.833 1.333H3.167v29.334h25.666z" />
+              </mask>
+              <g fill="currentColor" mask="url(#shield-a)">
+                <path
+                  d="M16.76 11.796h-2.364V5.094L5.53 9.398v12.683l14.551 5.895 6.389-5.005V8.498h-7.082V6.15h9.445v17.96l-8.369 6.557-17.297-7.008V7.933l13.593-6.6z"
+                />
+                <path
+                  d="M11.714 15.314c0-2.267 1.85-4.104 4.132-4.104s4.132 1.837 4.132 4.104v5.864h-8.264z"
+                />
+              </g>
+            </svg>
+            <div class="benefit__copy">
+              <p class="benefit__title">Polskie produkty</p>
+              <p class="benefit__text">sprawdzona jakość</p>
+            </div>
+          </li>
+          <li class="benefit">
+            <svg
+              class="benefit__icon"
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                fill="currentColor"
+                d="M28 5.333h-4V4a1.333 1.333 0 0 0-1.333-1.333H9.333A1.333 1.333 0 0 0 8 4v1.333H4a1.333 1.333 0 0 0-1.333 1.334v4A5.333 5.333 0 0 0 8 16h2.053a8 8 0 0 0 4.614 2.547v2.786h-1.334a4 4 0 0 0-4 4V28a1.333 1.333 0 0 0 1.334 1.333h10.666A1.333 1.333 0 0 0 22.667 28v-2.667a4 4 0 0 0-4-4h-1.334v-2.786A8 8 0 0 0 21.947 16H24a5.333 5.333 0 0 0 5.333-5.333v-4A1.334 1.334 0 0 0 28 5.333m-20 8a2.667 2.667 0 0 1-2.667-2.666V8H8v2.667a8 8 0 0 0 .467 2.666zM18.667 24A1.333 1.333 0 0 1 20 25.333v1.334h-8v-1.334A1.333 1.333 0 0 1 13.333 24zm2.666-13.333a5.333 5.333 0 1 1-10.666 0V5.333h10.666zm5.334 0A2.666 2.666 0 0 1 24 13.333h-.467A8 8 0 0 0 24 10.667V8h2.667z"
+              />
+            </svg>
+            <div class="benefit__copy">
+              <p class="benefit__title">Oficjalny sklep producenta</p>
+              <p class="benefit__text">gwarancja satysfakcji</p>
+            </div>
+          </li>
+        </ul>
+
+        <div class="tiles">
+          <article class="tile tile--thoro tile--narrow tile--row1">
+            <img
+              class="tile__img"
+              srcset="
+                assets/img/tile-thoro-640.webp   640w,
+                assets/img/tile-thoro-960.webp   960w,
+                assets/img/tile-thoro-1296.webp 1296w
+              "
+              sizes="(min-width: 1024px) max((min(100vw - 32px, 1600px) - 32px) * 0.4133, 450px), max(100vw - 32px, clamp(440px, 60vw, 520px) * 1.251)"
+              src="assets/img/tile-thoro-960.webp"
+              width="1296"
+              height="1036"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="tile__body">
+              <div class="tile__copy">
+                <p class="tile__eyebrow">Marka THORO</p>
+                <h2 class="tile__title">Poznaj lampy premium</h2>
+              </div>
+              <a class="tile__link" href="#"
+                ><span class="button button--dark">Odwiedź sklep THORO</span></a
+              >
+            </div>
+          </article>
+          <article class="tile tile--split tile--configurator tile--wide tile--row1">
+            <img
+              class="tile__img"
+              srcset="
+                assets/img/tile-configurator-640.webp   640w,
+                assets/img/tile-configurator-960.webp   960w,
+                assets/img/tile-configurator-1440.webp 1440w,
+                assets/img/tile-configurator-1872.webp 1872w
+              "
+              sizes="(min-width: 1024px) max((min(100vw - 32px, 1600px) - 32px) * 0.5867 + 16px, 650px), (min-width: 640px) calc((100vw - 32px) * 1.017), calc((100vw - 32px) * 1.355)"
+              src="assets/img/tile-configurator-960.webp"
+              width="1872"
+              height="1036"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="tile__body">
+              <div class="tile__copy">
+                <p class="tile__eyebrow">Konfigurator 3D</p>
+                <h2 class="tile__title">Wybierz projekt i dostosuj <br />go do swojego wnętrza</h2>
+              </div>
+              <a class="tile__link" href="#"
+                ><span class="button button--dark">Stwórz swój projekt</span></a
+              >
+            </div>
+          </article>
+          <article class="tile tile--split tile--catalog tile--wide tile--row2">
+            <img
+              class="tile__img"
+              srcset="
+                assets/img/tile-catalog-640.webp   640w,
+                assets/img/tile-catalog-960.webp   960w,
+                assets/img/tile-catalog-1440.webp 1440w,
+                assets/img/tile-catalog-1872.webp 1872w
+              "
+              sizes="(min-width: 1024px) max((min(100vw - 32px, 1600px) - 32px) * 0.5867 + 16px, 650px), (min-width: 640px) calc((100vw - 32px) * 1.017), calc((100vw - 32px) * 1.355)"
+              src="assets/img/tile-catalog-960.webp"
+              width="1872"
+              height="1036"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="tile__body">
+              <div class="tile__copy">
+                <p class="tile__eyebrow">Katalog</p>
+                <h2 class="tile__title">Odkryj najnowszy katalog</h2>
+              </div>
+              <a class="tile__link" href="#"
+                ><span class="button button--dark">Sprawdź katalog</span></a
+              >
+            </div>
+          </article>
+          <article class="tile tile--split tile--smart tile--narrow tile--row2">
+            <img
+              class="tile__img"
+              srcset="
+                assets/img/tile-smart-640.webp   640w,
+                assets/img/tile-smart-960.webp   960w,
+                assets/img/tile-smart-1296.webp 1296w
+              "
+              sizes="(min-width: 1024px) max((min(100vw - 32px, 1600px) - 32px) * 0.4133, 450px), calc(100vw - 32px)"
+              src="assets/img/tile-smart-960.webp"
+              width="1296"
+              height="1036"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="tile__body">
+              <div class="tile__copy">
+                <p class="tile__eyebrow">SOLLUX SMART</p>
+                <h2 class="tile__title">Przymierz lampę w aplikacji</h2>
+              </div>
+              <a class="tile__link" href="#"
+                ><span class="button button--dark">Pobierz aplikacje na telefon</span></a
+              >
+            </div>
+          </article>
+        </div>
+      </div>
     </main>
   </body>
 </html>

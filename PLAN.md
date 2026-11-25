@@ -146,11 +146,13 @@ tests/       (Playwright, written after the page is built)
 
 - Absolutely positioned over the hero, transparent, white text and icons.
 - Items: logo, nav (Lampy ▾, Kolory ▾, Pomieszczenia ▾, Nowości, Bestsellery, Promocje), search pill, "Stwórz swoją lampę" link with the cube icon, user icon, cart icon. Per NOTES, the arrows are decoration only and there are no dropdowns.
-- Hover: `.header__bg` (white) fades `opacity 0 → 1`. Text, icons and logo transition `color` white → black; SVGs use `currentColor`. All 250 ms ease-in-out, and the same timing on leave.
-- Hover only applies with `(hover: hover)`. Also apply the state on `:focus-within`.
-- Below **1280 px** (moved from 1024 by user decision; the full row doesn't fit below ~1300): logo + cart + burger. Nav, search, configurator and account go into the burger panel.
-  - The burger opens a full-height panel that slides in with `transform` (a plain fade under reduced motion).
-  - `aria-expanded` / `aria-controls`; focus trap while open; Esc closes; body scroll lock.
+- Hover: `.header::before` (white) fades `opacity 0 → 1`. Text, icons and logo transition `color` white → black; SVGs use `currentColor`. All 250 ms ease-in-out, and the same timing on leave. **(built)**
+- Hover only applies with `(hover: hover)`. The same solid state also applies on keyboard focus (`.header:has(:focus-visible)`, not `:focus-within`, so a mouse click on a link doesn't leave the header stuck white) and while the burger panel is open (`.header--open`).
+- Below **1280 px** (moved from 1024 by user decision; the full row doesn't fit below ~1300): logo + cart + burger. Nav, search, configurator and account go into the burger panel. **(built)**
+  - One set of markup: `.header__menu` (`#header-menu`) wraps nav, search and `.header__menu-actions` (configurator, account). From 1280 it's a flex part of the row (a negative end margin keeps the 8 px gap before the cart); below 1280 it's the panel. Nothing is duplicated.
+  - The panel is full-screen white under the bar, slides in from the right with `transform` (500 ms, `--dur-move`) plus an opacity fade; under reduced motion it's the fade only. The burger morphs into an X in step. `visibility` flips after the slide-out so the closed panel is out of the tab order.
+  - Burger: `aria-expanded` / `aria-controls="header-menu"`, constant label "Menu". Opening focuses the first link; Tab cycles through the bar and the panel; everything outside the header is `inert`; Esc closes and returns focus to the burger; following a link closes; widening past 1280 closes. Scroll lock: `html:has(.header--open) { overflow: hidden }`.
+  - In the panel the account icon shows its label "Moje konto" (on desktop the label is visually hidden and is the link's accessible name), and both panel icons are 24 px so the labels line up.
 - Sizes and spacing: §0.3. The header row uses 16 px side padding with a max width of 1600 (as in Figma), not a wider page gutter. Group gaps `clamp(16px, 3.33vw, 64px)`, link gaps `clamp(12px, 1.67vw, 32px)`; the search pill takes the remaining width. From 1280 to 1439 the configurator is icon-only (label kept for screen readers). Measured search width: 270 px at 1280–1439, 374 px at 1920.
 
 ### 3.3 Hero stage (`.hero`, `.hero__stage`)
@@ -180,15 +182,17 @@ tests/       (Playwright, written after the page is built)
 
 ### 3.4 Slider (`hero-slider.js`)
 
-- Autoplay: a new slide every 3 s.
+**(built: `js/hero-slider.js`, JS hooks are `data-slider*` / `data-slide*` / `data-lamps`)**
+- Autoplay: a new slide every 3 s (`--slide-interval`, read from CSS).
 - Crossfade: opacity, 600 ms ease-in-out.
-- Incoming image: `scale(1.05) → scale(1)` over 800 ms ease-out.
-- Progress bar: one segment per slide at the bottom centre. The active one fills yellow with `transform: scaleX(0 → 1)`, linear over 3 s, and resets on slide change. Clicking a segment goes to that slide.
-- Prev/next buttons; keyboard ←/→ when the hero has focus.
-- Pause on hover and focus-within, and on `visibilitychange` (hidden).
-- Timing uses `setTimeout`/`requestAnimationFrame` so `page.clock` can control it.
-- `aria-roledescription="carousel"`, slides labelled "1 z 2", `aria-live="off"` while autoplaying.
-- Reduced motion: no autoplay and no scale-in; manual slide changes still crossfade (opacity); progress bar hidden.
+- Incoming image: `scale 1.05 → 1` over 800 ms ease-out. The outgoing image keeps scale 1 until its fade-out has finished, then waits at 1.05 out of sight. Zoom origin is the lamp group's centre (`--lamps-origin`), which keeps the baked lamps closest to the overlays during the zoom.
+- **Lamp overlays:** shown on slides marked `data-slide-lamps` (slide 2). 1 → 2: they fade in with the crossfade. 2 → 1: they hold until the rock zoom has settled (`--dur-zoom` delay, 0 under reduced motion), then fade out over the baked lamps, so there's no double edge while the rock is still zooming. Checked frame by frame at 1280 × 633, DPR 1.5.
+- Progress bar: one segment per slide at the bottom centre. The active one fills yellow with `transform: scaleX(0 → 1)`, linear over 3 s, and resets on slide change. It is driven from the same rAF clock as the slide change, so the bar and the switch can't drift. Clicking a segment goes to that slide.
+- Prev/next buttons; keyboard ←/→ while focus is inside the hero; touch swipe (≥ 50 px, horizontal; the hero has `touch-action: pan-y`). Manual changes restart the 3 s timer.
+- **Pause** (changed from "hover on the hero"): while the mouse is over a control (arrows, progress), while **keyboard** focus is inside the hero (`:focus-visible`, so a mouse click doesn't stop autoplay), while the tab is hidden, and while the hero is off-screen (IntersectionObserver). Pausing on hover over the whole hero would stop autoplay for most desktop visitors, because the hero fills the first screen and the cursor usually rests on it.
+- Timing uses `requestAnimationFrame` + `performance.now`, which `page.clock` controls (verified: slide changes at exactly 3.0 s; the bar is at 0.49 at 1.5 s).
+- `aria-roledescription="karuzela"`, slides labelled "1 z 2" with `aria-hidden` on the inactive one, `aria-live="off"`, `aria-current` on the active segment.
+- Reduced motion: no autoplay and no scale-in; manual slide changes still crossfade (opacity). The progress bar **stays visible** as a static indicator (active segment full), because below 1024 px its segments are the only slide controls besides swipe.
 
 ### 3.5 Benefits (`.benefits`)
 

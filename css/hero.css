@@ -21,12 +21,18 @@
      (inset + arrow + 24 px gap); at 1920 the 1600 column is wider anyway */
   --arrow-clear: calc(var(--arrow-inset) + var(--arrow-size) + 24px);
 
+  /* centre of the lamp group in the stage (lamp-positions.json): x 21.77-80.52 %, y 7.87-76.58 % */
+  --lamps-origin: 51.15% 42.2%;
+
   position: relative;
   display: grid;
   height: var(--hero-h);
   overflow: hidden;
   color: var(--c-white);
   background: var(--c-black);
+
+  /* horizontal swipes go to the slider (js/hero-slider.js), vertical ones scroll */
+  touch-action: pan-y;
 }
 
 .hero__slides {
@@ -34,10 +40,12 @@
   inset: 0;
 }
 
+/* Crossfade (comments spec 04): 600 ms ease-in-out, both ways. */
 .hero__slide {
   position: absolute;
   inset: 0;
   opacity: 0;
+  transition: opacity var(--dur-fade) var(--ease);
 }
 
 .hero__slide--active {
@@ -67,9 +75,21 @@
   transform: translate(-50%, -50%);
 }
 
+/* Incoming image zooms 1.05 -> 1 over 800 ms ease-out. An inactive image
+   waits at 1.05, but only snaps there after its own fade-out has finished,
+   so the outgoing slide never jumps. Origin: the lamp group's centre, which
+   keeps the baked lamps closest to the overlays while the zoom runs. */
 .hero__img {
   width: 100%;
   height: 100%;
+  transform-origin: var(--lamps-origin);
+  scale: var(--scale-slide-in);
+  transition: scale 0s linear var(--dur-fade);
+}
+
+.hero__slide--active .hero__img {
+  scale: 1;
+  transition: scale var(--dur-zoom) var(--ease-out);
 }
 
 /* Lamps */
@@ -86,16 +106,19 @@
 
 /* Slide 1 has the lamps baked into the photo, so the overlay images stay
    hidden there (no reliance on pixel-perfect alignment); only the click glow
-   shows. They fade in with slide 2, in sync with the slide crossfade. The
+   shows. They fade in together with slide 2's crossfade. Going back, they
+   hold until slide 1's zoom has settled (--dur-zoom; 0 under reduced motion)
+   and then fade out over the baked lamps, which by then are in place. The
    buttons stay in place and clickable on both slides. */
 .lamp__img {
   width: 100%;
   opacity: 0;
-  transition: opacity var(--dur-fade) var(--ease);
+  transition: opacity var(--dur-fade) var(--ease) var(--dur-zoom);
 }
 
 .hero__stage--lamps-visible .lamp__img {
   opacity: 1;
+  transition-delay: 0s;
 }
 
 /* Text block: grid item on top of the absolute layers */
@@ -173,6 +196,26 @@
   background: var(--c-control-bg);
   border-radius: var(--radius-pill);
   transform: translateY(-50%);
+  isolation: isolate;
+}
+
+/* Hover (not in the design; simplest consistent option): a second layer of
+   the same translucent black fades in, as with the buttons' overlay. */
+.hero__arrow::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: '';
+  background: var(--c-control-bg);
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity var(--dur-button) var(--ease);
+}
+
+@media (hover: hover) {
+  .hero__arrow:hover::before {
+    opacity: 1;
+  }
 }
 
 .hero__arrow--prev {
@@ -183,7 +226,10 @@
   right: var(--arrow-inset);
 }
 
-/* Progress: 2 x 64 x 2 px bars; the buttons are 44 px tall tap targets. */
+/* Progress: 2 x 64 x 2 px bars; the buttons are 44 px tall tap targets.
+   While autoplaying, js/hero-slider.js sets the active fill's scaleX every
+   frame (linear over --slide-interval). Without autoplay (reduced motion, no
+   JS) the active bar is simply full. */
 .hero__progress {
   position: absolute;
   bottom: 11px; /* 32 px to the bar = 11 + (44 - 2) / 2 */

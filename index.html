@@ -38,11 +38,12 @@
     <link rel="stylesheet" href="css/hero.css" />
 
     <script src="js/header.js" defer></script>
+    <script src="js/hero-slider.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Przejdź do treści</a>
 
-    <header class="header">
+    <header class="header" data-header>
       <div class="header__inner">
         <a class="header__logo" href="#" aria-label="SOLLUX – strona główna">
           <svg
@@ -60,106 +61,113 @@
           </svg>
         </a>
 
-        <nav class="header__nav" id="header-nav" aria-label="Menu główne">
-          <ul class="header__links">
-            <li>
-              <a class="header__link" href="#">
-                Lampy
-                <svg
-                  class="header__chevron"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  aria-hidden="true"
-                  focusable="false"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M11.333 6.113a.667.667 0 0 0-.94 0L8 8.473l-2.36-2.36a.667.667 0 1 0-.94.947l2.827 2.827a.667.667 0 0 0 .946 0l2.86-2.827a.67.67 0 0 0 0-.947"
-                  />
-                </svg>
-              </a>
-            </li>
-            <li>
-              <a class="header__link" href="#">
-                Kolory
-                <svg
-                  class="header__chevron"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  aria-hidden="true"
-                  focusable="false"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M11.333 6.113a.667.667 0 0 0-.94 0L8 8.473l-2.36-2.36a.667.667 0 1 0-.94.947l2.827 2.827a.667.667 0 0 0 .946 0l2.86-2.827a.67.67 0 0 0 0-.947"
-                  />
-                </svg>
-              </a>
-            </li>
-            <li>
-              <a class="header__link" href="#">
-                Pomieszczenia
-                <svg
-                  class="header__chevron"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  aria-hidden="true"
-                  focusable="false"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M11.333 6.113a.667.667 0 0 0-.94 0L8 8.473l-2.36-2.36a.667.667 0 1 0-.94.947l2.827 2.827a.667.667 0 0 0 .946 0l2.86-2.827a.67.67 0 0 0 0-.947"
-                  />
-                </svg>
-              </a>
-            </li>
-            <li><a class="header__link" href="#">Nowości</a></li>
-            <li><a class="header__link" href="#">Bestsellery</a></li>
-            <li><a class="header__link" href="#">Promocje</a></li>
-          </ul>
-        </nav>
+        <!-- Header row from 1280 px, burger panel below (css/header.css) -->
+        <div class="header__menu" id="header-menu" data-menu>
+          <nav class="header__nav" aria-label="Menu główne">
+            <ul class="header__links">
+              <li>
+                <a class="header__link" href="#">
+                  Lampy
+                  <svg
+                    class="header__chevron"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M11.333 6.113a.667.667 0 0 0-.94 0L8 8.473l-2.36-2.36a.667.667 0 1 0-.94.947l2.827 2.827a.667.667 0 0 0 .946 0l2.86-2.827a.67.67 0 0 0 0-.947"
+                    />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a class="header__link" href="#">
+                  Kolory
+                  <svg
+                    class="header__chevron"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M11.333 6.113a.667.667 0 0 0-.94 0L8 8.473l-2.36-2.36a.667.667 0 1 0-.94.947l2.827 2.827a.667.667 0 0 0 .946 0l2.86-2.827a.67.67 0 0 0 0-.947"
+                    />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a class="header__link" href="#">
+                  Pomieszczenia
+                  <svg
+                    class="header__chevron"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M11.333 6.113a.667.667 0 0 0-.94 0L8 8.473l-2.36-2.36a.667.667 0 1 0-.94.947l2.827 2.827a.667.667 0 0 0 .946 0l2.86-2.827a.67.67 0 0 0 0-.947"
+                    />
+                  </svg>
+                </a>
+              </li>
+              <li><a class="header__link" href="#">Nowości</a></li>
+              <li><a class="header__link" href="#">Bestsellery</a></li>
+              <li><a class="header__link" href="#">Promocje</a></li>
+            </ul>
+          </nav>
 
-        <form class="header__search search" role="search" action="#">
-          <label class="visually-hidden" for="search-input">Szukaj w sklepie</label>
-          <input
-            class="search__input"
-            id="search-input"
-            type="search"
-            name="q"
-            placeholder="Czego szukasz?"
-            autocomplete="off"
-          />
-          <button class="search__button" type="submit" aria-label="Szukaj">
-            <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
-              <path
-                fill="currentColor"
-                d="M18.092 16.908 15 13.842A7.5 7.5 0 1 0 13.842 15l3.066 3.067a.83.83 0 0 0 1.184 0 .833.833 0 0 0 0-1.159M9.167 15a5.833 5.833 0 1 1 0-11.666 5.833 5.833 0 0 1 0 11.666"
-              />
-            </svg>
-          </button>
-        </form>
+          <form class="header__search search" role="search" action="#" data-search>
+            <label class="visually-hidden" for="search-input">Szukaj w sklepie</label>
+            <input
+              class="search__input"
+              id="search-input"
+              type="search"
+              name="q"
+              placeholder="Czego szukasz?"
+              autocomplete="off"
+            />
+            <button class="search__button" type="submit" aria-label="Szukaj">
+              <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                <path
+                  fill="currentColor"
+                  d="M18.092 16.908 15 13.842A7.5 7.5 0 1 0 13.842 15l3.066 3.067a.83.83 0 0 0 1.184 0 .833.833 0 0 0 0-1.159M9.167 15a5.833 5.833 0 1 1 0-11.666 5.833 5.833 0 0 1 0 11.666"
+                />
+              </svg>
+            </button>
+          </form>
+
+          <div class="header__menu-actions">
+            <a class="header__configurator" href="#">
+              <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                <path
+                  fill="currentColor"
+                  d="M17.058 6.142v-.067l-.05-.125a1 1 0 0 0-.058-.075 1 1 0 0 0-.075-.1l-.075-.058-.133-.067-6.25-3.858a.83.83 0 0 0-.884 0l-6.2 3.858-.075.067-.075.058a1 1 0 0 0-.075.1 1 1 0 0 0-.058.075L3 6.075v.067a1 1 0 0 0 0 .216v7.284a.83.83 0 0 0 .392.708l6.25 3.858a.4.4 0 0 0 .125.05h.066a.7.7 0 0 0 .434 0h.066a.4.4 0 0 0 .125-.05l6.209-3.858a.83.83 0 0 0 .391-.708V6.358a1 1 0 0 0 0-.216m-7.891 9.866-4.584-2.833V7.858l4.584 2.825zM10 9.242 5.333 6.358 10 3.483l4.667 2.875zm5.417 3.933-4.584 2.833v-5.325l4.584-2.825z"
+                />
+              </svg>
+              <span class="header__configurator-label">Stwórz swoją lampę</span>
+            </a>
+            <a class="header__icon header__icon--user" href="#">
+              <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path
+                  fill="currentColor"
+                  d="M15.71 12.71a6 6 0 1 0-7.42 0 10 10 0 0 0-6.22 8.18 1.006 1.006 0 1 0 2 .22 8 8 0 0 1 15.9 0 1 1 0 0 0 1 .89h.11a1 1 0 0 0 .88-1.1 10 10 0 0 0-6.25-8.19M12 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8"
+                />
+              </svg>
+              <span class="header__icon-label">Moje konto</span>
+            </a>
+          </div>
+        </div>
 
         <div class="header__actions">
-          <a class="header__configurator" href="#">
-            <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
-              <path
-                fill="currentColor"
-                d="M17.058 6.142v-.067l-.05-.125a1 1 0 0 0-.058-.075 1 1 0 0 0-.075-.1l-.075-.058-.133-.067-6.25-3.858a.83.83 0 0 0-.884 0l-6.2 3.858-.075.067-.075.058a1 1 0 0 0-.075.1 1 1 0 0 0-.058.075L3 6.075v.067a1 1 0 0 0 0 .216v7.284a.83.83 0 0 0 .392.708l6.25 3.858a.4.4 0 0 0 .125.05h.066a.7.7 0 0 0 .434 0h.066a.4.4 0 0 0 .125-.05l6.209-3.858a.83.83 0 0 0 .391-.708V6.358a1 1 0 0 0 0-.216m-7.891 9.866-4.584-2.833V7.858l4.584 2.825zM10 9.242 5.333 6.358 10 3.483l4.667 2.875zm5.417 3.933-4.584 2.833v-5.325l4.584-2.825z"
-              />
-            </svg>
-            <span class="header__configurator-label">Stwórz swoją lampę</span>
-          </a>
-          <a class="header__icon header__icon--user" href="#" aria-label="Moje konto">
-            <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path
-                fill="currentColor"
-                d="M15.71 12.71a6 6 0 1 0-7.42 0 10 10 0 0 0-6.22 8.18 1.006 1.006 0 1 0 2 .22 8 8 0 0 1 15.9 0 1 1 0 0 0 1 .89h.11a1 1 0 0 0 .88-1.1 10 10 0 0 0-6.25-8.19M12 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8"
-              />
-            </svg>
-          </a>
           <a class="header__icon" href="#" aria-label="Koszyk">
             <svg
               aria-hidden="true"
@@ -200,8 +208,9 @@
             class="header__burger"
             type="button"
             aria-expanded="false"
-            aria-controls="header-nav"
-            aria-label="Otwórz menu"
+            aria-controls="header-menu"
+            aria-label="Menu"
+            data-menu-toggle
           >
             <span class="header__burger-line"></span>
             <span class="header__burger-line"></span>
@@ -212,13 +221,19 @@
     </header>
 
     <main id="main">
-      <section class="hero" aria-roledescription="karuzela" aria-label="Bestsellery SOLLUX">
-        <div class="hero__slides">
+      <section
+        class="hero"
+        aria-roledescription="karuzela"
+        aria-label="Bestsellery SOLLUX"
+        data-slider
+      >
+        <div class="hero__slides" aria-live="off">
           <div
             class="hero__slide hero__slide--rock hero__slide--active"
             role="group"
             aria-roledescription="slajd"
             aria-label="1 z 2"
+            data-slide
           >
             <div class="hero__stage">
               <img
@@ -244,6 +259,9 @@
             role="group"
             aria-roledescription="slajd"
             aria-label="2 z 2"
+            aria-hidden="true"
+            data-slide
+            data-slide-lamps
           >
             <div class="hero__stage">
               <img
@@ -267,8 +285,9 @@
           </div>
         </div>
 
-        <!-- Lamps: same stage geometry as the slides; positions from design/lamp-positions.json -->
-        <div class="hero__stage hero__stage--lamps">
+        <!-- Lamps: same stage geometry as the slides; positions from design/lamp-positions.json.
+             Images visible only on slides marked data-slide-lamps (design/NOTES.md). -->
+        <div class="hero__stage hero__stage--lamps" data-lamps>
           <button
             class="lamp"
             type="button"
@@ -341,7 +360,12 @@
           </div>
         </div>
 
-        <button class="hero__arrow hero__arrow--prev" type="button" aria-label="Poprzedni slajd">
+        <button
+          class="hero__arrow hero__arrow--prev"
+          type="button"
+          aria-label="Poprzedni slajd"
+          data-slider-prev
+        >
           <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path
               fill="currentColor"
@@ -349,7 +373,12 @@
             />
           </svg>
         </button>
-        <button class="hero__arrow hero__arrow--next" type="button" aria-label="Następny slajd">
+        <button
+          class="hero__arrow hero__arrow--next"
+          type="button"
+          aria-label="Następny slajd"
+          data-slider-next
+        >
           <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path
               fill="currentColor"
@@ -358,16 +387,17 @@
           </svg>
         </button>
 
-        <div class="hero__progress">
+        <div class="hero__progress" data-slider-progress>
           <button
             class="hero__dot hero__dot--active"
             type="button"
             aria-label="Slajd 1"
             aria-current="true"
+            data-slider-dot
           >
             <span class="hero__dot-fill"></span>
           </button>
-          <button class="hero__dot" type="button" aria-label="Slajd 2">
+          <button class="hero__dot" type="button" aria-label="Slajd 2" data-slider-dot>
             <span class="hero__dot-fill"></span>
           </button>
         </div>

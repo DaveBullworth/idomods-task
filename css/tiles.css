@@ -63,6 +63,9 @@
   height: 100%;
   object-fit: cover;
   object-position: var(--tile-pos, center);
+  /* explicit 1, not the default none: under reduced motion the hover value
+     is also 1, so nothing changes and no scale transition starts */
+  scale: 1;
   transition: scale var(--dur-tile) var(--ease-out);
 }
 

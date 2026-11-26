@@ -23,5 +23,6 @@ The full list of decisions is in [`design/NOTES.md`](design/NOTES.md). The ones 
 - **Copy fixes:** the SOLLUX SMART tile button says "Pobierz aplikację na telefon" (the design has "aplikacje"), and the footer column is "Współpraca" (the design has "Wpsółpraca").
 - **Contrast:** THORO and Konfigurator tiles have a subtle dark gradient behind their white text, so the text meets WCAG contrast (4.5:1 for the eyebrow, 3:1 for the title). The design colours are unchanged.
 - **Hero lamps:** the lamps are part of the hero photo. On slide 1 only the photo's lamps show; the separate lamp images fade in with slide 2 and out again on the way back.
+- **Lamp light (the creative part of the brief):** click a lamp (or Tab to it and press Enter) to switch it on: a short flicker, a warm diffuser glow, a light cone and light on the rock, while the room dims a little. A "Kliknij lampę" hint shows on the first visit. Turn on all three for a small surprise in the headline.
 - **Mobile:** there are no mobile designs. The header switches to a burger menu below 1280 px, the tiles go to one column below 1024 px, and the benefits use two columns on phones.
 - **Hero slider:** autoplay pauses while the arrows or progress bar are hovered or keyboard focus is inside the hero, and there's a pause/play button next to the progress bar (WCAG 2.2.2).

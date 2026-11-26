@@ -1,0 +1,386 @@
+/* Lamp light (PLAN.md §3.3, comments spec 03; option B with a light dim).
+
+   Layers, bottom to top: slides -> lamps (buttons) -> .hero__dim ->
+   .hero__stage--light -> text. The light stage has the same 1920:1080
+   geometry as the photo, so every shape below is placed in % of the stage
+   (positions read from the lamp PNGs) and scales with it at every width.
+
+   Motion rules: only `.light__glow` (per lamp), `.light__peek`, the dim and
+   the headline glow animate, and only their opacity. The blurred / clipped
+   shapes inside never change, so they rasterise once. The screen blend sits
+   on the light stage, which itself never animates. */
+
+/* Room dim: none with no lamps on, then a little deeper per lamp */
+.hero__dim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: var(--c-black);
+  opacity: 0;
+  transition: opacity var(--dur-fade) var(--ease);
+}
+
+.hero--lit-1 .hero__dim {
+  opacity: var(--lamp-dim-1);
+}
+
+.hero--lit-2 .hero__dim {
+  opacity: var(--lamp-dim-2);
+}
+
+.hero--lit-3 .hero__dim {
+  opacity: var(--lamp-dim-3);
+}
+
+/* Hidden while unused: a blended layer on the page switches nearby text from
+   sub-pixel to greyscale anti-aliasing, so with no lamp on, hovered or
+   focused the hero would not be pixel-identical to the design. It turns
+   visible instantly and hides only after the switch-off fade. */
+.hero__stage--light {
+  z-index: 1;
+  pointer-events: none;
+  visibility: hidden;
+  mix-blend-mode: screen;
+  transition: visibility 0s linear var(--dur-fade);
+}
+
+.hero--lit .hero__stage--light,
+.hero:has(.lamp:focus-visible) .hero__stage--light {
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+@media (hover: hover) {
+  .hero:has(.lamp:hover) .hero__stage--light {
+    visibility: visible;
+    transition-delay: 0s;
+  }
+}
+
+/* Per-lamp geometry in % of the stage: diffuser centre (--cx, --cy), disc
+   size and tilt, cone direction / length / spread, pool on the rock. */
+.light {
+  position: absolute;
+  inset: 0;
+}
+
+.light--1 {
+  --cx: 51.2%;
+  --cy: 33.52%;
+  --dw: 10.94%;
+  --dh: 11.11%;
+  --rot: -22deg;
+  --cone-angle: 63deg;
+  --cone-len: 27.08%;
+  --cone-w: 27.78%;
+  --px: 63.8%;
+  --py: 77.31%;
+  --pw: 15.63%;
+  --ph: 6.48%;
+}
+
+.light--2 {
+  --cx: 60.21%;
+  --cy: 62.87%;
+  --dw: 4.43%;
+  --dh: 11.57%;
+  --rot: 25deg;
+  --cone-angle: 143deg;
+  --cone-len: 11.98%;
+  --cone-w: 15.74%;
+  --px: 50.78%;
+  --py: 75.46%;
+  --pw: 11.98%;
+  --ph: 5.09%;
+}
+
+.light--3 {
+  --cx: 36.35%;
+  --cy: 63.33%;
+  --dw: 13.02%;
+  --dh: 12.04%;
+  --rot: -20deg;
+  --cone-angle: 60deg;
+  --cone-len: 10.94%;
+  --cone-w: 21.3%;
+  --px: 41.67%;
+  --py: 79.81%;
+  --pw: 13.54%;
+  --ph: 5.56%;
+}
+
+.light__peek,
+.light__disc,
+.light__halo,
+.light__cone,
+.light__pool {
+  position: absolute;
+}
+
+/* Diffuser: the disc of light inside the lamp opening */
+.light__peek,
+.light__disc {
+  top: calc(var(--cy) - var(--dh) / 2);
+  left: calc(var(--cx) - var(--dw) / 2);
+  width: var(--dw);
+  height: var(--dh);
+  background: radial-gradient(
+    closest-side,
+    var(--c-light-core) 0%,
+    var(--c-light-warm) 45%,
+    rgb(255 196 110 / 55%) 75%,
+    rgb(255 170 80 / 0%) 100%
+  );
+  border-radius: 50%;
+  transform: rotate(var(--rot));
+}
+
+/* Discoverability: a faint glow on hover / keyboard focus while off */
+.light__peek {
+  opacity: 0;
+  transition: opacity var(--dur-hover) var(--ease);
+}
+
+@media (hover: hover) {
+  .hero:has(.lamp--1:hover) .light--1 .light__peek,
+  .hero:has(.lamp--2:hover) .light--2 .light__peek,
+  .hero:has(.lamp--3:hover) .light--3 .light__peek {
+    opacity: 0.35;
+  }
+}
+
+.hero:has(.lamp--1:focus-visible) .light--1 .light__peek,
+.hero:has(.lamp--2:focus-visible) .light--2 .light__peek,
+.hero:has(.lamp--3:focus-visible) .light--3 .light__peek {
+  opacity: 0.35;
+}
+
+.light--on .light__peek {
+  opacity: 0;
+}
+
+/* The light itself: one group per lamp. On: a short flicker, then steady.
+   Off: a plain fade. */
+.light__glow {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity var(--dur-light-off) var(--ease);
+}
+
+.light--on .light__glow {
+  opacity: 1;
+  animation: lamp-flicker var(--dur-flicker) linear;
+}
+
+@keyframes lamp-flicker {
+  0% {
+    opacity: 0;
+  }
+
+  12% {
+    opacity: 0.7;
+  }
+
+  22% {
+    opacity: 0.15;
+  }
+
+  38% {
+    opacity: 0.9;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+
+  70% {
+    opacity: 1;
+  }
+
+  82% {
+    opacity: 0.75;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.light__halo {
+  top: calc(var(--cy) - var(--dh) * 0.95);
+  left: calc(var(--cx) - var(--dw) * 0.95);
+  width: calc(var(--dw) * 1.9);
+  height: calc(var(--dh) * 1.9);
+  background: radial-gradient(
+    closest-side,
+    rgb(255 190 110 / 75%),
+    rgb(255 150 70 / 25%) 55%,
+    rgb(255 140 60 / 0%) 100%
+  );
+  border-radius: 50%;
+  opacity: 0.45;
+  filter: blur(clamp(3px, 0.3vw, 6px));
+  transform: rotate(var(--rot));
+}
+
+/* Cone: blurred on the outer box, clipped to a wedge on the inner one
+   (clip-path applies after filter, so they can't share an element). */
+.light__cone {
+  top: calc(var(--cy) - var(--cone-w) / 2);
+  left: var(--cx);
+  width: var(--cone-len);
+  height: var(--cone-w);
+  opacity: 0.62;
+  filter: blur(clamp(6px, 0.95vw, 18px));
+  transform: rotate(var(--cone-angle));
+  transform-origin: 0 50%;
+}
+
+.light__cone::before {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background: linear-gradient(
+    to right,
+    rgb(255 214 150 / 90%),
+    rgb(255 190 110 / 45%) 45%,
+    rgb(255 170 90 / 0%)
+  );
+  clip-path: polygon(0 40%, 100% 0, 100% 100%, 0 60%);
+}
+
+/* Warm light where the cone lands on the rock (slide 1 only: slide 2 has no
+   rock, so the pools fade out with the slide change). */
+.light__pool {
+  top: calc(var(--py) - var(--ph) / 2);
+  left: calc(var(--px) - var(--pw) / 2);
+  width: var(--pw);
+  height: var(--ph);
+  background: radial-gradient(
+    closest-side,
+    rgb(255 180 100 / 90%),
+    rgb(255 150 70 / 35%) 55%,
+    rgb(255 140 60 / 0%)
+  );
+  border-radius: 50%;
+  opacity: 0.5;
+  filter: blur(clamp(3px, 0.42vw, 8px));
+  transition: opacity var(--dur-fade) var(--ease);
+}
+
+.hero:has(.hero__stage--lamps-visible) .light__pool {
+  opacity: 0;
+}
+
+/* First-visit hint next to lamp 2 (gone after the first click, remembered) */
+.hero__hint {
+  position: absolute;
+  top: 52%;
+  left: 81.25%;
+  z-index: 1;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 14px;
+  font-size: var(--fs-13);
+  font-weight: var(--fw-medium);
+  line-height: 1.1;
+  color: var(--c-white);
+  white-space: nowrap;
+  pointer-events: none;
+  background: var(--c-badge-bg);
+  border-radius: var(--radius-pill);
+  animation: hint-in var(--dur-fade) var(--ease) 1.2s both;
+}
+
+.hero__hint[hidden] {
+  display: none;
+}
+
+.hero__hint-dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  background: var(--c-yellow);
+  border-radius: 50%;
+}
+
+.hero__hint-dot::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background: var(--c-yellow);
+  border-radius: 50%;
+  animation: hint-pulse 1.6s var(--ease-out) infinite;
+}
+
+@keyframes hint-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes hint-pulse {
+  from {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+
+/* Contained (portrait) hero: the right of lamp 2 is outside the view, so
+   the hint sits under lamp 2's diffuser instead. */
+@media (max-aspect-ratio: 5/4) {
+  .hero__hint {
+    top: 76%;
+    left: 60%;
+    transform: translateX(-50%);
+  }
+}
+
+/* Easter egg: all three lamps on -> "w nowym świetle" glows warm. A copy of
+   the words fades in on top; its text is hidden from assistive tech
+   (`/ ""`), so the heading is never read twice. */
+.hero__glow {
+  position: relative;
+  display: inline-block;
+}
+
+.hero__glow::after {
+  position: absolute;
+  inset: 0;
+  color: var(--c-light-text);
+  text-shadow:
+    0 0 18px rgb(255 190 90 / 95%),
+    0 0 42px rgb(255 160 60 / 70%);
+  pointer-events: none;
+  content: attr(data-text) / '';
+  opacity: 0;
+  transition: opacity var(--dur-zoom) var(--ease);
+}
+
+.hero--lit-3 .hero__glow::after {
+  opacity: 1;
+}
+
+/* Reduced motion: no flicker and no pulse; switching is a plain fade */
+@media (prefers-reduced-motion: reduce) {
+  .light--on .light__glow {
+    animation: none;
+  }
+
+  .light__glow {
+    transition-duration: var(--dur-fade);
+  }
+
+  .hero__hint-dot::after {
+    animation: none;
+    opacity: 0;
+  }
+}

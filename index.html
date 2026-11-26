@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/header.css" />
     <link rel="stylesheet" href="css/hero.css" />
+    <link rel="stylesheet" href="css/lamps.css" />
     <link rel="stylesheet" href="css/benefits.css" />
     <link rel="stylesheet" href="css/tiles.css" />
     <link rel="stylesheet" href="css/shader.css" />
@@ -43,6 +44,7 @@
 
     <script src="js/header.js" defer></script>
     <script src="js/hero-slider.js" defer></script>
+    <script src="js/lamps.js" defer></script>
     <script src="js/shader.js" defer></script>
   </head>
   <body>
@@ -294,10 +296,11 @@
              Images visible only on slides marked data-slide-lamps (design/NOTES.md). -->
         <div class="hero__stage hero__stage--lamps" data-lamps>
           <button
-            class="lamp"
+            class="lamp lamp--1"
             type="button"
             aria-pressed="false"
             aria-label="Włącz lampę 1"
+            data-lamp
             style="--x: 39.5833%; --y: 7.8704%; --w: 19.375%"
           >
             <img
@@ -310,10 +313,11 @@
             />
           </button>
           <button
-            class="lamp"
+            class="lamp lamp--2"
             type="button"
             aria-pressed="false"
             aria-label="Włącz lampę 2"
+            data-lamp
             style="--x: 56.0417%; --y: 30.7407%; --w: 24.4792%"
           >
             <img
@@ -326,10 +330,11 @@
             />
           </button>
           <button
-            class="lamp"
+            class="lamp lamp--3"
             type="button"
             aria-pressed="false"
             aria-label="Włącz lampę 3"
+            data-lamp
             style="--x: 21.7708%; --y: 40.1852%; --w: 22.0313%"
           >
             <img
@@ -341,12 +346,53 @@
               alt=""
             />
           </button>
+
+          <p class="hero__hint" aria-hidden="true" data-lamp-hint hidden>
+            <span class="hero__hint-dot"></span>Kliknij lampę
+          </p>
+        </div>
+
+        <!-- Lamp light (css/lamps.css, js/lamps.js): the room dims a little per lamp,
+             the light layer above it adds diffuser glow, cone and pool (screen blend). -->
+        <div class="hero__dim" aria-hidden="true"></div>
+        <div class="hero__stage hero__stage--light" aria-hidden="true">
+          <div class="light light--1" data-light>
+            <div class="light__peek"></div>
+            <div class="light__glow">
+              <div class="light__halo"></div>
+              <div class="light__cone"></div>
+              <div class="light__pool"></div>
+              <div class="light__disc"></div>
+            </div>
+          </div>
+          <div class="light light--2" data-light>
+            <div class="light__peek"></div>
+            <div class="light__glow">
+              <div class="light__halo"></div>
+              <div class="light__cone"></div>
+              <div class="light__pool"></div>
+              <div class="light__disc"></div>
+            </div>
+          </div>
+          <div class="light light--3" data-light>
+            <div class="light__peek"></div>
+            <div class="light__glow">
+              <div class="light__halo"></div>
+              <div class="light__cone"></div>
+              <div class="light__pool"></div>
+              <div class="light__disc"></div>
+            </div>
+          </div>
         </div>
 
         <div class="hero__content">
           <div class="hero__inner">
             <p class="hero__eyebrow">Bestsellery SOLLUX</p>
-            <h1 class="hero__title">Kolor i forma <br />w nowym świetle</h1>
+            <h1 class="hero__title">
+              Kolor i forma <br /><span class="hero__glow" data-text="w nowym świetle"
+                >w nowym świetle</span
+              >
+            </h1>
             <a class="button button--primary hero__cta" href="#">Sprawdź bestsellery</a>
 
             <p class="hero__badge">

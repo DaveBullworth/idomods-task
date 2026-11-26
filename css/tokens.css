@@ -17,6 +17,17 @@
   --c-tile-cream: #fdf8eb;
   --c-tile-stone: #e8e4df;
 
+  /* Lamp light (css/lamps.css). The dim is how dark the room gets with 1, 2
+     and 3 lamps on; tune by eye. No lamps on = 0, the hero as designed. */
+  --lamp-dim-1: 0.06;
+  --lamp-dim-2: 0.11;
+  --lamp-dim-3: 0.15;
+  --c-light-core: rgb(255 246 226);
+  --c-light-warm: rgb(255 214 150);
+  --c-light-amber: rgb(255 180 100);
+  --c-light-ember: rgb(255 150 70);
+  --c-light-text: #ffd27a;
+
   /* Shader section (measured from design/frames/screen.png; 1:707 is image-only).
      The WebGL colour ramp in js/shader.js uses the same values. */
   --c-shader-text: #f0f0f3;
@@ -52,6 +63,8 @@
   --dur-zoom: 800ms;
   --dur-move: 500ms; /* menu panel, other movement */
   --slide-interval: 3000ms;
+  --dur-flicker: 450ms; /* lamp switch-on flicker (opacity steps) */
+  --dur-light-off: 300ms;
 
   /* Transform amounts. Set to "no effect" under reduced motion below,
      so components never need their own reduced-motion branches for these. */

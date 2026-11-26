@@ -105,7 +105,7 @@ The rules are in `CLAUDE.md`. Values marked **TBD #N** come from Figma call N (s
 index.html
 favicon.svg
 css/  tokens.css base.css header.css hero.css benefits.css tiles.css shader.css footer.css
-js/   header.js menu.js hero-slider.js lamps.js shader.js      (classic <script defer>)
+js/   header.js menu.js hero-slider.js lamps.js lamp-parallax.js shader.js      (classic <script defer>)
 assets/raw/  (source, untouched)
 assets/img/  assets/icons/  assets/fonts/  (built by npm run assets, committed)
 scripts/build-assets.mjs
@@ -179,6 +179,13 @@ tests/       (Playwright, written after the page is built)
   - Discoverability: pointer cursor; faint diffuser glow on hover and keyboard focus; first-visit pill "Kliknij lampę" next to lamp 2 (under it in the portrait layout), hidden after the first click and remembered in `localStorage` (try/catch). The pill is `aria-hidden`; the buttons already say "Włącz lampę 1–3".
   - Easter egg: all three on → "w nowym świetle" glows warm (a copy of the words fades in on top; its generated text is hidden from assistive tech with `content: attr(data-text) / ""`).
   - Motion rules: only opacity animates (the light groups, the peek, the dim, the headline glow); the blurred / clipped shapes are static and the blend sits on a layer that never animates.
+- **Lamp parallax (built; `js/lamp-parallax.js`, user-specified):**
+  - With a mouse, each lamp is offset towards the cursor: the cursor's position in the hero mapped to −1…1 per axis (clamped to the unit circle) × `--lamp-parallax` (12 px at a 1920 px stage, scaled with the stage width) × the lamp's `data-depth` (lamp 3, the nearest: 1; lamp 2: 0.8; lamp 1: 0.55).
+  - The script writes `--parallax` on each lamp button and its `.light--N` group, applied as `translate` (transform only), so the peek, glow and cone move with the lamp. `--parallax-pool` pulls the pool back so it moves `--lamp-parallax-pool` (0.3) of its lamp's offset.
+  - Smoothing: an exponential follow (time constant 160 ms) in a requestAnimationFrame loop that runs only while something still moves; scrolling re-evaluates, since the hero moves under a still cursor. Leaving the hero (or the window) eases the lamps back to rest; at rest the inline properties are removed, so the hero is pixel-identical to the static layout (verified: 0 differing bytes after moving and leaving).
+  - Only with `(hover: hover) and (pointer: fine)` and pointer type `mouse`; off under reduced motion.
+  - Performance: moving the blurred light shapes repainted them every frame (with all lamps on at 1920, every other frame was dropped). While moving, `.hero--parallax` sets `will-change: translate` on the lamps, light groups and pools; after that, frame times are the same as without parallax (6.9 ms, the display rate). The class goes at rest, and so do the extra layers.
+  - Slide changes don't touch the offsets: checked frame by frame at 1280 × 633, DPR 1.5 with the cursor parked in the hero.
 - Lamps are `<button aria-pressed>` with a Polish `aria-label` ("Włącz lampę 1").
 - **Portrait screens (`max-aspect-ratio: 5/4`), "contained mode":** shifting a covering stage can't work, because at 375 × 812 the covering stage is 1443 px wide and the lamp group alone is 848 px. Instead:
   - the stage is sized so the lamp group (58.75 % of the stage) fits the viewport minus the gutters, and anchored to the bottom, centred on the lamp group;

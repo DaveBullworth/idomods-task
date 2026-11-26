@@ -58,6 +58,24 @@
   }
 }
 
+/* Cursor parallax (js/lamp-parallax.js). The script sets --parallax on each
+   lamp and on its light group, so the glow, cone and peek move with the lamp;
+   --parallax-pool pulls the pool back, so it moves less (it lies on the
+   rock). Unset at rest: `translate: none`, exactly the static layout. */
+.lamp,
+.light {
+  translate: var(--parallax, none);
+}
+
+/* Only while moving: own compositor layers, so the blurred shapes move
+   without a repaint per frame (measured: every other frame dropped without
+   this at 1920 with all lamps on). */
+.hero--parallax .lamp,
+.hero--parallax .light,
+.hero--parallax .light__pool {
+  will-change: translate;
+}
+
 /* Per-lamp geometry in % of the stage: diffuser centre (--cx, --cy), disc
    size and tilt, cone direction / length / spread, pool on the rock. */
 .light {
@@ -268,6 +286,9 @@
   opacity: 0.5;
   filter: blur(clamp(3px, 0.42vw, 8px));
   transition: opacity var(--dur-fade) var(--ease);
+
+  /* parallax: pulled back towards rest (see "Cursor parallax" above) */
+  translate: var(--parallax-pool, none);
 }
 
 .hero:has(.hero__slide--interior.hero__slide--active) .light__pool {

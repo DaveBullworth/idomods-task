@@ -28,6 +28,12 @@
   --c-light-ember: rgb(255 150 70);
   --c-light-text: #ffd27a;
 
+  /* Lamp parallax (js/lamp-parallax.js): largest offset of the nearest lamp
+     at a 1920 px stage (scales with the stage), and how much of its lamp's
+     offset the light pool on the rock follows. */
+  --lamp-parallax: 12px;
+  --lamp-parallax-pool: 0.3;
+
   /* Shader section (measured from design/frames/screen.png; 1:707 is image-only).
      The WebGL colour ramp in js/shader.js uses the same values. */
   --c-shader-text: #f0f0f3;

@@ -252,7 +252,7 @@
 }
 
 /* Warm light where the cone lands on the rock (slide 1 only: slide 2 has no
-   rock, so the pools fade out with the slide change). */
+   rock, so the pools fade out with the crossfade). */
 .light__pool {
   top: calc(var(--py) - var(--ph) / 2);
   left: calc(var(--px) - var(--pw) / 2);
@@ -270,7 +270,7 @@
   transition: opacity var(--dur-fade) var(--ease);
 }
 
-.hero:has(.hero__stage--lamps-visible) .light__pool {
+.hero:has(.hero__slide--interior.hero__slide--active) .light__pool {
   opacity: 0;
 }
 

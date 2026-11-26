@@ -1,4 +1,4 @@
-/* Hero (Figma 1:506, PLAN.md §0.3 / §3.3). Static: no slide animation yet.
+/* Hero (Figma 1:506, PLAN.md §0.3 / §3.3 / §3.4).
 
    Two layouts share one rule: everything that must stay aligned with the photo
    (slide images and lamps) lives in a `.hero__stage` box with the photo's
@@ -20,9 +20,6 @@
   /* while the arrows show, text starts this far from the hero edge
      (inset + arrow + 24 px gap); at 1920 the 1600 column is wider anyway */
   --arrow-clear: calc(var(--arrow-inset) + var(--arrow-size) + 24px);
-
-  /* centre of the lamp group in the stage (lamp-positions.json): x 21.77-80.52 %, y 7.87-76.58 % */
-  --lamps-origin: 51.15% 42.2%;
 
   position: relative;
   display: grid;
@@ -77,12 +74,10 @@
 
 /* Incoming image zooms 1.05 -> 1 over 800 ms ease-out. An inactive image
    waits at 1.05, but only snaps there after its own fade-out has finished,
-   so the outgoing slide never jumps. Origin: the lamp group's centre, which
-   keeps the baked lamps closest to the overlays while the zoom runs. */
+   so the outgoing slide never jumps. */
 .hero__img {
   width: 100%;
   height: 100%;
-  transform-origin: var(--lamps-origin);
   scale: var(--scale-slide-in);
   transition: scale 0s linear var(--dur-fade);
 }
@@ -104,21 +99,10 @@
   width: var(--w);
 }
 
-/* Slide 1 has the lamps baked into the photo, so the overlay images stay
-   hidden there (no reliance on pixel-perfect alignment); only the click glow
-   shows. They fade in together with slide 2's crossfade. Going back, they
-   hold until slide 1's zoom has settled (--dur-zoom; 0 under reduced motion)
-   and then fade out over the baked lamps, which by then are in place. The
-   buttons stay in place and clickable on both slides. */
+/* Neither photo has lamps in it, so the lamp images are always visible and
+   never fade or zoom: only the backgrounds crossfade and zoom underneath. */
 .lamp__img {
   width: 100%;
-  opacity: 0;
-  transition: opacity var(--dur-fade) var(--ease) var(--dur-zoom);
-}
-
-.hero__stage--lamps-visible .lamp__img {
-  opacity: 1;
-  transition-delay: 0s;
 }
 
 /* Text block: grid item on top of the absolute layers */

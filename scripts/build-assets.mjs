@@ -15,7 +15,7 @@ const OUT_FONTS = path.join(ROOT, 'assets/fonts');
 // Full-width / large photos: srcset with w descriptors (CLAUDE.md, PLAN.md §3.1).
 const WIDE_WIDTHS = [640, 960, 1440, 1920, 2880];
 const WIDE = [
-  'hero-rock.png',
+  'hero-rock-clean.png', // slide 1 without the baked lamps (design/NOTES.md)
   'hero-interior.png',
   'tile-thoro.png',
   'tile-configurator.png',

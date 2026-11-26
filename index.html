@@ -15,11 +15,11 @@
       as="image"
       type="image/webp"
       imagesrcset="
-        assets/img/hero-rock-640.webp   640w,
-        assets/img/hero-rock-960.webp   960w,
-        assets/img/hero-rock-1440.webp 1440w,
-        assets/img/hero-rock-1920.webp 1920w,
-        assets/img/hero-rock-2880.webp 2880w
+        assets/img/hero-rock-clean-640.webp   640w,
+        assets/img/hero-rock-clean-960.webp   960w,
+        assets/img/hero-rock-clean-1440.webp 1440w,
+        assets/img/hero-rock-clean-1920.webp 1920w,
+        assets/img/hero-rock-clean-2880.webp 2880w
       "
       imagesizes="(max-aspect-ratio: 5/4) calc((100vw - 32px) * 1.7021), (max-aspect-ratio: 16/9) calc(100vh * 1.7778), 100vw"
       fetchpriority="high"
@@ -246,14 +246,14 @@
               <img
                 class="hero__img"
                 srcset="
-                  assets/img/hero-rock-640.webp   640w,
-                  assets/img/hero-rock-960.webp   960w,
-                  assets/img/hero-rock-1440.webp 1440w,
-                  assets/img/hero-rock-1920.webp 1920w,
-                  assets/img/hero-rock-2880.webp 2880w
+                  assets/img/hero-rock-clean-640.webp   640w,
+                  assets/img/hero-rock-clean-960.webp   960w,
+                  assets/img/hero-rock-clean-1440.webp 1440w,
+                  assets/img/hero-rock-clean-1920.webp 1920w,
+                  assets/img/hero-rock-clean-2880.webp 2880w
                 "
                 sizes="(max-aspect-ratio: 5/4) calc((100vw - 32px) * 1.7021), (max-aspect-ratio: 16/9) calc(100vh * 1.7778), 100vw"
-                src="assets/img/hero-rock-1920.webp"
+                src="assets/img/hero-rock-clean-1920.webp"
                 width="1920"
                 height="1080"
                 alt=""
@@ -268,7 +268,6 @@
             aria-label="2 z 2"
             aria-hidden="true"
             data-slide
-            data-slide-lamps
           >
             <div class="hero__stage">
               <img
@@ -293,8 +292,8 @@
         </div>
 
         <!-- Lamps: same stage geometry as the slides; positions from design/lamp-positions.json.
-             Images visible only on slides marked data-slide-lamps (design/NOTES.md). -->
-        <div class="hero__stage hero__stage--lamps" data-lamps>
+             Always visible: the slides underneath have no lamps (design/NOTES.md). -->
+        <div class="hero__stage hero__stage--lamps">
           <button
             class="lamp lamp--1"
             type="button"

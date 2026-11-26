@@ -167,23 +167,22 @@ tests/       (Playwright, written after the page is built)
   - `width: max(100%, var(--hero-h) * 16 / 9)`; the height comes **only** from `aspect-ratio`. Never derive it as `calc(var(--stage-w) * 9 / 16)`: inside `height` the `100%` resolves against the hero's height, which squashed the photo on viewports wider than 16:9 (bug found at 1280 × 633, fixed);
   - centred with `left: 50%; transform: translateX(calc(-50% + var(--stage-x, 0%)))`.
 - Inside the stage, all absolutely positioned in % of the stage:
-  - `.hero__slide` ×2 (`hero-rock`, `hero-interior`), stacked;
+  - `.hero__slide` ×2 (`hero-rock-clean`, `hero-interior`), stacked. Neither photo has lamps in it: slide 1 uses `hero-rock-clean.png`, the rock photo with the lamps removed (user-made in Figma, see NOTES.md);
   - `.hero__stage--lamps` above both slides, containing three `<button class="lamp lamp--N" aria-pressed>` elements, each holding its lamp image. The light lives in separate layers (below).
 - **Lamp positions:** left/top/width in % of the stage, taken from `design/lamp-positions.json` (§0.2). They aren't from Figma; the lamps aren't in the hero frame. For reference, the PNGs at 2× are 744×838, 940×856, 846×786, which is 372×419, 470×428, 423×393 at 1920, if the match confirms scale 1.0.
-- **Slide 1:** the lamp images stay at **opacity 0**; the lamps you see are the ones baked into the photo, so slide 1 never depends on pixel-perfect alignment (NOTES.md). The buttons stay in place and clickable; the light (below) is a separate layer, so it works on slide 1 too.
-- **Slide 2:** the lamp images fade in (`.hero__stage--lamps-visible`, opacity, `--dur-fade` = the 600 ms crossfade) as floating lamps over the interior, and fade out again when going back to slide 1. They sit where the baked lamps are, so the switch looks continuous. The slider (§3.4) toggles the modifier together with the slide change; reduced motion keeps the fade (opacity only).
+- **Both slides:** the lamp images are always visible and never fade or zoom; only the backgrounds crossfade and zoom underneath them. (Earlier the lamps were baked into the rock photo and the overlays were handed off by opacity, which showed the lamps twice during transitions: a dip mid-crossfade on 1 → 2, and the baked lamps zooming into the overlays on 2 → 1.)
 - **Lamp light on click (built, option B with a light dim; user-approved; `css/lamps.css`, `js/lamps.js`):**
   - Layers, bottom to top: slides → lamps → `.hero__dim` → `.hero__stage--light` (screen blend) → text. Per lamp, `.light--N` holds a hover/focus glow (`.light__peek`) and the light group (`.light__glow`: diffuser disc, halo, cone, pool on the rock). Geometry is in % of the 1920:1080 stage, read from the lamp PNGs, so it scales at every width.
   - Switching on: a 450 ms opacity flicker, then steady; off: a 300 ms fade. Reduced motion: a plain 600 ms fade both ways, no flicker.
   - Room dim deepens per lamp: `--lamp-dim-1/2/3` = 0.06 / 0.11 / 0.15 in `tokens.css` (tunable). With no lamp on the dim is 0 and the light layer is `visibility: hidden` (a blended layer switches nearby text to greyscale anti-aliasing), so the hero is pixel-identical to before (verified: 0 differing pixels, also after switching a lamp on and off).
-  - Slide 2: diffuser glow and cones work the same; the pools fade out (there's no rock).
+  - Slide 2: diffuser glow and cones work the same; the pools fade out with the crossfade (there's no rock), keyed on the active slide in CSS.
   - Discoverability: pointer cursor; faint diffuser glow on hover and keyboard focus; first-visit pill "Kliknij lampę" next to lamp 2 (under it in the portrait layout), hidden after the first click and remembered in `localStorage` (try/catch). The pill is `aria-hidden`; the buttons already say "Włącz lampę 1–3".
   - Easter egg: all three on → "w nowym świetle" glows warm (a copy of the words fades in on top; its generated text is hidden from assistive tech with `content: attr(data-text) / ""`).
   - Motion rules: only opacity animates (the light groups, the peek, the dim, the headline glow); the blurred / clipped shapes are static and the blend sits on a layer that never animates.
 - Lamps are `<button aria-pressed>` with a Polish `aria-label` ("Włącz lampę 1").
 - **Portrait screens (`max-aspect-ratio: 5/4`), "contained mode":** shifting a covering stage can't work, because at 375 × 812 the covering stage is 1443 px wide and the lamp group alone is 848 px. Instead:
   - the stage is sized so the lamp group (58.75 % of the stage) fits the viewport minus the gutters, and anchored to the bottom, centred on the lamp group;
-  - above it, the slide's sky colour (sampled from the photo's top edge: rock `#9c6744`, interior `#c5afa3`) fills the hero, and the stage image fades in over its top 25 %;
+  - above it, the slide's sky colour (sampled from the photo's top edge: rock `#9c6744`, unchanged in the clean photo, interior `#c5afa3`) fills the hero, and the stage image fades in over its top 25 %;
   - slide 2 adds a 45 % dark scrim behind the text, since white on `#c5afa3` is only about 2.1:1;
   - the text sits at the top under the header; its bottom padding reserves the stage height, so the hero grows instead of overlapping on short screens.
   - Measured at 375 × 812: text block y 104–365, lamps y 509–735, all within x 16–359.
@@ -195,11 +194,11 @@ tests/       (Playwright, written after the page is built)
 
 ### 3.4 Slider (`hero-slider.js`)
 
-**(built: `js/hero-slider.js`, JS hooks are `data-slider*` / `data-slide*` / `data-lamps`)**
+**(built: `js/hero-slider.js`, JS hooks are `data-slider*` / `data-slide`)**
 - Autoplay: a new slide every 3 s (`--slide-interval`, read from CSS).
 - Crossfade: opacity, 600 ms ease-in-out.
-- Incoming image: `scale 1.05 → 1` over 800 ms ease-out. The outgoing image keeps scale 1 until its fade-out has finished, then waits at 1.05 out of sight. Zoom origin is the lamp group's centre (`--lamps-origin`), which keeps the baked lamps closest to the overlays during the zoom.
-- **Lamp overlays:** shown on slides marked `data-slide-lamps` (slide 2). 1 → 2: they fade in with the crossfade. 2 → 1: they hold until the rock zoom has settled (`--dur-zoom` delay, 0 under reduced motion), then fade out over the baked lamps, so there's no double edge while the rock is still zooming. Checked frame by frame at 1280 × 633, DPR 1.5.
+- Incoming image: `scale 1.05 → 1` over 800 ms ease-out. The outgoing image keeps scale 1 until its fade-out has finished, then waits at 1.05 out of sight. Zoom origin is the image centre.
+- **Lamps:** not part of the slides, so the slider doesn't touch them. Checked frame by frame in both directions at 1280 × 633, DPR 1.5: the lamp pixels are identical in every frame.
 - Progress bar: one segment per slide at the bottom centre. The active one fills yellow with `transform: scaleX(0 → 1)`, linear over 3 s, and resets on slide change. It is driven from the same rAF clock as the slide change, so the bar and the switch can't drift. Clicking a segment goes to that slide.
 - Prev/next buttons; keyboard ←/→ while focus is inside the hero; touch swipe (≥ 50 px, horizontal; the hero has `touch-action: pan-y`). Manual changes restart the 3 s timer.
 - **Pause** (changed from "hover on the hero"): while the mouse is over a control (arrows, progress), while **keyboard** focus is inside the hero (`:focus-visible`, so a mouse click doesn't stop autoplay), while the tab is hidden, and while the hero is off-screen (IntersectionObserver). Pausing on hover over the whole hero would stop autoplay for most desktop visitors, because the hero fills the first screen and the cursor usually rests on it. (User-approved.)

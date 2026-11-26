@@ -8,7 +8,6 @@
 //   hero, while the tab is hidden and while the hero is off-screen.
 // - Pause/play toggle next to the progress bar (WCAG 2.2.2).
 // - Reduced motion: no autoplay (manual changes still crossfade).
-// - Lamp overlay images are shown on slides marked data-slide-lamps.
 (function () {
   'use strict';
 
@@ -27,7 +26,6 @@
 
     var slides = root.querySelectorAll('[data-slide]');
     var dots = root.querySelectorAll('[data-slider-dot]');
-    var lamps = root.querySelector('[data-lamps]');
     var controls = root.querySelectorAll(
       '[data-slider-prev], [data-slider-next], [data-slider-progress]',
     );
@@ -79,12 +77,6 @@
         if (active) dot.setAttribute('aria-current', 'true');
         else dot.removeAttribute('aria-current');
       });
-      if (lamps) {
-        lamps.classList.toggle(
-          'hero__stage--lamps-visible',
-          slides[index].hasAttribute('data-slide-lamps'),
-        );
-      }
       renderProgress();
     }
 

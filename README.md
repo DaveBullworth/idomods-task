@@ -22,8 +22,8 @@ Before the first test run, install Playwright's browser once: `npx playwright in
 
 The full list of decisions is in [`design/NOTES.md`](design/NOTES.md). The ones a reviewer would notice:
 
-- **Copy fixes:** the SOLLUX SMART tile button says "Pobierz aplikację na telefon" (the design has "aplikacje"), and the footer column is "Współpraca" (the design has "Wpsółpraca").
-- **Contrast:** THORO and Konfigurator tiles have a subtle dark gradient behind their white text, so the text meets WCAG contrast (4.5:1 for the eyebrow, 3:1 for the title). The design colours are unchanged.
+- **Copy fixes:** the SOLLUX SMART tile button says "Pobierz aplikację na telefon" (the design has "aplikacje"), the footer column is "Współpraca" (the design has "Wpsółpraca"), and the footer hours use en dashes ("Pn–Pt 7:00–15:00").
+- **Contrast:** the second hero slide (not in the design) has dark bands behind the header and the text, and THORO and Konfigurator tiles have a subtle dark gradient behind their white text, so the text meets WCAG contrast (4.5:1 for the eyebrow, 3:1 for the title). The design colours are unchanged.
 - **Hero lamps:** in the design the lamps are part of the rock photo. Slide 1 uses a copy of that photo with the lamps removed (an AI edit; it re-rendered the rock slightly, see NOTES.md), so the lamps are separate images that stay put on both slides while only the backgrounds crossfade and zoom.
 - **Lamp light (the creative part of the brief):** click a lamp (or Tab to it and press Enter) to switch it on: a short flicker, a warm diffuser glow, a light cone and light on the rock, while the room dims a little. A "Kliknij lampę" hint shows on the first visit. Turn on all three for a small surprise in the headline. With a mouse, the lamps also drift slightly with the cursor (the nearest one most); off on touch screens and with reduced motion.
 - **Mobile:** there are no mobile designs. The header switches to a burger menu below 1280 px, the tiles go to one column below 1024 px, and the benefits use two columns on phones.

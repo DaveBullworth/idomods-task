@@ -62,9 +62,10 @@
       else open();
     });
 
-    // Following a link closes the panel (all links are href="#").
+    // Following a link closes the panel (all links are href="#"). Focus goes
+    // back to the burger: the link it was on is hidden once the panel closes.
     menu.addEventListener('click', function (event) {
-      if (event.target.closest('a')) close(false);
+      if (event.target.closest('a')) close(true);
     });
 
     document.addEventListener('keydown', function (event) {

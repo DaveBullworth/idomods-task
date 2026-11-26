@@ -93,8 +93,9 @@
 .tile--scrim .tile__body {
   background: linear-gradient(
     to top,
-    rgb(16 16 17 / var(--scrim)) calc(100% - var(--body-pad-top) + 8px),
-    rgb(16 16 17 / 0%)
+    color-mix(in srgb, var(--c-black) var(--scrim), transparent)
+      calc(100% - var(--body-pad-top) + 8px),
+    transparent
   );
 }
 

@@ -21,6 +21,9 @@
      (inset + arrow + 24 px gap); at 1920 the 1600 column is wider anyway */
   --arrow-clear: calc(var(--arrow-inset) + var(--arrow-size) + 24px);
 
+  /* left edge of the text column (.hero__content), for the slide 2 scrim */
+  --text-x: max(var(--gutter), (100% - var(--container)) / 2);
+
   position: relative;
   display: grid;
   height: var(--hero-h);
@@ -49,15 +52,18 @@
   opacity: 1;
 }
 
-/* Top-edge colour of each photo; scrim keeps white text >= 4.5:1 on mobile */
+/* Top-edge colour of each photo; scrim keeps white text >= 4.5:1 on mobile.
+   Landscape scrim strengths for slide 2: see "Slide 2 scrim" below. */
 .hero__slide--rock {
-  --hero-sky: #9c6744;
+  --hero-sky: var(--c-sky-rock);
   --hero-scrim: 0%;
 }
 
 .hero__slide--interior {
-  --hero-sky: #c5afa3;
+  --hero-sky: var(--c-sky-interior);
   --hero-scrim: 45%;
+  --hero-scrim-header: 59%;
+  --hero-scrim-text: 46%;
 }
 
 /* Height comes from aspect-ratio, never from a calc on --stage-w: inside
@@ -92,17 +98,123 @@
   z-index: 1;
 }
 
+/* Hit area: the image boxes overlap (lamps 2 and 3 sit over lamp 1's box),
+   so the button itself takes no pointer events and its image does, clipped to
+   the convex hull of its visible pixels. Clicks bubble from the image to the
+   button; the focus ring stays on the unclipped button. The hulls enclose
+   every pixel with alpha > 0 (computed from the lamp PNGs on a 60 x 60 grid,
+   rounded outward), so nothing visible changes. tests/lamps.spec.js checks
+   that lamp 1's visible pixels next to lamps 2 and 3 click lamp 1. */
 .lamp {
   position: absolute;
   top: var(--y);
   left: var(--x);
   width: var(--w);
+  pointer-events: none;
 }
 
 /* Neither photo has lamps in it, so the lamp images are always visible and
    never fade or zoom: only the backgrounds crossfade and zoom underneath. */
 .lamp__img {
   width: 100%;
+  pointer-events: auto;
+}
+
+.lamp--1 .lamp__img {
+  clip-path: polygon(
+    1.67% 41.67%,
+    3.33% 35%,
+    6.67% 30%,
+    13.33% 21.67%,
+    20% 16.67%,
+    28.33% 11.67%,
+    38.33% 8.33%,
+    46.67% 6.67%,
+    56.67% 5%,
+    60% 5%,
+    68.33% 6.67%,
+    73.33% 10%,
+    76.67% 13.33%,
+    80% 18.33%,
+    95% 41.67%,
+    98.33% 48.33%,
+    100% 55%,
+    100% 60%,
+    98.33% 65%,
+    95% 71.67%,
+    86.67% 80%,
+    80% 85%,
+    70% 90%,
+    61.67% 93.33%,
+    53.33% 95%,
+    33.33% 95%,
+    26.67% 91.67%,
+    21.67% 85%,
+    8.33% 61.67%,
+    3.33% 51.67%,
+    1.67% 46.67%
+  );
+}
+
+.lamp--2 .lamp__img {
+  clip-path: polygon(
+    0% 68.33%,
+    3.33% 61.67%,
+    16.67% 40%,
+    25% 26.67%,
+    31.67% 16.67%,
+    43.33% 5%,
+    48.33% 3.33%,
+    81.67% 0%,
+    90% 0%,
+    95% 1.67%,
+    95% 61.67%,
+    38.33% 96.67%,
+    35% 98.33%,
+    25% 98.33%,
+    20% 96.67%,
+    10% 90%,
+    6.67% 86.67%,
+    1.67% 80%,
+    0% 75%
+  );
+}
+
+.lamp--3 .lamp__img {
+  clip-path: polygon(
+    3.33% 41.67%,
+    5% 35%,
+    8.33% 30%,
+    15% 21.67%,
+    21.67% 15%,
+    31.67% 8.33%,
+    41.67% 3.33%,
+    48.33% 1.67%,
+    58.33% 0%,
+    61.67% 0%,
+    68.33% 1.67%,
+    73.33% 5%,
+    75% 6.67%,
+    78.33% 11.67%,
+    96.67% 43.33%,
+    98.33% 46.67%,
+    100% 53.33%,
+    100% 55%,
+    98.33% 61.67%,
+    95% 68.33%,
+    90% 75%,
+    80% 83.33%,
+    73.33% 88.33%,
+    63.33% 93.33%,
+    55% 96.67%,
+    46.67% 98.33%,
+    35% 98.33%,
+    30% 96.67%,
+    25% 91.67%,
+    21.67% 86.67%,
+    13.33% 71.67%,
+    3.33% 51.67%
+  );
 }
 
 /* Text block: grid item on top of the absolute layers */
@@ -167,7 +279,7 @@
   font-weight: var(--fw-bold);
 }
 
-/* Arrows: hidden below 1024 (PLAN.md §5, proposed) */
+/* Arrows: hidden below 1024 (PLAN.md §5, user-approved) */
 .hero__arrow {
   position: absolute;
   top: 50%;
@@ -200,6 +312,10 @@
   .hero__arrow:hover::before {
     opacity: 1;
   }
+}
+
+.hero__arrow:focus-visible::before {
+  opacity: 1;
 }
 
 .hero__arrow--prev {
@@ -266,16 +382,16 @@
   color: var(--c-white);
 }
 
-.hero__pause[hidden] {
-  display: none;
-}
-
 .hero__pause[aria-pressed='true'] .hero__pause-icon--pause,
 .hero__pause[aria-pressed='false'] .hero__pause-icon--play {
   display: none;
 }
 
 @media (width >= 1024px) {
+  .hero {
+    --text-x: max(var(--arrow-clear), (100% - var(--container)) / 2);
+  }
+
   .hero__arrow {
     display: grid;
   }
@@ -313,7 +429,10 @@
     inset: 0 0 auto;
     height: calc(100% - var(--stage-h) * 0.8);
     content: '';
-    background: linear-gradient(rgb(16 16 17 / var(--hero-scrim)) 60%, rgb(16 16 17 / 0%));
+    background: linear-gradient(
+      color-mix(in srgb, var(--c-black) var(--hero-scrim), transparent) 60%,
+      transparent
+    );
   }
 
   .hero__stage {
@@ -336,5 +455,32 @@
        8 % is sky, so the text may overlap that */
     padding-top: calc(var(--header-h) + 24px);
     padding-bottom: calc(var(--stage-h) * 0.92 + 24px);
+  }
+}
+
+/* Slide 2 scrim, landscape (portrait has its own, above). White on the
+   interior photo is down to about 1:1 behind the header (a ceiling spotlight
+   under the search text at 1280 x 633) and about 1.7:1 behind the eyebrow
+   and H1. Two dark bands, measured minimum + 2 points (design/NOTES.md):
+   one behind the header, fading out below it, and one behind the text
+   column, fading out to its right. They sit inside the slide, under the
+   lamps, so they crossfade with the photo and the lamps never dim. */
+@media (aspect-ratio > 5/4) {
+  .hero__slide--interior::after {
+    position: absolute;
+    inset: 0;
+    content: '';
+    background:
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--c-black) var(--hero-scrim-header), transparent) 88px,
+        transparent 160px
+      ),
+      linear-gradient(
+        to right,
+        color-mix(in srgb, var(--c-black) var(--hero-scrim-text), transparent)
+          calc(var(--text-x) + 480px),
+        transparent calc(var(--text-x) + 720px)
+      );
   }
 }

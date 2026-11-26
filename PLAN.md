@@ -105,7 +105,7 @@ The rules are in `CLAUDE.md`. Values marked **TBD #N** come from Figma call N (s
 index.html
 favicon.svg
 css/  tokens.css base.css header.css hero.css benefits.css tiles.css shader.css footer.css
-js/   header.js menu.js hero-slider.js lamps.js lamp-parallax.js shader.js      (classic <script defer>)
+js/   header.js hero-slider.js lamps.js lamp-parallax.js shader.js      (classic <script defer>)
 assets/raw/  (source, untouched)
 assets/img/  assets/icons/  assets/fonts/  (built by npm run assets, committed)
 scripts/build-assets.mjs
@@ -119,7 +119,7 @@ tests/       (Playwright, written after the page is built)
 
 - `<html lang="pl">`, charset, viewport, `<title>`, meta description.
 - `<meta name="robots" content="noindex">`, since the page is a copy of a real shop.
-- `<link rel="preload" as="image" type="image/webp" imagesrcset="hero-rock-640.webp 640w, ...-960w, ...-1440w, ...-1920w, ...-2880w" imagesizes="(max-aspect-ratio: 16/9) calc(100svh * 16 / 9), 100vw" fetchpriority="high">` for the first hero slide.
+- `<link rel="preload" as="image" type="image/webp" imagesrcset="hero-rock-640.webp 640w, ...-960w, ...-1440w, ...-1920w, ...-2880w" imagesizes="(max-aspect-ratio: 5/4) calc((100vw - 32px) * 1.7021), (max-aspect-ratio: 16/9) calc(clamp(560px, 100svh, 1080px) * 1.7778), 100vw" fetchpriority="high">` for the first hero slide (the first entry is the portrait "contained mode", §3.3; the second follows the hero height clamp).
   - `imagesizes` must match the stage width, because the stage covers the hero. It must also be identical to the slide `<img sizes>` so the preload gets reused.
 - ~~Font preload~~ **removed (user-approved, tests):** a font preload is always a CORS request, which Chrome blocks over `file://` (console error, §4 criterion 9). Both `@font-face` rules use `font-display: swap`; the font timing is checked in Lighthouse after the deploy (§4 criterion 12). latin-ext loads on demand through `unicode-range`.
 - CSS in `<link>` tags in section order; JS with `defer` at the end of `<head>`.
@@ -144,7 +144,7 @@ tests/       (Playwright, written after the page is built)
 - `tokens.css`:
   - colours;
   - motion: `--dur-hover: 250ms`, `--dur-button: 200ms`, `--dur-fade: 600ms`, `--dur-zoom: 800ms`, `--dur-tile: 500ms`, `--ease: cubic-bezier(0.4,0,0.2,1)`, `--ease-out`;
-  - layout: `--container: 1600px`, `--gutter: clamp(16px, 8.33vw, 160px)`.
+  - layout: `--container: 1600px`, `--gutter: 16px` (as in Figma, §3.2).
 - `base.css`: `@font-face` ×2, reset, `.container`, `.visually-hidden`, focus ring, button base, and a `prefers-reduced-motion` block that removes transform transitions and animations but keeps short opacity fades.
 
 ### 3.2 Header (`.header`)
@@ -165,7 +165,7 @@ tests/       (Playwright, written after the page is built)
 - `.hero` uses `--hero-h: clamp(560px, 100svh, 1080px)`, with `height: var(--hero-h)`, `overflow: hidden` and `position: relative`. `svh`, not `vh`, so the hero doesn't jump when the mobile browser bar shows or hides.
 - `.hero__stage` has `aspect-ratio: 1920 / 1080` and covers the hero like `object-fit: cover`:
   - `width: max(100%, var(--hero-h) * 16 / 9)`; the height comes **only** from `aspect-ratio`. Never derive it as `calc(var(--stage-w) * 9 / 16)`: inside `height` the `100%` resolves against the hero's height, which squashed the photo on viewports wider than 16:9 (bug found at 1280 × 633, fixed);
-  - centred with `left: 50%; transform: translateX(calc(-50% + var(--stage-x, 0%)))`.
+  - centred with `top: 50%; left: 50%; transform: translate(-50%, -50%)` (portrait screens: see "contained mode" below).
 - Inside the stage, all absolutely positioned in % of the stage:
   - `.hero__slide` ×2 (`hero-rock-clean`, `hero-interior`), stacked. Neither photo has lamps in it: slide 1 uses `hero-rock-clean.png`, the rock photo with the lamps removed (user-made in Figma, see NOTES.md);
   - `.hero__stage--lamps` above both slides, containing three `<button class="lamp lamp--N" aria-pressed>` elements, each holding its lamp image. The light lives in separate layers (below).
@@ -173,10 +173,11 @@ tests/       (Playwright, written after the page is built)
 - **Both slides:** the lamp images are always visible and never fade or zoom; only the backgrounds crossfade and zoom underneath them. (Earlier the lamps were baked into the rock photo and the overlays were handed off by opacity, which showed the lamps twice during transitions: a dip mid-crossfade on 1 → 2, and the baked lamps zooming into the overlays on 2 → 1.)
 - **Lamp light on click (built, option B with a light dim; user-approved; `css/lamps.css`, `js/lamps.js`):**
   - Layers, bottom to top: slides → lamps → `.hero__dim` → `.hero__stage--light` (screen blend) → text. Per lamp, `.light--N` holds a hover/focus glow (`.light__peek`) and the light group (`.light__glow`: diffuser disc, halo, cone, pool on the rock). Geometry is in % of the 1920:1080 stage, read from the lamp PNGs, so it scales at every width.
-  - Switching on: a 450 ms opacity flicker, then steady; off: a 300 ms fade. Reduced motion: a plain 600 ms fade both ways, no flicker.
+  - Switching on: a 450 ms opacity flicker with a single dip (up, one dip, then steady; review item 12, well under the WCAG 2.3.1 limit of 3 flashes per second), then steady; off: a 300 ms fade. Reduced motion: a plain 600 ms fade both ways, no flicker.
   - Room dim deepens per lamp: `--lamp-dim-1/2/3` = 0.06 / 0.11 / 0.15 in `tokens.css` (tunable). With no lamp on the dim is 0 and the light layer is `visibility: hidden` (a blended layer switches nearby text to greyscale anti-aliasing), so the hero is pixel-identical to before (verified: 0 differing pixels, also after switching a lamp on and off).
   - Slide 2: diffuser glow and cones work the same; the pools fade out with the crossfade (there's no rock), keyed on the active slide in CSS.
-  - Discoverability: pointer cursor; faint diffuser glow on hover and keyboard focus; first-visit pill "Kliknij lampę" next to lamp 2 (under it in the portrait layout), hidden after the first click and remembered in `localStorage` (try/catch). The pill is `aria-hidden`; the buttons already say "Włącz lampę 1–3".
+  - Hit areas: the lamp image boxes overlap (lamps 2 and 3 cover part of lamp 1's box), so each image takes the pointer events, clipped to the convex hull of its visible pixels, and the button itself has `pointer-events: none` (its focus ring stays unclipped). Tested: lamp 1's visible pixels next to the other lamps click lamp 1 (review item 13).
+  - Discoverability: pointer cursor; faint diffuser glow on hover and keyboard focus; first-visit pill "Kliknij lampę" next to lamp 2 (under it in the portrait layout), hidden after the first click and remembered in `localStorage` (try/catch). Its dot pulses 3 times, then stays still (WCAG 2.2.2). The pill is `aria-hidden`; the buttons already say "Włącz lampę 1–3".
   - Easter egg: all three on → "w nowym świetle" glows warm (a copy of the words fades in on top; its generated text is hidden from assistive tech with `content: attr(data-text) / ""`).
   - Motion rules: only opacity animates (the light groups, the peek, the dim, the headline glow); the blurred / clipped shapes are static and the blend sits on a layer that never animates.
 - **Lamp parallax (built; `js/lamp-parallax.js`, user-specified):**
@@ -190,9 +191,10 @@ tests/       (Playwright, written after the page is built)
 - **Portrait screens (`max-aspect-ratio: 5/4`), "contained mode":** shifting a covering stage can't work, because at 375 × 812 the covering stage is 1443 px wide and the lamp group alone is 848 px. Instead:
   - the stage is sized so the lamp group (58.75 % of the stage) fits the viewport minus the gutters, and anchored to the bottom, centred on the lamp group;
   - above it, the slide's sky colour (sampled from the photo's top edge: rock `#9c6744`, unchanged in the clean photo, interior `#c5afa3`) fills the hero, and the stage image fades in over its top 25 %;
-  - slide 2 adds a 45 % dark scrim behind the text, since white on `#c5afa3` is only about 2.1:1;
+  - slide 2 adds a 45 % dark scrim behind the text, since white on `#c5afa3` is only about 2.1:1 (landscape screens have their own slide 2 scrim, below);
   - the text sits at the top under the header; its bottom padding reserves the stage height, so the hero grows instead of overlapping on short screens.
   - Measured at 375 × 812: text block y 104–365, lamps y 509–735, all within x 16–359.
+- **Slide 2 scrim, landscape (review item 11, `hero.css`):** white text on the interior photo measured down to 1.0:1 behind the header (a ceiling spotlight under the search placeholder at 1280 × 633) and 1.6–1.8:1 behind the eyebrow and H1. Two dark bands inside slide 2, under the lamps (so they crossfade with the photo and the lamps never dim): 59 % behind the header, fading out by 160 px, and 46 % behind the text column, fading out 240 px to its right. Strength: measured minimum + 2 points across 800 × 520, 1024 × 768, 1280 × 633, 1440 × 900 and 1920 × 1080. Ratios before/after in `docs/review.md`. Where "świetle" crosses lamp 3 (on both slides, as in Figma) the lamp itself is light; that is left as designed.
 - Hero text: eyebrow "Bestsellery SOLLUX", H1 "Kolor i forma" / "w nowym świetle" (two lines, line break kept at desktop), yellow pill CTA "Sprawdź bestsellery". _(verified against #3, nodes 1:510, 1:511, 1:513)_
 - Text block is vertically centred and left-aligned on the 1600 column (§0.3). In contained mode it sits at the top and the lamps below it (see above). Below 1024 the Trustmate badge joins the text flow under the CTA, because at the bottom it would collide with the progress bar.
 - Rating badge bottom right: "4.8" + star icon + "Uwielbiany przez klientów". _(verified against #3, nodes 1:526, 1:532)_

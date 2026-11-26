@@ -16,7 +16,7 @@
   color: var(--c-shader-text);
   text-align: center;
   background:
-    linear-gradient(to bottom, var(--c-black) 22%, rgb(16 16 17 / 0%) 96%),
+    linear-gradient(to bottom, var(--c-black) 22%, transparent 96%),
     linear-gradient(
       40deg,
       var(--c-shader-gold) 0%,

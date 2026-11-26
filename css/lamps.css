@@ -147,8 +147,8 @@
     closest-side,
     var(--c-light-core) 0%,
     var(--c-light-warm) 45%,
-    rgb(255 196 110 / 55%) 75%,
-    rgb(255 170 80 / 0%) 100%
+    color-mix(in srgb, var(--c-light-honey) 55%, transparent) 75%,
+    transparent 100%
   );
   border-radius: 50%;
   transform: rotate(var(--rot));
@@ -178,7 +178,7 @@
   opacity: 0;
 }
 
-/* The light itself: one group per lamp. On: a short flicker, then steady.
+/* The light itself: one group per lamp. On: one flicker, then steady.
    Off: a plain fade. */
 .light__glow {
   position: absolute;
@@ -192,35 +192,22 @@
   animation: lamp-flicker var(--dur-flicker) linear;
 }
 
+/* Up, one dip, then steady: reads as a lamp catching, and with a single
+   dip it stays well clear of the WCAG 2.3.1 flash limit (3 per second). */
 @keyframes lamp-flicker {
   0% {
     opacity: 0;
   }
 
-  12% {
-    opacity: 0.7;
-  }
-
-  22% {
-    opacity: 0.15;
-  }
-
-  38% {
+  25% {
     opacity: 0.9;
   }
 
-  50% {
+  45% {
     opacity: 0.35;
   }
 
-  70% {
-    opacity: 1;
-  }
-
-  82% {
-    opacity: 0.75;
-  }
-
+  75%,
   100% {
     opacity: 1;
   }
@@ -233,9 +220,9 @@
   height: calc(var(--dh) * 1.9);
   background: radial-gradient(
     closest-side,
-    rgb(255 190 110 / 75%),
-    rgb(255 150 70 / 25%) 55%,
-    rgb(255 140 60 / 0%) 100%
+    color-mix(in srgb, var(--c-light-gold) 75%, transparent),
+    color-mix(in srgb, var(--c-light-ember) 25%, transparent) 55%,
+    transparent 100%
   );
   border-radius: 50%;
   opacity: 0.45;
@@ -262,9 +249,9 @@
   content: '';
   background: linear-gradient(
     to right,
-    rgb(255 214 150 / 90%),
-    rgb(255 190 110 / 45%) 45%,
-    rgb(255 170 90 / 0%)
+    color-mix(in srgb, var(--c-light-warm) 90%, transparent),
+    color-mix(in srgb, var(--c-light-gold) 45%, transparent) 45%,
+    transparent
   );
   clip-path: polygon(0 40%, 100% 0, 100% 100%, 0 60%);
 }
@@ -278,9 +265,9 @@
   height: var(--ph);
   background: radial-gradient(
     closest-side,
-    rgb(255 180 100 / 90%),
-    rgb(255 150 70 / 35%) 55%,
-    rgb(255 140 60 / 0%)
+    color-mix(in srgb, var(--c-light-amber) 90%, transparent),
+    color-mix(in srgb, var(--c-light-ember) 35%, transparent) 55%,
+    transparent
   );
   border-radius: 50%;
   opacity: 0.5;
@@ -313,11 +300,7 @@
   pointer-events: none;
   background: var(--c-badge-bg);
   border-radius: var(--radius-pill);
-  animation: hint-in var(--dur-fade) var(--ease) 1.2s both;
-}
-
-.hero__hint[hidden] {
-  display: none;
+  animation: hint-in var(--dur-fade) var(--ease) var(--dur-hint-delay) both;
 }
 
 .hero__hint-dot {
@@ -334,7 +317,8 @@
   content: '';
   background: var(--c-yellow);
   border-radius: 50%;
-  animation: hint-pulse 1.6s var(--ease-out) infinite;
+  /* 3 pulses, then still (WCAG 2.2.2: no motion beyond about 5 s) */
+  animation: hint-pulse var(--dur-hint-pulse) var(--ease-out) var(--dur-hint-delay) 3 both;
 }
 
 @keyframes hint-in {
@@ -378,12 +362,12 @@
   inset: 0;
   color: var(--c-light-text);
   text-shadow:
-    0 0 18px rgb(255 190 90 / 95%),
-    0 0 42px rgb(255 160 60 / 70%);
+    0 0 18px color-mix(in srgb, var(--c-light-text-glow) 95%, transparent),
+    0 0 42px color-mix(in srgb, var(--c-light-text-halo) 70%, transparent);
   pointer-events: none;
   content: attr(data-text) / '';
   opacity: 0;
-  transition: opacity var(--dur-zoom) var(--ease);
+  transition: opacity var(--dur-fade) var(--ease);
 }
 
 .hero--lit-3 .hero__glow::after {

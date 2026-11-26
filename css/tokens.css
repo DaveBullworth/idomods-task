@@ -24,9 +24,18 @@
   --lamp-dim-3: 0.15;
   --c-light-core: rgb(255 246 226);
   --c-light-warm: rgb(255 214 150);
+  --c-light-honey: rgb(255 196 110);
+  --c-light-gold: rgb(255 190 110);
   --c-light-amber: rgb(255 180 100);
   --c-light-ember: rgb(255 150 70);
   --c-light-text: #ffd27a;
+  --c-light-text-glow: rgb(255 190 90);
+  --c-light-text-halo: rgb(255 160 60);
+
+  /* Hero: top-edge colour of each photo, continued above the stage on
+     portrait screens (css/hero.css) */
+  --c-sky-rock: #9c6744;
+  --c-sky-interior: #c5afa3;
 
   /* Lamp parallax (js/lamp-parallax.js): largest offset of the nearest lamp
      at a 1920 px stage (scales with the stage), and how much of its lamp's
@@ -69,7 +78,9 @@
   --dur-zoom: 800ms;
   --dur-move: 500ms; /* menu panel, other movement */
   --slide-interval: 3000ms;
-  --dur-flicker: 450ms; /* lamp switch-on flicker (opacity steps) */
+  --dur-flicker: 450ms; /* lamp switch-on: up, one dip, steady (opacity) */
+  --dur-hint-delay: 1200ms; /* first-visit lamp hint appears after this */
+  --dur-hint-pulse: 1600ms; /* one pulse of its dot (3 in all) */
   --dur-light-off: 300ms;
 
   /* Transform amounts. Set to "no effect" under reduced motion below,

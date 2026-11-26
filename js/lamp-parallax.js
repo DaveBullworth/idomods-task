@@ -17,7 +17,10 @@
 (function () {
   'use strict';
 
-  var SMOOTH_MS = 160; // time constant of the follow
+  // Time constant of the exponential follow (how quickly the lamps catch up
+  // with the cursor), not a transition duration, so it lives here rather
+  // than in tokens.css.
+  var SMOOTH_MS = 160;
   var STAGE_REF = 1920; // --lamp-parallax is given for this stage width
   var EPSILON = 0.002;
 

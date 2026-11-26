@@ -16,7 +16,7 @@
   var MAX_DPR = 1.5;
   // The picture is soft gradients only (text is HTML), so the canvas renders
   // at half resolution and CSS scales it up: no visible difference, about a
-  // quarter of the pixel work. Overridable for testing via data-render-scale.
+  // quarter of the pixel work.
   var RENDER_SCALE = 0.5;
   var RESIZE_DEBOUNCE_MS = 100;
   var FRAME_MS = 1000 / 60; // slow motion: more than 60 fps only costs GPU and battery
@@ -144,7 +144,6 @@
     if (!uniforms) return;
 
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-    var renderScale = parseFloat(root.getAttribute('data-render-scale')) || RENDER_SCALE;
     var elapsed = 0;
     var last = null;
     var frame = 0;
@@ -162,7 +161,7 @@
     }
 
     function resize() {
-      var dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR) * renderScale;
+      var dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR) * RENDER_SCALE;
       var w = Math.max(1, Math.round(canvas.clientWidth * dpr));
       var h = Math.max(1, Math.round(canvas.clientHeight * dpr));
       if (w !== canvas.width || h !== canvas.height) {

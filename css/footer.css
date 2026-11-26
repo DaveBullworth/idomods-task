@@ -1,0 +1,272 @@
+/* Footer (Figma 1:708, design/figma/05-design-context-footer.tsx; PLAN.md §3.8).
+   Three bands on the 1600 column: top (logo + socials, 5 link columns),
+   bottom (payments, awards, shops), caption (VAT line, badges, contact).
+   Type: headings Bold 13/1.1, links Medium 13/1.1, caption Medium 12/1.1,
+   all #1e1e1e. Layout below the design width: PLAN.md §3.8. */
+.footer {
+  color: var(--c-ink);
+  background: var(--c-white);
+}
+
+.footer__top,
+.footer__bottom,
+.footer__caption {
+  width: min(100% - 2 * var(--gutter), var(--container));
+  margin-inline: auto;
+}
+
+.footer__heading {
+  font-size: var(--fs-13);
+  font-weight: var(--fw-bold);
+  line-height: 1.1;
+}
+
+/* Links carry 6 px vertical padding with a 2 px list gap: the same 28 px
+   rhythm as Figma's 14 px gap, but a 26 px tall target instead of 14 px. */
+.footer__link {
+  display: inline-block;
+  padding-block: 6px;
+  font-size: var(--fs-13);
+  font-weight: var(--fw-medium);
+  line-height: 1.1;
+}
+
+@media (hover: hover) {
+  .footer__link:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+/* Top band */
+.footer__top {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-block: 64px 40px;
+}
+
+.footer__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  align-self: flex-start;
+}
+
+.footer__logo {
+  display: grid;
+  place-items: center;
+  width: 160px;
+  height: 44px;
+}
+
+.footer__social {
+  display: flex;
+  gap: 2px;
+}
+
+.footer__social-link {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  color: var(--c-black);
+  border-radius: var(--radius-pill);
+}
+
+.footer__nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px 24px;
+}
+
+.footer__column {
+  display: flex;
+  flex-direction: column;
+  gap: 18px; /* + the first link's 6 px padding = Figma's 24 */
+}
+
+.footer__links {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+  margin-bottom: -6px; /* the last link's padding is tap area, not layout */
+}
+
+/* Bottom band: three groups, stacked below 1024 */
+.footer__bottom {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 16px;
+  border-top: 1px solid var(--c-line);
+}
+
+.footer__group {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-block: 32px;
+}
+
+.footer__group + .footer__group {
+  border-top: 1px solid var(--c-line);
+}
+
+/* 5 cells of 57 x 36 per row (43 x 24 logo + 7 / 6 padding), 8 px gaps */
+.footer__payments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 317px;
+}
+
+.footer__payment {
+  padding: 6px 7px;
+}
+
+.footer__awards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  max-width: 294px;
+}
+
+.footer__flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.footer__flag {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-pill);
+}
+
+.footer__flag img {
+  border-radius: 50%;
+}
+
+/* Caption */
+.footer__caption {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-block: 32px;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-medium);
+  line-height: 1.1;
+}
+
+.footer__vat {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+  align-items: center;
+}
+
+.footer__rule {
+  display: none;
+}
+
+.footer__badges {
+  display: flex;
+  gap: 8px;
+}
+
+.footer__contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+  align-items: center;
+}
+
+/* tap area kept, line height as in Figma */
+.footer__contact .footer__link {
+  margin-block: -6px;
+  font-size: inherit;
+}
+
+.footer__phone {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+@media (width >= 640px) {
+  .footer__nav {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (width >= 1024px) {
+  .footer__nav {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  /* three equal columns (512 at 1600) including their padding, as in Figma */
+  .footer__bottom {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+  }
+
+  .footer__group {
+    padding: 32px;
+    border-right: 1px solid var(--c-line);
+  }
+
+  .footer__group:first-child {
+    padding-left: 0;
+  }
+
+  .footer__group:last-child {
+    border-right: 0;
+  }
+
+  .footer__group + .footer__group {
+    border-top: 0;
+  }
+
+  .footer__caption {
+    gap: 8px;
+  }
+
+  .footer__vat {
+    flex-wrap: nowrap;
+  }
+
+  .footer__vat p {
+    flex: none;
+  }
+
+  .footer__rule {
+    display: block;
+    flex: 1 1 auto;
+    height: 1px;
+    background: var(--c-line);
+  }
+}
+
+/* From 1280: one row as in the design. The column gap scales so the row fits
+   at 1280 and is exactly Figma's 96 at 1920. */
+@media (width >= 1280px) {
+  .footer__top {
+    flex-direction: row;
+    justify-content: space-between;
+    padding-block: 96px 64px;
+  }
+
+  .footer__nav {
+    display: flex;
+    gap: clamp(40px, 5vw, 96px);
+  }
+
+  .footer__link {
+    white-space: nowrap;
+  }
+}

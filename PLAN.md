@@ -231,12 +231,14 @@ tests/       (Playwright, written after the page is built)
 - Fallbacks (verified): no WebGL / no JS -> the section's own CSS gradient (the canvas only fades in, `.shader--ready`, after the first WebGL frame); context lost -> back to the gradient, resumes on restore; reduced motion -> one static WebGL frame, no animation.
 - Copy: heading "Twoje wnętrze zasługuje na wyjątkowe światło", CTA "Kup teraz", subline "Od 119 zł na oficjalnej stronie producenta SOLLUX". _(to verify by the user by eye: 1:707 is image-only)_ The frame has a double space in "wyjątkowe  światło"; the page uses a single space.
 
-### 3.8 Footer (`.footer`)
+### 3.8 Footer (`.footer`) **(built: `css/footer.css`; values and copy from Figma #5)**
 
-- Top row: logo + 4 social circle buttons, then 5 link columns. On mobile the columns stack; collapsible `<details>` are optional and only if it's simple.
-- Bottom row: Płatności i dostawy / Nagrody / Nasze sklepy in 3 columns, stacked on mobile.
-- Caption: VAT note, divider, IdoMods + IdoSell badges, contact line (NIP, tel, hours, e-mail, company, address).
-- Type and colours: **TBD #5**.
+- Top band (padding 96 / 64): logo (136 px glyph in a 160 x 44 box) centred over 4 social links (48 px circles, 24 px icons, 2 px apart); 5 link columns. Headings Bold 13/1.1 (`h2`), links Medium 13/1.1, all `#1e1e1e`; 24 px heading → links, 28 px link rhythm. Links have 6 px vertical padding (a 26 px tap target instead of 14) with the list gap reduced to match, so the layout is unchanged.
+- Bottom band: `#e7e7e7` top rule; three equal columns (512 at 1600, grid) with `#e7e7e7` dividers, padding 32. Payments 5 x 2 cells of 57 x 36 (43 x 24 logos), awards at their Figma sizes with 3 px gaps, 8 flags (24 px in 32 px circles, links with Polish country names as labels).
+- Caption: VAT line, a rule filling the row, IdoMods (98 x 36) + IdoSell (66 x 36); contact line Medium 12/1.1 with 24 px gaps (phone and e-mail are links, `href="#"`).
+- Layout below the design width: from 1280 one row as in Figma (column gap `clamp(40px, 5vw, 96px)`, 96 at 1920); below 1280 the logo block sits above the link grid (5 columns from 1024, 3 from 640, 2 on phones); below 1024 the three bottom groups stack with horizontal rules and the caption wraps (its long rule is hidden).
+- Measured at 1920 vs `footer.png`: column x within 3 px, bottom groups and flags exact, height 712 vs 709 (the 13 px / 1.1 line boxes add up slightly taller than Figma's rounded ones). No overflow, nothing cut off 320-2560.
+- Copy verified against #5. "Wpsółpraca" in Figma is a typo; the page uses "Współpraca" (NOTES.md).
 
 ### 3.9 Polish pass
 
@@ -271,8 +273,9 @@ tests/       (Playwright, written after the page is built)
 - ~~**Hero arrows below 1024 px**~~ **Resolved (user-approved):** hidden below 1024 px; swipe + progress segments (64 × 44 px tap areas) + the pause/play toggle (44 × 44).
 - ~~**Tile copy typo**~~ **Resolved (user):** "Pobierz aplikację na telefon" (Figma has "aplikacje"). In NOTES.md and README.
 - ~~**Tile text contrast**~~ **Resolved (user):** design colours kept; dark gradient behind the text on THORO (52 %) and Konfigurator (32 %), measured ≥ 4.5:1 eyebrow / ≥ 3:1 title at 320-1920. Details in NOTES.md, CSS in `tiles.css` (`.tile--scrim`).
-- **Lamp positions:** `scripts/find-lamps.mjs` → `design/lamp-positions.json` (§0.2), then check by eye.
-- **User check:** shader section copy (image-only).
-- **TBD #4** (VP's): tile radius, type scale, button styles, benefit icon colour.
-- **TBD #5** (footer): type and colours.
-- Spare **#6**: the shader section, only if its colours can't be read from `full.png` / `screen.png`.
+- **OPEN, next step: lamp glow on click** (comments spec 03, "Pokaż swoją kreatywność w animacji": the creative part of the brief). Not built yet: the lamp buttons exist (`aria-pressed`, labels, positions from §0.2) but do nothing. The §3.3 bullet (`.lamp--on`, a radial `.lamp__glow` fading in over 500 ms on both slides) is the starting point, not a final design; the idea gets proposed and agreed before it's built. Acceptance criterion 5 covers it.
+- ~~**Lamp positions**~~ done (§0.2, `design/lamp-positions.json`), checked by eye and by difference view.
+- **User check:** shader section copy (image-only); the user checks it by eye against Figma. Single space in "wyjątkowe światło" confirmed.
+- ~~**TBD #4**~~ done (§3.5, §3.6). ~~**TBD #5**~~ done (§3.8).
+- ~~**Footer heading typo**~~ "Współpraca" instead of Figma's "Wpsółpraca" (same rule as the tile typo; NOTES.md, README).
+- Spare **#6**: unused so far; keep it for anything the lamp glow or the polish pass needs from Figma.

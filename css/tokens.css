@@ -32,6 +32,14 @@
   --c-light-text-glow: rgb(255 190 90);
   --c-light-text-halo: rgb(255 160 60);
 
+  /* Text shadow for white text straight on the hero photo (header row,
+     eyebrow, H1): a tight dark halo at the letter edges, which carries the
+     contrast where the text crosses a light lamp, plus a soft wide one.
+     Strengths measured (design/NOTES.md). */
+  --text-shadow-hero:
+    0 0 2px color-mix(in srgb, var(--c-black) 70%, transparent),
+    0 0 12px color-mix(in srgb, var(--c-black) 35%, transparent);
+
   /* Hero: top-edge colour of each photo, continued above the stage on
      portrait screens (css/hero.css) */
   --c-sky-rock: #9c6744;

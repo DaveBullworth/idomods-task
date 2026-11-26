@@ -45,6 +45,8 @@
 
 .header--open,
 .header:has(:focus-visible) {
+  --header-text-shadow: none;
+
   color: var(--c-ink);
 }
 
@@ -55,6 +57,8 @@
 
 @media (hover: hover) {
   .header:hover {
+    --header-text-shadow: none;
+
     color: var(--c-ink);
   }
 
@@ -280,8 +284,19 @@
 /* From 1280: one row. The menu wrapper joins it; its negative end margin
    turns the row gap before the cart into the 8 px icon gap from Figma. */
 @media (width >= 1280px) {
+  /* The row sits straight on the hero photo, white text and all: the hero
+     text shadow (tokens.css), dropped as soon as the header turns white
+     (the solid states above set it to none). Below 1280 the links are in
+     the white burger panel and need none. */
   .header {
     --header-gap: clamp(16px, 3.33vw, 64px);
+    --header-text-shadow: var(--text-shadow-hero);
+  }
+
+  .header__link,
+  .header__configurator,
+  .search__input {
+    text-shadow: var(--header-text-shadow);
   }
 
   .header__inner {

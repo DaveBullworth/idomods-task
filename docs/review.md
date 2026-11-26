@@ -169,7 +169,7 @@ Method: the text is hidden and the area behind each element's text (its line box
 - "świetle" over lamp 3: 1.59 at 1280×633, 1.50 at 1920. This is the Figma layout.
 - At 1280×633, lamp 1's top sits behind the nav links "Bestsellery" / "Promocje": 1.54. Viewports wider than 16:9 push the stage up, past the header.
 
-A slide scrim can't fix either case without dimming the lamps.
+A slide scrim can't fix either case without dimming the lamps. Followed up below ("Follow-up: open contrast items").
 
 ### 12. Lamp switch-on flicker
 
@@ -296,6 +296,39 @@ The test now passes at both widths.
 **Recommendation:** Skip. The page is Polish and the brand names are unlikely to get garbled.
 
 **Decision:** Skip as recommended.
+
+---
+
+## Follow-up: open contrast items
+
+**Decision:** Fix them with one consistent technique that doesn't dim the lamps. A subtle text-shadow on the white text over the hero (transparent header links and search placeholder, eyebrow, H1), removed when the header turns white. For slide 1's eyebrow, also a light scrim on the text side under the lamps, measured minimum + 2 points. Measure before and after.
+
+**Outcome:**
+- **Shadow:** `--text-shadow-hero` (tokens.css) is a tight 2 px halo at 70 % black plus a soft 12 px one at 35 %. It applies to the eyebrow, the H1 and, from 1280, the header links, configurator and search text. The header's solid states (hover, focus, open panel) set it to none.
+- **Slide 1 scrim:** a 30 % band behind the text column. The eyebrow needs 28 % at worst (1440 × 900; 18–27 % at 800 × 520, 1024 × 768, 1280 × 633 and 1920), plus 2 points.
+
+**Method:** a text-shadow only darkens the pixels next to the letters, so these figures are measured on a round ring 2 px around the glyphs: WCAG treats a halo or outline as the text's background. The page is screenshotted as is and again with the text colour transparent (shadows kept); where the two differ are the glyphs. The figure is the worst ring pixel. The lamps are visible, unlike the item 11 table, because these are the lamp overlaps.
+
+| Item | Target | Before | After (2 px ring) | After (1 px ring) |
+|---|---|---|---|---|
+| "świetle" over lamp 3, slide 1, 1280×633 | 3 | 1.73 | 2.02 | 2.48 |
+| "świetle" over lamp 3, slide 1, 1920 | 3 | 1.53 | 2.06 | 2.49 |
+| "świetle" over lamp 3, slide 2, 1280×633 | 3 | 1.75 | 2.07 | 2.48 |
+| "świetle" over lamp 3, slide 2, 1920 | 3 | 1.59 | 2.07 | 2.49 |
+| Nav over lamp 1, slide 1, 1280×633 | 4.5 | 1.58 | 1.80 | 2.45 |
+| Nav over lamp 1, slide 2, 1280×633 | 4.5 | 1.63 | 1.84 | 2.46 |
+| Slide 1 eyebrow, 1280×633 | 4.5 | 2.85 | **5.16** | 5.28 |
+| Slide 1 eyebrow, 1920 | 4.5 | 2.78 | **5.04** | 5.19 |
+
+**Result:**
+- The slide 1 eyebrow is fixed.
+- The two lamp overlaps improve, but a subtle shadow can't reach 3:1 / 4.5:1 there. Stronger recipes were tried:
+  - a heavy stacked halo (2 + 4 + 4 + 12 px) gets "świetle" to 2.53 (3.21 within 1 px) and the nav to 2.43 (3.37), and starts to read as an outline;
+  - the nav over lamp 1 needs about 47 % black right at the letter edges.
+
+  Side-by-side crops (none / subtle / heavy) and final screenshots at 1920 and 1280×633 were shown to the user. The subtle version is kept, as decided ("subtle", "as close to Figma as possible").
+- **Remaining options (user's call):** a stronger halo for the H1 only; or, for the nav, keeping lamp 1 below the header on viewports wider than 16:9 (a stage-position change, not a dimming one).
+- **Also found while measuring (slide 1, as designed):** the search placeholder at 1280×633 is 3.74 and the configurator label at 1920 is 4.31, both on the bright sky. The badge label is 3.60 on its 40 % dark pill. These are not in the decision above, so they are left open.
 
 ---
 

@@ -53,10 +53,12 @@
 }
 
 /* Top-edge colour of each photo; scrim keeps white text >= 4.5:1 on mobile.
-   Landscape scrim strengths for slide 2: see "Slide 2 scrim" below. */
+   Landscape scrim strengths: see "Landscape scrims" below. */
 .hero__slide--rock {
   --hero-sky: var(--c-sky-rock);
   --hero-scrim: 0%;
+  --hero-scrim-header: 0%;
+  --hero-scrim-text: 30%;
 }
 
 .hero__slide--interior {
@@ -236,6 +238,11 @@
 
 .hero__inner > * {
   pointer-events: auto;
+}
+
+.hero__eyebrow,
+.hero__title {
+  text-shadow: var(--text-shadow-hero);
 }
 
 .hero__eyebrow {
@@ -458,15 +465,17 @@
   }
 }
 
-/* Slide 2 scrim, landscape (portrait has its own, above). White on the
-   interior photo is down to about 1:1 behind the header (a ceiling spotlight
-   under the search text at 1280 x 633) and about 1.7:1 behind the eyebrow
-   and H1. Two dark bands, measured minimum + 2 points (design/NOTES.md):
-   one behind the header, fading out below it, and one behind the text
-   column, fading out to its right. They sit inside the slide, under the
-   lamps, so they crossfade with the photo and the lamps never dim. */
+/* Landscape scrims (portrait has its own, above), measured minimum + 2
+   points (design/NOTES.md). Slide 2: white on the interior photo is down to
+   about 1:1 behind the header (a ceiling spotlight under the search text at
+   1280 x 633) and about 1.7:1 behind the eyebrow and H1, so a band behind
+   the header (59 %), fading out below it, and one behind the text column
+   (46 %), fading out to its right. Slide 1: the eyebrow on the bright sky
+   is about 2.7:1, so a light text band only (30 %). They sit inside the
+   slide, under the lamps, so they crossfade with the photo and the lamps
+   never dim. Text over a lamp is covered by --text-shadow-hero (tokens.css). */
 @media (aspect-ratio > 5/4) {
-  .hero__slide--interior::after {
+  .hero__slide::after {
     position: absolute;
     inset: 0;
     content: '';

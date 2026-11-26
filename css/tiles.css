@@ -32,11 +32,13 @@
 
 .tile--thoro {
   --tile-fg: var(--c-white);
+  --scrim: 52%;
   --tile-pos: 40% center;
 }
 
 .tile--configurator {
   --tile-fg: var(--c-white);
+  --scrim: 32%;
   --tile-bg: var(--c-tile-blue);
   --tile-pos: 85% center;
 }
@@ -69,7 +71,28 @@
   flex-direction: column;
   gap: 24px;
   align-items: flex-start;
-  padding: var(--tile-pad);
+  padding: var(--body-pad-top, var(--tile-pad)) var(--tile-pad) var(--tile-pad);
+}
+
+/* Contrast scrim (design/NOTES.md): white text on THORO's photo and on
+   Konfigurator's blue is under WCAG minimums, so a dark gradient sits behind
+   the text block only. The body grows upward by --scrim-fade; the gradient
+   is clear at its top edge and reaches full strength (--scrim) 8 px above
+   the eyebrow, staying there to the bottom. Strengths are the measured
+   minimum for 4.5:1 on the eyebrow and 3:1 on the title at every width
+   (see NOTES.md). The body is not positioned, so the link's ::after still
+   covers the whole tile. */
+.tile--scrim {
+  --scrim-fade: 48px;
+  --body-pad-top: calc(var(--tile-pad) + var(--scrim-fade));
+}
+
+.tile--scrim .tile__body {
+  background: linear-gradient(
+    to top,
+    rgb(16 16 17 / var(--scrim)) calc(100% - var(--body-pad-top) + 8px),
+    rgb(16 16 17 / 0%)
+  );
 }
 
 .tile__copy {
@@ -148,10 +171,10 @@
     aspect-ratio: 4 / 3;
   }
 
-  /* painted after the (possibly zoomed) image */
+  /* 32 px clears the hover zoom's overhang (5 % of the image box) and,
+     on Konfigurator, holds the scrim's fade on the flat colour */
   .tile--split .tile__body {
-    position: relative;
-    padding-top: 8px;
+    --body-pad-top: 32px;
   }
 }
 

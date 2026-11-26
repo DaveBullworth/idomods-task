@@ -269,8 +269,8 @@ tests/       (Playwright, written after the page is built)
 
 - ~~TBD #3~~ done (§0.3). All hero and header copy matched Figma.
 - ~~**Hero arrows below 1024 px**~~ **Resolved (user-approved):** hidden below 1024 px; swipe + progress segments (64 × 44 px tap areas) + the pause/play toggle (44 × 44).
-- **Tile copy typo in Figma (#4, node 1:706):** "Pobierz aplikacje na telefon"; correct Polish would be "aplikację". Built verbatim from Figma; change only if the user confirms.
-- **Tile text contrast (from the design):** white on `#72a3f3` (Konfigurator) is about 2.5:1, under the 3:1 needed even for large text; THORO's white eyebrow sits on the light wall (well under 3:1). Built as designed. Options: a darker blue or text colour for Konfigurator, a subtle bottom scrim on THORO.
+- ~~**Tile copy typo**~~ **Resolved (user):** "Pobierz aplikację na telefon" (Figma has "aplikacje"). In NOTES.md and README.
+- ~~**Tile text contrast**~~ **Resolved (user):** design colours kept; dark gradient behind the text on THORO (52 %) and Konfigurator (32 %), measured ≥ 4.5:1 eyebrow / ≥ 3:1 title at 320-1920. Details in NOTES.md, CSS in `tiles.css` (`.tile--scrim`).
 - **Lamp positions:** `scripts/find-lamps.mjs` → `design/lamp-positions.json` (§0.2), then check by eye.
 - **User check:** shader section copy (image-only).
 - **TBD #4** (VP's): tile radius, type scale, button styles, benefit icon colour.

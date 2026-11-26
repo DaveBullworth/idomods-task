@@ -28,4 +28,7 @@
 - **Dropdown menus are not designed** ("Lampy", "Kolory", "Pomieszczenia"). Plain links with an arrow icon, no dropdowns.
 - **Links and search.** All links use `href="#"`. The search form is static and does not submit.
 - **Spec conflict:** "animate only transform and opacity" vs. colour changes in the header and buttons. Backgrounds change through an overlay with opacity; text and icon colour use a `color` transition as a deliberate exception.
+- **Typo in the design.** The SOLLUX SMART tile button reads "Pobierz aplikacje na telefon" in Figma (node 1:706); the page uses the correct "Pobierz aplikację na telefon".
+- **Tile text contrast.** White text on THORO's photo (about 1.4:1 at worst) and on Konfigurator's blue `#72a3f3` (2.55:1) is under WCAG minimums. The design colours stay; a dark gradient (`#101011`) sits behind the text block only, fading in above the eyebrow. Strength is the measured minimum plus 2 points: THORO 52 %, Konfigurator 32 %. Measured on the lightest background pixel behind each text box, at widths 320-1920: eyebrow 4.89:1 (THORO) and 4.67:1 (Konfigurator), target 4.5:1; title 4.74:1 and 3.29:1, target 3:1.
+- **Tiles below 1024 px.** One column. Konfigurator, Katalog and SOLLUX SMART stack the image above the text (on the tile's own flat colour), because overlaid text would cross the device mockups at these widths. THORO keeps the overlay.
 - **Anything else not specified:** the simplest behaviour consistent with the rest of the page.

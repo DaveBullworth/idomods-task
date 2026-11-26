@@ -87,6 +87,36 @@ test.describe('switching a lamp', () => {
   });
 });
 
+test('the switch-on flicker has a single dip, then stays steady', async ({ page }) => {
+  await openPage(page);
+  // opacity steps of the keyframes: up, one dip, back up to steady
+  const steps = await page.evaluate(() => {
+    const rule = [...document.styleSheets]
+      .flatMap((s) => [...s.cssRules])
+      .find((r) => r instanceof CSSKeyframesRule && r.name === 'lamp-flicker');
+    return [...rule.cssRules].flatMap((k) =>
+      k.keyText.split(',').map(() => Number(k.style.opacity)),
+    );
+  });
+  const dips = steps.filter(
+    (v, i) => i > 0 && i < steps.length - 1 && v < steps[i - 1] && v < steps[i + 1],
+  );
+  expect(dips).toHaveLength(1);
+  expect(steps.at(-1)).toBe(1);
+});
+
+test('the hint dot pulses 3 times, then stops', async ({ page }) => {
+  await openPage(page, { showHint: true });
+  const iterations = await page.evaluate(
+    () =>
+      document
+        .getAnimations()
+        .find((a) => a.animationName === 'hint-pulse')
+        .effect.getComputedTiming().iterations,
+  );
+  expect(iterations).toBe(3);
+});
+
 test('the first-visit hint goes after the first click and stays gone', async ({ page }) => {
   await openPage(page, { showHint: true });
   const hint = page.locator('[data-lamp-hint]');
@@ -132,6 +162,8 @@ test('at 375 the lamps are in view and clear of the hero text', async ({ page })
     const b = await box(lamp(page, n));
     expect(b.x).toBeGreaterThanOrEqual(0);
     expect(b.x + b.width).toBeLessThanOrEqual(375);
+    expect(b.y).toBeGreaterThanOrEqual(0);
+    expect(b.y + b.height).toBeLessThanOrEqual(812);
     const overlaps =
       b.x < text.x + text.width &&
       text.x < b.x + b.width &&
@@ -140,3 +172,68 @@ test('at 375 the lamps are in view and clear of the hero text', async ({ page })
     expect(overlaps, `lamp ${n} overlaps the hero text`).toBe(false);
   }
 });
+
+// Review item 13: the lamp buttons are full image rectangles, and lamps 2 and
+// 3 (later in the DOM, so on top) overlap lamp 1's box. Where lamp 1 is
+// visible and the lamp on top is transparent, a click must still reach lamp 1.
+for (const [width, height] of [
+  [1920, 1080],
+  [375, 812],
+]) {
+  test(`lamp 1's visible pixels next to lamps 2 and 3 click lamp 1 at ${width}`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height });
+    await openPage(page);
+    await page
+      .locator('.lamp__img')
+      .evaluateAll((imgs) => Promise.all(imgs.map((i) => i.decode())));
+
+    const result = await page.evaluate(() => {
+      // alpha of a lamp image at a viewport point (0 outside its box)
+      const lamps = [1, 2, 3].map((n) => {
+        const img = document.querySelector(`.lamp--${n} .lamp__img`);
+        const r = img.getBoundingClientRect();
+        const c = document.createElement('canvas');
+        c.width = Math.round(r.width);
+        c.height = Math.round(r.height);
+        const ctx = c.getContext('2d', { willReadFrequently: true });
+        ctx.drawImage(img, 0, 0, c.width, c.height);
+        const { data } = ctx.getImageData(0, 0, c.width, c.height);
+        return {
+          r,
+          alpha(x, y) {
+            const i = Math.floor(x - r.x);
+            const j = Math.floor(y - r.y);
+            if (i < 0 || j < 0 || i >= c.width || j >= c.height) return 0;
+            return data[(j * c.width + i) * 4 + 3];
+          },
+        };
+      });
+      const [one, ...above] = lamps;
+      const VISIBLE = 128;
+      const step = Math.max(2, Math.round(one.r.width / 120));
+      let sampled = 0;
+      const wrong = [];
+      for (let y = one.r.top + 1; y < one.r.bottom - 1; y += step) {
+        for (let x = one.r.left + 1; x < one.r.right - 1; x += step) {
+          if (one.alpha(x, y) < VISIBLE) continue;
+          // only where another lamp's box overlaps but its pixel is clear
+          const covering = above.filter(
+            (l) => x >= l.r.left && x < l.r.right && y >= l.r.top && y < l.r.bottom,
+          );
+          if (!covering.length || covering.some((l) => l.alpha(x, y) > 0)) continue;
+          sampled++;
+          const hit = document.elementFromPoint(x, y)?.closest('[data-lamp]');
+          if (!hit?.classList.contains('lamp--1')) {
+            wrong.push(`${Math.round(x)},${Math.round(y)} -> ${hit ? hit.className : 'no lamp'}`);
+          }
+        }
+      }
+      return { sampled, wrong: wrong.slice(0, 10), wrongCount: wrong.length };
+    });
+
+    expect(result.sampled, 'no sample points in the overlaps').toBeGreaterThan(0);
+    expect(result.wrong, `${result.wrongCount} of ${result.sampled} points`).toEqual([]);
+  });
+}

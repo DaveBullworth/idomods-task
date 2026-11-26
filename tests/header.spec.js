@@ -40,12 +40,25 @@ test.describe('burger menu (< 1280 px)', () => {
     await burger.click();
     await expect(burger).toHaveAttribute('aria-expanded', 'true');
     await expect(menu).toBeVisible();
-    await expect(page.locator('main')).toHaveJSProperty('inert', true);
+    // everything outside the header: skip link, main and footer
+    for (const outside of ['.skip-link', 'main', 'footer']) {
+      await expect(page.locator(outside)).toHaveJSProperty('inert', true);
+    }
 
     await burger.click();
     await expect(burger).toHaveAttribute('aria-expanded', 'false');
     await expect(menu).toBeHidden();
-    await expect(page.locator('main')).toHaveJSProperty('inert', false);
+    for (const outside of ['.skip-link', 'main', 'footer']) {
+      await expect(page.locator(outside)).toHaveJSProperty('inert', false);
+    }
+  });
+
+  test('following a link closes it and focus returns to the burger', async ({ page }) => {
+    const burger = page.locator('[data-menu-toggle]');
+    await burger.click();
+    await page.locator('.header__link').first().click();
+    await expect(burger).toHaveAttribute('aria-expanded', 'false');
+    await expect(burger).toBeFocused();
   });
 
   test('Esc closes it and focus returns to the burger', async ({ page }) => {

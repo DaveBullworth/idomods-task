@@ -65,6 +65,21 @@ test.describe('burger menu', () => {
   });
 });
 
+test('no lamp flicker and no pulsing hint dot', async ({ page }) => {
+  await openPage(page, { showHint: true });
+  const keyframeAnimations = () =>
+    page.evaluate(() =>
+      document
+        .getAnimations()
+        .filter((a) => ['lamp-flicker', 'hint-pulse'].includes(a.animationName))
+        .map((a) => a.animationName),
+    );
+  await expect(page.locator('[data-lamp-hint]')).toBeVisible();
+  expect(await keyframeAnimations()).toEqual([]);
+  await page.locator('.lamp--1').click();
+  expect(await keyframeAnimations()).toEqual([]);
+});
+
 test('the shader shows a still frame', async ({ page }) => {
   await openPage(page);
   const canvas = page.locator('[data-shader-canvas]');

@@ -5,8 +5,8 @@
 //   wavelength), so t = 25 s renders exactly the t = 0 frame. t is kept modulo
 //   25 s in JS so float precision never degrades.
 // - Cheap: one full-screen triangle, 2-octave value noise, DPR capped at 1.5
-//   and rendered at half that resolution, low-power context. rAF only while the section is on screen and the tab is
-//   visible.
+//   and rendered at half that resolution, at most 60 fps, low-power context.
+//   rAF only while the section is on screen and the tab is visible.
 // - Fallbacks: no WebGL / lost context -> the section's CSS gradient stays
 //   (the canvas never fades in). Reduced motion -> one static frame.
 (function () {
@@ -19,6 +19,7 @@
   // quarter of the pixel work. Overridable for testing via data-render-scale.
   var RENDER_SCALE = 0.5;
   var RESIZE_DEBOUNCE_MS = 100;
+  var FRAME_MS = 1000 / 60; // slow motion: more than 60 fps only costs GPU and battery
 
   var VERTEX = [
     'attribute vec2 a_pos;',
@@ -150,6 +151,7 @@
     var visible = false;
     var lost = false;
     var resizeTimer = 0;
+    var lastDraw = -Infinity;
 
     function draw() {
       if (lost) return;
@@ -180,7 +182,14 @@
       // clamp long gaps so the motion never jumps after a stall
       if (last !== null) elapsed = (elapsed + Math.min(now - last, 100)) % LOOP_MS;
       last = now;
-      draw();
+      // 60 fps cap: time always advances, only the drawing is skipped. The
+      // draw schedule moves in exact 1/60 s steps, so a 144 Hz screen averages
+      // 60; the 1 ms tolerance keeps a 60 Hz screen from dropping to 30.
+      var since = now - lastDraw;
+      if (since >= FRAME_MS - 1) {
+        lastDraw = since > 2 * FRAME_MS ? now : lastDraw + FRAME_MS;
+        draw();
+      }
       update();
     }
 

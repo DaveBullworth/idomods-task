@@ -38,9 +38,11 @@
     <link rel="stylesheet" href="css/hero.css" />
     <link rel="stylesheet" href="css/benefits.css" />
     <link rel="stylesheet" href="css/tiles.css" />
+    <link rel="stylesheet" href="css/shader.css" />
 
     <script src="js/header.js" defer></script>
     <script src="js/hero-slider.js" defer></script>
+    <script src="js/shader.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Przejdź do treści</a>
@@ -667,6 +669,18 @@
           </article>
         </div>
       </div>
+
+      <!-- Shader section (design/frames/screen.png; copy to verify by eye, 1:707 is image-only) -->
+      <section class="shader" aria-labelledby="shader-title" data-shader>
+        <canvas class="shader__canvas" aria-hidden="true" data-shader-canvas></canvas>
+        <div class="shader__content">
+          <h2 class="shader__title" id="shader-title">
+            Twoje wnętrze zasługuje na wyjątkowe światło
+          </h2>
+          <a class="button button--primary shader__cta" href="#">Kup teraz</a>
+          <p class="shader__note">Od 119 zł na oficjalnej stronie producenta SOLLUX</p>
+        </div>
+      </section>
     </main>
   </body>
 </html>

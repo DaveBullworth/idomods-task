@@ -17,6 +17,14 @@
   --c-tile-cream: #fdf8eb;
   --c-tile-stone: #e8e4df;
 
+  /* Shader section (measured from design/frames/screen.png; 1:707 is image-only).
+     The WebGL colour ramp in js/shader.js uses the same values. */
+  --c-shader-text: #f0f0f3;
+  --c-shader-deep: #2a2418;
+  --c-shader-olive: #5f4e1d;
+  --c-shader-mid: #8f7121;
+  --c-shader-gold: #b08a23;
+
   /* Type */
   --ff: 'Red Hat Display', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --fw-medium: 500;
@@ -29,6 +37,9 @@
   /* 18 -> 21 px: benefit titles, tile eyebrows */
   --fs-lead: clamp(1.125rem, 1rem + 0.5vw, 1.3125rem);
   --fs-tile-title: clamp(1.5rem, 1.1rem + 1.25vw, 2rem); /* 24 -> 32 px */
+  --fs-17: 1.0625rem;
+  --fs-18: 1.125rem;
+  --fs-shader: clamp(2rem, 1.4rem + 1.9vw, 3.25rem); /* 32 -> 52 px */
 
   /* Motion (CLAUDE.md "Motion") */
   --ease: cubic-bezier(0.4, 0, 0.2, 1);

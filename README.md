@@ -14,7 +14,9 @@ Node is only needed for development tooling (`npm install` first):
 | `npm run assets` | Rebuilds optimised images, icons and fonts from `assets/raw/` |
 | `npm run lint` | Stylelint, html-validate and a Prettier check |
 | `npm run format` | Formats the code with Prettier |
-| `npm test` | Playwright tests (added once the page is complete) |
+| `npm test` | Playwright test suite (`tests/`, one spec per area); serves the folder itself on port 4173 |
+
+Before the first test run, install Playwright's browser once: `npx playwright install chromium`.
 
 ## Deviations from the design
 

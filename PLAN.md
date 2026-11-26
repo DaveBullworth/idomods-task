@@ -121,7 +121,7 @@ tests/       (Playwright, written after the page is built)
 - `<meta name="robots" content="noindex">`, since the page is a copy of a real shop.
 - `<link rel="preload" as="image" type="image/webp" imagesrcset="hero-rock-640.webp 640w, ...-960w, ...-1440w, ...-1920w, ...-2880w" imagesizes="(max-aspect-ratio: 16/9) calc(100svh * 16 / 9), 100vw" fetchpriority="high">` for the first hero slide.
   - `imagesizes` must match the stage width, because the stage covers the hero. It must also be identical to the slide `<img sizes>` so the preload gets reused.
-- `<link rel="preload" as="font" type="font/woff2" crossorigin>` for `assets/fonts/font.woff2` (latin). latin-ext loads on demand through `unicode-range`.
+- ~~Font preload~~ **removed (user-approved, tests):** a font preload is always a CORS request, which Chrome blocks over `file://` (console error, §4 criterion 9). Both `@font-face` rules use `font-display: swap`; the font timing is checked in Lighthouse after the deploy (§4 criterion 12). latin-ext loads on demand through `unicode-range`.
 - CSS in `<link>` tags in section order; JS with `defer` at the end of `<head>`.
 - `favicon.svg`: the "S" from `union.svg`.
 - `loading="lazy"` + `decoding="async"` on every image below the fold: tiles, benefit icons, footer logos, flags, badges. Hero images load eagerly; slide 1 gets `fetchpriority="high"`.
@@ -259,27 +259,38 @@ tests/       (Playwright, written after the page is built)
 - Favicon; html-validate, Stylelint and Prettier clean.
 - Check the 320–1920 range by hand; Lighthouse sanity check.
 
-## 4. Acceptance criteria (Playwright tests, written after the page is built)
+## 4. Acceptance criteria (Playwright tests)
 
-1. **Slider timing** (`page.clock`): the slide changes at 3 s; the crossfade finishes by 600 ms; the progress bar is `scaleX(1)` at 3 s and resets after the change; it pauses on hover; prev/next and segment clicks work.
-2. **Header hover:** after 250 ms the computed `color` is black and the overlay opacity is 1; both revert on leave.
-3. **Tile hover:** after the transition the image transform is `scale(1.1)` and the button overlay opacity is 1.
-4. **Burger menu** (< 1280 px): opens and closes, `aria-expanded` toggles, Esc closes, focus is trapped and returns to the burger.
-5. **Lamps:**
-   - a click toggles `aria-pressed` and the glow opacity on both slides;
-   - lamp boxes stay aligned with their reference positions in the stage (tolerance in px, agreed once measured) at 375 / 768 / 1440 / 1920;
+The suite is in `tests/`, one spec file per area; `npm test` runs it (setup in README). Criteria 1–11, including the lamp light and parallax under 5, are automated; criterion 12 is run after the deploy.
+
+1. **Slider timing** (`slider.spec.js`, `page.clock` paused before load): the slide changes at 3 s; the crossfade finishes by 600 ms; the progress bar is nearly full just before 3 s and resets after the change; it pauses while the mouse is over a control and with the pause button; prev/next and segment clicks work and restart the 3 s timer.
+2. **Header hover** (`header.spec.js`): after the transition the computed `color` is the ink colour and the overlay (`::before`) opacity is 1; both revert on leave.
+3. **Tile hover** (`tiles.spec.js`): after the transition the image's `scale` property is 1.1 (the zoom uses `scale`, not `transform`) and the button overlay opacity is 1, on all four tiles.
+4. **Burger menu** (`header.spec.js`, at 768): opens and closes, `aria-expanded` toggles, the rest of the page is `inert`, Esc closes, focus is trapped and returns to the burger.
+5. **Lamps** (`lamps.spec.js`, `parallax.spec.js`):
+   - a click toggles `aria-pressed` and the glow opacity on both slides; Enter and Space work too;
+   - lamp boxes stay within **1 px** (user-approved; measured max 0.016 px) of their reference positions in the stage at 375 / 768 / 1440 / 1920;
    - at 375 the lamps are inside the viewport and don't overlap the hero text box.
-6. **Shader:**
-   - the canvas has a WebGL context and draws non-blank pixels;
-   - with WebGL disabled (via `HTMLCanvasElement.prototype.getContext` override in `addInitScript`) the `.shader--static` fallback is shown and there are no errors.
-7. **Accessibility:** axe finds no violations on the full page (desktop and mobile).
-8. **No horizontal scroll** at widths from 320 to 1920 (stepped): `scrollWidth <= clientWidth`.
-9. **No console errors or failed requests** on load, also when opened over `file://`.
-10. **Reduced motion** (`emulateMedia`): no autoplay, the shader doesn't animate (static fallback), no transform transitions (tile zoom, slide scale-in, menu slide). Opacity fades are allowed.
-11. **Touch:** with `hasTouch` and no hover capability, tapping a tile or the header leaves no stuck hover state.
-12. **Lighthouse (mobile)** on the deployed GitHub Pages URL: **≥ 90** in Performance, Accessibility, Best Practices and SEO.
+   - **Lamp light:**
+     - the room dims a little more with each lamp (`--lamp-dim-1/2/3`), not at all with none, and the blended light layer is hidden again once nothing is lit;
+     - with all three lamps on, "w nowym świetle" glows (easter egg) and goes off when one is switched off; the H1 is still read once;
+     - the first-visit hint goes after the first click and stays gone after a reload.
+   - **Parallax:**
+     - with the cursor at the hero's edge each lamp moves by 12 px × its depth (at 1920), its glow and cone move with it, and its rock pool moves 0.3 of that;
+     - when the cursor leaves the hero the lamps ease back to rest: same positions as before, no inline properties, no `.hero--parallax`;
+     - nothing moves on touch (`hasTouch`) or under reduced motion.
+6. **Shader** (`shader.spec.js`):
+   - the canvas has a WebGL context and draws non-blank pixels that change over time;
+   - with WebGL disabled (`HTMLCanvasElement.prototype.getContext` override in `addInitScript`) the section never gets `.shader--ready`, the canvas stays at opacity 0, the CSS gradient shows, and there are no errors.
+7. **Accessibility** (`a11y.spec.js`): axe finds no violations on the full page (desktop and mobile).
+8. **No horizontal scroll** (`layout.spec.js`) at widths from 320 to 1920 (stepped): `scrollWidth <= clientWidth`.
+9. **No console errors or failed requests** (`console.spec.js`) on load and while scrolling, over http and over `file://`.
+10. **Reduced motion** (`reduced-motion.spec.js`, `emulateMedia`): no autoplay and no pause button, the shader shows a still frame, no transform transitions (tile zoom, slide scale-in, menu slide). Opacity fades are allowed.
+11. **Touch** (`touch.spec.js`): with `hasTouch` and no hover capability, tapping a tile or the header leaves no stuck hover state.
+12. **Lighthouse (mobile)**, after the deploy, on the GitHub Pages URL: **≥ 90** in Performance, Accessibility, Best Practices and SEO.
     - `noindex` is intentional; if SEO flags it, note it and keep the meta tag. Don't remove it to pass.
-    - Run by hand or with Lighthouse CLI (needs approval as a new dependency) after deploy.
+    - Also check the font timing there: the font preload was removed (§2).
+    - Run by hand or with Lighthouse CLI (needs approval as a new dependency).
 
 ## 5. Open items
 

@@ -194,6 +194,8 @@ tests/       (Playwright, written after the page is built)
   - slide 2 adds a 45 % dark scrim behind the text, since white on `#c5afa3` is only about 2.1:1 (landscape screens have their own slide 2 scrim, below);
   - the text sits at the top under the header; its bottom padding reserves the stage height, so the hero grows instead of overlapping on short screens.
   - Measured at 375 × 812: text block y 104–365, lamps y 509–735, all within x 16–359.
+- **Text shadow (review follow-up):** white text straight on the hero photo (eyebrow, H1, and from 1280 the header links, configurator and search) has `--text-shadow-hero`: a tight 2 px dark halo plus a soft 12 px one. The header drops it as soon as it turns white (hover, focus, open panel). It improves text over the lamps but doesn't reach the WCAG ratios there (`docs/review.md`).
+- **Slide 1 scrim, landscape:** a 30 % text band like slide 2's (no header band), for the eyebrow on the bright sky (2.7:1 → 5.0:1); measured minimum + 2 points.
 - **Slide 2 scrim, landscape (review item 11, `hero.css`):** white text on the interior photo measured down to 1.0:1 behind the header (a ceiling spotlight under the search placeholder at 1280 × 633) and 1.6–1.8:1 behind the eyebrow and H1. Two dark bands inside slide 2, under the lamps (so they crossfade with the photo and the lamps never dim): 59 % behind the header, fading out by 160 px, and 46 % behind the text column, fading out 240 px to its right. Strength: measured minimum + 2 points across 800 × 520, 1024 × 768, 1280 × 633, 1440 × 900 and 1920 × 1080. Ratios before/after in `docs/review.md`. Where "świetle" crosses lamp 3 (on both slides, as in Figma) the lamp itself is light; that is left as designed.
 - Hero text: eyebrow "Bestsellery SOLLUX", H1 "Kolor i forma" / "w nowym świetle" (two lines, line break kept at desktop), yellow pill CTA "Sprawdź bestsellery". _(verified against #3, nodes 1:510, 1:511, 1:513)_
 - Text block is vertically centred and left-aligned on the 1600 column (§0.3). In contained mode it sits at the top and the lamps below it (see above). Below 1024 the Trustmate badge joins the text flow under the CTA, because at the bottom it would collide with the progress bar.
@@ -256,10 +258,12 @@ tests/       (Playwright, written after the page is built)
 - Measured at 1920 vs `footer.png`: column x within 3 px, bottom groups and flags exact, height 712 vs 709 (the 13 px / 1.1 line boxes add up slightly taller than Figma's rounded ones). No overflow, nothing cut off 320-2560.
 - Copy verified against #5. "Wpsółpraca" in Figma is a typo; the page uses "Współpraca" (NOTES.md).
 
-### 3.9 Polish pass
+### 3.9 Polish pass (done)
 
-- Favicon; html-validate, Stylelint and Prettier clean.
-- Check the 320–1920 range by hand; Lighthouse sanity check.
+- `favicon.svg` at the root: the "S" path from `union.svg`, white on a #101011 rounded square (visible on light and dark tabs), linked with a relative `href`; a test checks it loads as SVG.
+- html-validate, Stylelint and Prettier clean; the Playwright suite green (51 tests, two runs).
+- 320–1920 checked by hand (320, 375, 768, 1024, 1280 × 633, 1440, 1920): nothing overlaps or is cut off; the text shadow and the slide scrims read as in the design.
+- Lighthouse: after the deploy (§4 criterion 12).
 
 ## 4. Acceptance criteria (Playwright tests)
 

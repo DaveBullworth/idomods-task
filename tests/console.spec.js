@@ -34,3 +34,14 @@ test('over http', async ({ page }) => {
 test('over file://', async ({ page }) => {
   expect(await loadAndCollect(page, FILE_URL)).toEqual([]);
 });
+
+// PLAN.md §3.9: the favicon is linked with a relative path (GitHub Pages
+// subfolder) and loads as SVG, so browsers never fall back to /favicon.ico.
+test('the favicon is linked relatively and loads as SVG', async ({ page, request }) => {
+  await page.goto('index.html');
+  const href = await page.locator('link[rel="icon"]').getAttribute('href');
+  expect(href).not.toMatch(/^\//);
+  const response = await request.get(href);
+  expect(response.ok()).toBe(true);
+  expect(response.headers()['content-type']).toMatch(/svg/);
+});

@@ -47,7 +47,7 @@ Recruitment task: a static landing page for SOLLUX, built from a Figma design. T
 - **Section done-check** (Playwright MCP screenshots):
   1. **1920 px:** compare with the matching frame PNG in `design/frames/`.
   2. **1280 and 1440 px** (the most common laptop widths, e.g. a 1920 screen at 150 % scaling is ~1280 CSS px): no frame either, so check that nothing overlaps (text vs. arrows, header row), nothing is cut off and icons stay consistent.
-  3. **1280 × 633 at devicePixelRatio 1.5** (a 1920 × 1080 laptop at 150 % scaling; also wider than 16:9): Playwright context with `deviceScaleFactor: 1.5` and device-scale screenshots. Check the hero stage keeps the photo's 16:9 ratio and the lamp overlays line up (difference view: lamps-on vs lamps-off screenshots).
+  3. **1280 × 633 at devicePixelRatio 1.5** (a 1920 × 1080 laptop at 150 % scaling; also wider than 16:9): Playwright context with `deviceScaleFactor: 1.5` and device-scale screenshots. Check the hero stage keeps the photo's 16:9 ratio, and capture **transition frames in both directions** (1 → 2 and 2 → 1): pause the CSS transitions with `document.getAnimations()`, step `currentTime` through 0 / 150 / 300 / 450 / 600 / 800 ms and screenshot each step. Each lamp must appear once in every frame, with no dip, double edge or sliding.
   4. **375 and 768 px:** there are no mobile frames, so check against the mobile decisions in `design/NOTES.md`: no horizontal overflow, nothing cut off, lamps in view.
   5. List the differences first, then fix them, then commit.
 - Tests: never update snapshots or loosen thresholds without asking the user.
